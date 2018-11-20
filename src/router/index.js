@@ -1,0 +1,34 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import yf from './yf-router'
+Vue.use(Router)
+const router = new Router({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes: [
+    ...yf, {
+      path: '*',
+      redirect: '/test',
+      meta: {
+        title: ''
+      }
+    }
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    // return {
+    //     y: 0
+    // }
+  }
+})
+router.beforeEach((to, from, next) => {
+  console.log('router.beforeEach')
+  next()
+})
+router.afterEach((to) => {
+  console.log('router.afterEach')
+})
+router.onReady(() => {
+  console.log('router.onReady,一次生命周期只运行一次')
+})
+
+export default router
