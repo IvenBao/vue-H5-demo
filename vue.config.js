@@ -4,7 +4,7 @@ const path = require('path')
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
-console.log(process.env)
+// console.log(process.env)
 module.exports = {
   // 部署生产环境和开发环境下的URL
   // baseUrl: process.env.NODE_ENV === 'production' ? '/production-sub-path/' : '/',
@@ -52,17 +52,23 @@ module.exports = {
   productionSourceMap: true,
   // webpack配置
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
-  chainWebpack: (config) => {
+  chainWebpack: config => {
     config.resolve.alias
       .set('@', resolve('src'))
       .set('assets', resolve('src/assets'))
       .set('components', resolve('src/components'))
       .set('base', resolve('src/base'))
+  },
+  // vux 相关配置,使用vux-ui
+  configureWebpack: config => {
+    require('vux-loader').merge(config, {
+      options: {},
+      plugins: ['vux-ui']
+    })
   }
   // use the full build with in-browser compiler?
   // https://vuejs.org/v2/guide/installation.html#Runtime-Compiler-vs-Runtime-only
   // compiler: false,
-  // configureWebpack: () => {},
   // vue-loader 配置项
   // https://vue-loader.vuejs.org/en/options.html
   // vueLoader: {},

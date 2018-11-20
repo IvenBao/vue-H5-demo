@@ -4,7 +4,7 @@ export default [
     name: 'test',
     component: () => import('@/views/test/test'),
     meta: {
-      title: '项目测试',
+      title: 'demo项目',
       shareInfo: {
       }
     }

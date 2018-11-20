@@ -1,6 +1,7 @@
-<!-- test项目 -->
+<!-- demo项目 -->
 <template>
-  <div>
+  <div id="test">
+    <x-header></x-header>
     <div>test</div>
     <div>test</div>
     <div>test</div>
@@ -10,13 +11,16 @@
 </template>
 
 <script>
+import { XHeader } from 'vux'
 export default {
   data () {
     return {
     }
   },
 
-  components: {},
+  components: {
+    XHeader
+  },
 
   computed: {},
 
@@ -28,4 +32,10 @@ export default {
 
 </script>
 <style lang='scss' scoped>
+#test{
+  div{
+    color: red;
+    font-size: 48px;
+  }
+}
 </style>

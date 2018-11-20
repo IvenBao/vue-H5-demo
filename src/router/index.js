@@ -22,6 +22,12 @@ const router = new Router({
 })
 router.beforeEach((to, from, next) => {
   console.log('router.beforeEach')
+  let {
+    meta: {
+      title = '微谷商城'
+    } = {}
+  } = to
+  document.title = title || '微谷商城'
   next()
 })
 router.afterEach((to) => {
