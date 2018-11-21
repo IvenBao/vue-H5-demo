@@ -2,13 +2,13 @@ import Axios from 'axios'
 import promise from 'es6-promise'
 import {
   randomWord
-} from 'global/tools'
+} from 'base/global/tools'
 promise.polyfill()
 if (!sessionStorage.getItem('_r')) {
   sessionStorage.setItem('_r', randomWord(false, 32))
 }
 class HttpRequest {
-  constructor () {
+  constructor() {
     this.options = {
       method: 'post',
       url: ''
@@ -17,13 +17,13 @@ class HttpRequest {
     this.queue = {}
   }
   // 销毁请求实例
-  destroy (url) {
+  destroy(url) {
     delete this.queue[url]
     const queue = Object.keys(this.queue)
     return queue.length
   }
   // 请求拦截
-  interceptors (instance, url) {
+  interceptors(instance, url) {
     // 添加请求拦截器
     instance.interceptors.request.use(config => {
       console.log(config)
@@ -48,7 +48,7 @@ class HttpRequest {
     })
   }
   // 创建实例
-  create () {
+  create() {
     let conf = {
       // timeout: 2000,
       headers: {
@@ -59,11 +59,11 @@ class HttpRequest {
     return Axios.create(conf)
   }
   // 合并请求实例
-  mergeReqest (instances = []) {
+  mergeReqest(instances = []) {
     //
   }
   // 请求实例
-  request (options) {
+  request(options) {
     var instance = this.create()
     this.interceptors(instance, options.url)
     options = Object.assign({

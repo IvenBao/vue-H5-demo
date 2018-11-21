@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import yf from './yf-router'
+import dh from './dh-router'
+
 Vue.use(Router)
 const router = new Router({
   mode: 'history',
@@ -12,7 +14,8 @@ const router = new Router({
       meta: {
         title: ''
       }
-    }
+    },
+    ...dh
   ],
   scrollBehavior (to, from, savedPosition) {
     // return {
