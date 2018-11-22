@@ -13,7 +13,7 @@
 <script>
 import { XHeader } from 'vux'
 export default {
-  data () {
+  data() {
     return {
     }
   },
@@ -24,7 +24,7 @@ export default {
 
   computed: {},
 
-  mounted () {
+  mounted() {
   },
 
   methods: {}
@@ -32,8 +32,8 @@ export default {
 
 </script>
 <style lang='scss' scoped>
-#test{
-  div{
+#test {
+  div {
     color: red;
     font-size: 48px;
   }

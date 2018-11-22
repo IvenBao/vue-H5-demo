@@ -1,19 +1,17 @@
 <template>
   <div>
-    <header>
-      <div class="header">
-        <div class="header-content flex-st">
-          <div class="avatar">
-            <img :src="minedata.logoUrl" alt="">
-          </div>
-          <div class="sty">
-            <div class="nickname" v-if="!minedata.realName">{{minedata.nickName}} || 德玛西亚 </div>
-            <div class="nickname" v-else-if="minedata.realName">{{minedata.realName}} || 德玛西亚</div>
-            <div class="users">邀请您学习快速卖货的方法</div>
-          </div>
+    <div class="header">
+      <div class="header-content flex-st">
+        <div class="avatar">
+          <img :src="minedata.logoUrl" alt="">
+        </div>
+        <div class="sty">
+          <div class="nickname" v-if="!minedata.realName">{{minedata.nickName}} || 德玛西亚 </div>
+          <div class="nickname" v-else-if="minedata.realName">{{minedata.realName}} || 德玛西亚</div>
+          <div class="users">邀请您学习快速卖货的方法</div>
         </div>
       </div>
-    </header>
+    </div>
   </div>
 </template>
 

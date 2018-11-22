@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import {
     randomWord
-} from 'global/tools'
+} from 'base/global/tools'
 if (!sessionStorage.getItem('_r')) {
     sessionStorage.setItem('_r', randomWord(false, 32))
 }
