@@ -1,6 +1,6 @@
-import request from 'base/global/request'
+import axios from 'base/request'
 export const xx = (data) => {
-  return request.request({
+  return axios.request({
     url: '/api-member/saas/member/login',
     method: 'post',
     data: {
