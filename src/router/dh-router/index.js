@@ -67,5 +67,33 @@ export default [{
         },
         component: () =>
             import('@/views/offline-detail/index.vue')
+    },
+    {
+        path: '/order-result',
+        name: 'order-result',
+        meta: {
+            keepAlive: true,
+            title: '订单详情',
+            shareInfo: {
+                title: '',
+                desc: ''
+            }
+        },
+        component: () =>
+            import('@/views/order/order-result.vue')
+    },
+    {
+        path: '/order-list',
+        name: 'order-list',
+        meta: {
+            keepAlive: true,
+            title: '订单列表',
+            shareInfo: {
+                title: '',
+                desc: ''
+            }
+        },
+        component: () =>
+            import('@/views/order/order-list.vue')
     }
 ]
