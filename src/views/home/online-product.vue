@@ -1,6 +1,6 @@
 
 <template>
-  <section class="product">
+  <div class="product">
     <!-- <ly-line v-show="productList.length > 0"></ly-line> -->
     <head-line :headTitle="headTitle" v-show="productList.length > 0"></head-line>
     <ul>
@@ -14,13 +14,13 @@
             <p class="sty">
               <span>{{item.buyCountShow}}</span>
             </p>
-            <span class="price" v-if="isok == 1">会员免费</span>
-            <span class="price" v-else-if="isok == 99">立即学习</span>
+            <span class="price">会员免费</span>
+            <span class="price">立即学习</span>
           </div>
         </div>
       </li>
     </ul>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -58,7 +58,7 @@ export default {
   props: ['isok'],
   methods: {
     getProductById(id) {
-      this.$router.push({ name: 'product-detail', query: { productId: id } })
+      this.$router.push({ name: 'offline-detail', query: { productId: id } })
     }
   }
 }
@@ -68,6 +68,10 @@ export default {
 .time {
   font-size: 26px;
   color: #989898;
+}
+.product {
+  margin-top: 20px;
+  background-color: #fff;
 }
 .product ul {
   padding: 0 28px;

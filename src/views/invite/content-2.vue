@@ -7,7 +7,6 @@
           <img :src="item.sellerLogo" alt="">
           <span>{{item.sellerName}}</span>
           <span>{{item.createTime}}</span>
-          <span @click="push(item.status)">我的签到码</span>
         </div>
         <div class="content">
           <img :src="item.imgUrl" alt="" />
@@ -20,7 +19,7 @@
       </li>
     </ul>
     <span v-else class="no-list">
-      <img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181123/9f956e49cd58415c918b20d959af4dfa.png" alt="">
+      <img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181123/caf430d9af764a538cdc9b7ab269b414.png" alt="">
     </span>
   </div>
 </template>
@@ -70,6 +69,26 @@ export default {
         //   totalFeeDesc: '1980',
         //   id: 4,
         //   status: 2
+        // }, {
+        //   sellerName: '德玛西亚',
+        //   sellerLogo: '',
+        //   createTime: '2018-12-23 13:21:12',
+        //   desc: '人生大起大落完全了解进',
+        //   imgUrl: '',
+        //   productName: '渠道革命',
+        //   totalFeeDesc: '1980',
+        //   id: 5,
+        //   status: 2
+        // }, {
+        //   sellerName: '德玛西亚',
+        //   sellerLogo: '',
+        //   createTime: '2018-12-23 13:21:12',
+        //   desc: '人生大起大落完全了解进',
+        //   imgUrl: '',
+        //   productName: '渠道革命',
+        //   totalFeeDesc: '1980',
+        //   id: 6,
+        //   status: 2
         // }
       ]
     }
@@ -82,13 +101,7 @@ export default {
   mounted() { },
 
   methods: {
-    push(status) {
-      if (status === 1) {
-        this.$router.push({ name: 'order-result' })
-      } else {
-        alert(6666)
-      }
-    }
+
   }
 }
 
@@ -104,7 +117,6 @@ export default {
     left: 50%;
     margin-left: -119px;
     top: 50%;
-    margin-top: -113px;
   }
 }
 .bigbox {
@@ -175,12 +187,6 @@ export default {
     font-size: 26px;
     color: rgba(152, 152, 152, 1);
     margin-left: 10px;
-  }
-  span:nth-child(4) {
-    display: inline-block;
-    font-size: 24px;
-    color: rgba(250, 79, 78, 1);
-    float: right;
   }
 }
 </style>

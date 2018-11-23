@@ -95,5 +95,19 @@ export default [{
         },
         component: () =>
             import('@/views/order/order-list.vue')
+    },
+    {
+        path: '/invite',
+        name: 'invite',
+        meta: {
+            keepAlive: true,
+            title: '订单列表',
+            shareInfo: {
+                title: '',
+                desc: ''
+            }
+        },
+        component: () =>
+            import('@/views/invite/index.vue')
     }
 ]

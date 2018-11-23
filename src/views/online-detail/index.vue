@@ -5,7 +5,7 @@
     <top :doemData="doemData"></top>
     <course :doemData="doemData"></course>
     <synopsis :doemData="doemData.content"></synopsis>
-    <div class="but">
+    <div class="but" @click="dredge">
       <span>立即加入会员</span>
     </div>
   </div>
@@ -60,9 +60,15 @@ export default {
 
   computed: {},
 
-  mounted() { },
+  mounted() {
+    document.title = this.doemData.title
+  },
 
-  methods: {}
+  methods: {
+    dredge() {
+      this.$router.push({ name: 'dredge' })
+    }
+  }
 }
 
 </script>

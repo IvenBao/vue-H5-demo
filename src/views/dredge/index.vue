@@ -31,7 +31,7 @@
       </div>
     </div>
     <li-ne></li-ne>
-    <div class="text">
+    <div class="title">
       <h4>会员权益说明</h4>
       <div></div>
     </div>
@@ -63,7 +63,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.text {
+.title {
   padding: 32px 32px 0 32px;
   h4 {
     font-size: 40px;

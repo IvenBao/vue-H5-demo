@@ -26,7 +26,7 @@
         </div>
       </div>
     </header>
-    <my-superior v-show="superior" v-on:status="status" :superiorData='ReferrerData'></my-superior>
+    <!-- <my-superior v-show="superior" v-on:status="status" :superiorData='ReferrerData'></my-superior> -->
   </div>
 </template>
 

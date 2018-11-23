@@ -1,11 +1,9 @@
 <!-- 首页 -->
 <template>
-  <div>
+  <div class="bigbox">
     <swiper-comm :swiperVal="bannerData" :swiperType="1"></swiper-comm>
     <me-mber :isok="ok"></me-mber>
-    <li-ne></li-ne>
     <product :isok='ok'></product>
-    <li-ne></li-ne>
     <online-learning :isok='ok'></online-learning>
     <footer-tab></footer-tab>
 
@@ -16,7 +14,6 @@
 // import { Indicator } from 'mint-ui';
 import { getBannerList, getmineData } from '@/api'
 import SwiperComm from '@/views/home/swiper-comm.vue'
-import LiNe from '@/views/home/line.vue'
 import FooterTab from '@/views/home/footer-tab.vue'
 import MeMber from '@/views/home/member.vue'
 import Product from '@/views/home/online-product.vue'
@@ -40,8 +37,7 @@ export default {
     FooterTab,
     Product,
     onlineLearning,
-    MeMber,
-    LiNe
+    MeMber
   },
   computed: {
     swiper() {
@@ -68,6 +64,9 @@ export default {
 
 <style lang='less' scoped>
 /*@import url("home.css");*/
+.bigbox {
+  background-color: rgba(247, 247, 247, 1);
+}
 .video {
   padding: 0 32px 30px;
   box-sizing: border-box;

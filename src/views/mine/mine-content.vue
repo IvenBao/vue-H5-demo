@@ -10,7 +10,7 @@
       </a>
     </div>
     <div class="inner layout borderSty">
-      <a href="/poster">
+      <a href="/order-list">
         <div class="fs18px v100 flex-be sty">
           <img class="leftimg" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/52f9cbd04e47421d9996ced9882d30aa.png" alt="">
           <span class="posi">我的订单</span>

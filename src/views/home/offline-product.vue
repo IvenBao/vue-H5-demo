@@ -1,5 +1,5 @@
 <template>
-  <section class="product">
+  <div class="product">
     <!-- <ly-line v-show="productList.length > 0"></ly-line> -->
     <head-line :headTitle="headTitle" v-show="productList.length > 0"></head-line>
     <ul>
@@ -18,7 +18,7 @@
         </div>
       </li>
     </ul>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -55,7 +55,7 @@ export default {
   props: ['isok'],
   methods: {
     getProductById(id) {
-      this.$router.push({ name: 'course-detail', query: { courseId: id } })
+      this.$router.push({ name: 'online-detail', query: { courseId: id } })
     }
   }
 }
@@ -65,6 +65,10 @@ export default {
 .time {
   font-size: 26px;
   color: #989898;
+}
+.product {
+  margin-top: 20px;
+  background-color: #fff;
 }
 .product ul {
   padding: 0 28px;

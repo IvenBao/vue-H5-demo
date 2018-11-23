@@ -32,14 +32,14 @@ export default {
     MineFooter,
     MeMber
   },
-  beforeRouteEnter(to, from, next) {
-    if (window.localStorage.getItem('gm-token')) {
-      next()
-    } else {
-      // todo
-      // login()
-    }
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   if (window.localStorage.getItem('gm-token')) {
+  //     next()
+  //   } else {
+  //     // todo
+  //     // login()
+  //   }
+  // },
   mounted() {
     /**
      * 测试流程用代码，无用代码
