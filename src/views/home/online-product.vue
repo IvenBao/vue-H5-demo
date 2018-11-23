@@ -5,14 +5,14 @@
     <head-line :headTitle="headTitle" v-show="productList.length > 0"></head-line>
     <ul>
       <li class="flex-row flex-st" v-for="item in productList" :key="item.id" @click="getProductById(item.id)">
-        <img class="url" :src="item.imgUrl" alt="" />
+        <img class="url" :src="item.picUrl" alt="" />
         <div class="left flex-col">
-          <h3 class="productName color36">{{name}}</h3>
-          <p class=" color97 contentText">{{item.contentText}}</p>
+          <h3 class="productName color36">{{item.name}}</h3>
+          <p class=" color97 contentText">{{item.brief}}</p>
           <div class=" color97 position">
             <img class="player" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/f9f2a39d507e4055b9eaee0643d13ed6.png" alt="">
             <p class="sty">
-              <span>{{item.buyCountShow}}</span>
+              <span>{{item.listenCountDesc}}</span>
             </p>
             <span class="price">会员免费</span>
             <span class="price">立即学习</span>
@@ -37,9 +37,26 @@ export default {
           'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180917/7373c0c6badb448890338f796394a0be.png'
       },
       productList: [
-        {}
-      ],
-      name: '爱是飞洒撒旦撒'
+        {
+          brief: '按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店',
+          name: '爱是飞洒撒旦撒',
+          listenCountDesc: '157万',
+          id: 1
+        },
+        {
+          brief: '按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店',
+          name: '爱是飞洒撒旦撒',
+          listenCountDesc: '157万',
+          id: 2
+        },
+        {
+          brief: '按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店',
+          name: '爱是飞洒撒旦撒',
+          listenCountDesc: '157万',
+          id: 3
+        }
+      ]
+
     }
   },
   components: {
@@ -58,7 +75,7 @@ export default {
   props: ['isok'],
   methods: {
     getProductById(id) {
-      this.$router.push({ name: 'offline-detail', query: { productId: id } })
+      this.$router.push({ name: 'online-detail', query: { productId: id } })
     }
   }
 }

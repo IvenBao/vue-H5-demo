@@ -18,7 +18,7 @@
         <span>请保存此二维码作为入场凭证</span>
       </div>
       <div class="qrcode">
-        <img :src="qrcode" alt="">
+        <qrcode :value="value" :fg-color="fgColor" type="img"></qrcode>
         <p>（长按保存至相册）</p>
         <span>* 切勿分享传播该二维码 ！！！</span>
       </div>
@@ -31,10 +31,13 @@
 // import { Indicator } from 'mint-ui'
 // import { Toast, resolveTimeout } from '@/global'
 // import weixin from '../Official-Accounts'
+import { Qrcode } from 'vux'
 export default {
   name: 'order-result',
   data() {
     return {
+      value: '',
+      fgColor: '#000000',
       title: '签到二维码',
       desc:
         '长按保存到手机相册 开课现场工作人员扫码 入场即可 (非工作人员扫码无法验证)',
@@ -59,6 +62,7 @@ export default {
   },
   components: {
     // weixin
+    Qrcode
   },
   methods: {
     goBack() {
@@ -244,7 +248,7 @@ section {
         width: 30px;
         height: 30px;
         background-color: RGB(242, 38, 2);
-        border-radius: 0 15px 15px 0;
+        border-radius: 50%;
       }
       &:after {
         position: absolute;

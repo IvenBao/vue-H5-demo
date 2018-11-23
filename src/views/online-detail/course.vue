@@ -5,11 +5,11 @@
       <p class="title"> <span>课程目录</span> <span>共{{doemData.num}}节课</span></p>
     </div>
     <ul>
-      <li v-for="item in doemData.list" :key="item.id" @click="play(item.id)">
+      <li v-for="item in doemData.list" :key="item.id" @click="play(item.id,item.isFree)">
         <span>{{item.title}}</span>
-        <span v-if="item.st == 1">试听</span>
+        <span v-if="item.isFree == 0 && dj != 1">试听</span>
         <div v-else>
-          <div class="img1" v-if="doemData.dj == 2" :class="{img3:changeRed == item.id}"></div>
+          <div class="img1" v-if="dj == 1" :class="{img3:changeRed == item.id}"></div>
           <div class="img2" v-else></div>
         </div>
 
@@ -22,7 +22,8 @@
 export default {
   data() {
     return {
-      changeRed: 0
+      changeRed: 0,
+      dj: 0
     }
   },
 
@@ -33,10 +34,12 @@ export default {
   mounted() { },
 
   methods: {
-    play(id) {
-      if (this.doemData.dj === 2) {
+    play(id, isFree) {
+      if (this.dj === 1) {
         this.changeRed = id // tab切换效果
-      } else {
+      } else if (isFree === 0) {
+        alert('可以试听')
+      } else if (this.dj !== 1) {
         alert('傻屌！不是会员还想听课')
       }
     }

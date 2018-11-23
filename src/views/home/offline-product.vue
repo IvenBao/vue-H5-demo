@@ -55,7 +55,7 @@ export default {
   props: ['isok'],
   methods: {
     getProductById(id) {
-      this.$router.push({ name: 'online-detail', query: { courseId: id } })
+      this.$router.push({ name: 'offline-detail', query: { courseId: id } })
     }
   }
 }
