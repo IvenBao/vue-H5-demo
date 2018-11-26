@@ -10,7 +10,7 @@
       </a>
     </div>
     <div class="inner layout borderSty">
-      <a href="/poster">
+      <a href="/order-list">
         <div class="fs18px v100 flex-be sty">
           <img class="leftimg" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/52f9cbd04e47421d9996ced9882d30aa.png" alt="">
           <span class="posi">我的订单</span>
@@ -29,7 +29,7 @@
       </router-link>
     </div>
     <div class="inner layout borderSty">
-      <router-link to="/mine-order">
+      <router-link to="/mine-manage">
         <div class="fs18px v100 flex-be sty">
           <img class="leftimg" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/7050ef793a6d446089cc9032300a3206.png" alt="">
           <span class="posi">账户管理</span>
@@ -38,15 +38,13 @@
         </div>
       </router-link>
     </div>
-    <div class="inner layout top20">
-      <router-link to="/mineOrder-online">
-        <div class="fs18px v100 flex-be sty">
-          <img class="leftimg" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/73c32aaba0ae4c588be1efb95754676b.png" alt="">
-          <span class="posi">我的客服</span>
-          <!-- <span class="item-rigth">{{minedata.userOnlineOrderCount}}</span> -->
-          <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
-        </div>
-      </router-link>
+    <div class="inner layout top20" @click="confirm">
+      <div class="fs18px v100 flex-be sty">
+        <img class="leftimg" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/73c32aaba0ae4c588be1efb95754676b.png" alt="">
+        <span class="posi">我的客服</span>
+        <!-- <span class="item-rigth">{{minedata.userOnlineOrderCount}}</span> -->
+        <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
+      </div>
     </div>
   </div>
 </template>
@@ -54,6 +52,7 @@
 export default {
   data() {
     return {
+      phone: 13023687583
     }
   },
   props: ['minedata'],
@@ -69,29 +68,8 @@ export default {
         query: { certificationStatus: this.minedata.certificationStatus }
       })
     },
-    bangding() {
-      this.$router.push({ name: 'bindingMobile' })
-    },
-    bangdingWechatId() {
-      this.$router.push({ name: 'bangdingWechatId' })
-    },
-    mineStatus(level) {
-      var staTus
-      switch (level) {
-        case 0:
-          staTus = '未提交'
-          break
-        case 1:
-          staTus = '审核中'
-          break
-        case 2:
-          staTus = '审核通过'
-          break
-        case 3:
-          staTus = '审核驳回'
-          break
-      }
-      return staTus
+    confirm() {
+      window.open('tel:13023687583')
     }
   },
   mounted() {
