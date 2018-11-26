@@ -17,10 +17,13 @@ module.exports = {
         https: false,
         hotOnly: false,
         proxy: { // 设置代理
-            '/api': {
-                target: '<url>',
+            '/dev': {
+                target: 'http://192.168.0.160:8080',
                 ws: true,
-                changeOrigin: true
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/dev': '/' // 需要rewrite重写的,
+                }
             }
         }
     },

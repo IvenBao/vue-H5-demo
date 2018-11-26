@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { tips, wxAuthorize } from 'base/global/g'
+import { tips, WXAuthorize } from 'base/global/g'
 import { isWX } from 'base/global/tools'
 import { Indicator } from 'mint-ui'
 export default {
@@ -41,10 +41,9 @@ export default {
                 // 调用后端的接口去实现微信登录
             } else {
                 // 去授权
-                wxAuthorize(window.location.origin + window.location.pathname)
+                WXAuthorize(window.location.origin + window.location.pathname)
             }
         } else {
-            Indicator.close()
             next()
         }
     },
@@ -54,6 +53,8 @@ export default {
         }).then(() => {
             tips({
                 message: '444555666'
+            }).then(() => {
+                Indicator.close()
             })
         })
     },

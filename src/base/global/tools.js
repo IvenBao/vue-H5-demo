@@ -265,3 +265,13 @@ export const trimFirst = function(string) {
     /// <summary>去掉首个字符 </summary>
     return string.substr(1)
 }
+/**
+ * 获取链接上的参数
+ * @param {String} name 参数名
+ */
+export const getQueryString = (name) => {
+    let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)')
+    let r = window.location.search.substr(1).match(reg)
+    if (r != null) return r[2]
+    return ''
+}

@@ -6,14 +6,12 @@ import 'lib-flexible'
 import promise from 'es6-promise'
 import {
     Toast
-    // Indicator
 } from 'mint-ui'
 import 'mint-ui/lib/style.css'
 promise.polyfill()
-console.log(process)
+console.log(process.env.NODE_ENV)
 Vue.config.productionTip = false
 Vue.component(Toast.name, Toast)
-// Vue.component(Indicator.name, Indicator)
 new Vue({
     router,
     store,

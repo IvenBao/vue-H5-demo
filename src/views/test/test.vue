@@ -1,39 +1,34 @@
 <!-- demo项目 -->
 <template>
-  <div id="test">
-    <x-header></x-header>
-    <div>test</div>
-    <div>test</div>
-    <div>test</div>
-    <div>test</div>
-    <div>test</div>
-  </div>
+    <div id="test">
+        <router-link to="/home">home</router-link>
+        <router-link to="/login">login</router-link>
+        <router-link to="/bind-mobile">bindMobile</router-link>
+    </div>
 </template>
 
 <script>
-import { XHeader } from 'vux'
 export default {
-  data () {
-    return {
-    }
-  },
+    data() {
+        return {
+        }
+    },
 
-  components: {
-    XHeader
-  },
+    components: {
+    },
 
-  computed: {},
+    computed: {},
 
-  mounted () {
-  },
+    mounted() {
+    },
 
-  methods: {}
+    methods: {}
 }
 
 </script>
 <style lang='scss' scoped>
-#test{
-  div{
+#test {
+  div {
     color: red;
     font-size: 48px;
   }

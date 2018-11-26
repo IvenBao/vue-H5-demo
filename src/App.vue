@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
-    <!-- <div id="nav">
+    <div id="app">
+        <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div> -->
-    <router-view/>
-  </div>
+        <router-view/>
+    </div>
 </template>
 
 <style lang="scss">
@@ -23,7 +23,7 @@ html {
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-width: 100vw;
+  max-width: 750px;
   min-height: 100vh;
   box-sizing: border-box;
   margin: 0 auto;
