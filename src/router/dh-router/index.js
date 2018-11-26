@@ -109,5 +109,33 @@ export default [{
         },
         component: () =>
             import('@/views/invite/index.vue')
+    },
+    {
+        path: '/mine-manage',
+        name: 'mine-manage',
+        meta: {
+            keepAlive: true,
+            title: '账户管理',
+            shareInfo: {
+                title: '',
+                desc: ''
+            }
+        },
+        component: () =>
+            import('@/views/mine/mine-manage.vue')
+    },
+    {
+        path: '/bangdingWechatId',
+        name: 'bangdingWechatId',
+        meta: {
+            keepAlive: true,
+            title: '账户管理',
+            shareInfo: {
+                title: '',
+                desc: ''
+            }
+        },
+        component: () =>
+            import('@/views/bangdingWechatId/index.vue')
     }
 ]

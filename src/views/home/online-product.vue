@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { getOfflineActivityThemeList } from '@/api'
+import { getCourseProductList } from '@/api'
 import HeadLine from '@/views/home/headline.vue'
 export default {
   data() {
@@ -64,11 +64,10 @@ export default {
   },
   mounted() {
     let o = {
-      queryType: 0,
       pageNum: 1,
       pageSize: 20
     }
-    getOfflineActivityThemeList(o).then(res => {
+    getCourseProductList(o).then(res => {
       this.productList = res.data
     })
   },

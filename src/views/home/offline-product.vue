@@ -35,7 +35,9 @@ export default {
           'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180917/7373c0c6badb448890338f796394a0be.png'
       },
       productList: [
-        {}
+        {
+          id: 32
+        }
       ]
     }
   },
@@ -44,7 +46,6 @@ export default {
   },
   mounted() {
     let o = {
-      queryType: 0,
       pageNum: 1,
       pageSize: 20
     }
@@ -55,7 +56,7 @@ export default {
   props: ['isok'],
   methods: {
     getProductById(id) {
-      this.$router.push({ name: 'offline-detail', query: { courseId: id } })
+      this.$router.push({ name: 'offline-detail', query: { productId: id } })
     }
   }
 }

@@ -7,14 +7,14 @@
           <img :src="item.sellerLogo" alt="">
           <span>{{item.sellerName}}</span>
           <span>{{item.createTime}}</span>
-          <span @click="push(item.status)">我的签到码</span>
+          <span @click="push(item.redirectFlag)">我的签到码</span>
         </div>
         <div class="content">
-          <img :src="item.imgUrl" alt="" />
+          <img :src="item.productPic" alt="" />
           <div class="rigth">
             <h3 class="productName">{{item.productName}}</h3>
-            <p class="contentText">{{item.desc}}</p>
-            <span class="moneySty">￥{{item.totalFeeDesc}}</span>
+            <p class="contentText">{{item.productDesc}}</p>
+            <span class="moneySty">￥{{item.productPriceDesc}}</span>
           </div>
         </div>
       </li>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { getOrderList } from '@/api'
 export default {
   data() {
     return {
@@ -34,44 +35,49 @@ export default {
           sellerName: '德玛西亚',
           sellerLogo: '',
           createTime: '2018-12-23 13:21:12',
-          desc: '人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进',
-          imgUrl: '',
+          productDesc: '人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进',
+          productPic: '',
           productName: '渠道革命',
-          totalFeeDesc: '1980',
+          productPriceDesc: '1980',
           id: 1,
-          status: 1
+          redirectFlag: 0
         }, {
           sellerName: '德玛西亚',
           sellerLogo: '',
           createTime: '2018-12-23 13:21:12',
-          desc: '人生大起大落完全了解进',
-          imgUrl: '',
+          productDesc: '人生大起大落完全了解进',
+          productPic: '',
           productName: '渠道革命',
-          totalFeeDesc: '1980',
+          productPriceDesc: '1980',
           id: 2,
-          status: 2
+          redirectFlag: 1
         }, {
           sellerName: '德玛西亚德玛西亚德玛西亚',
           sellerLogo: '',
           createTime: '2018-12-23 13:21:12',
-          desc: '人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进',
-          imgUrl: '',
+          productDesc: '人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进',
+          productPic: '',
           productName: '渠道革命渠道革命渠道革命渠道革命渠道革命',
-          totalFeeDesc: '1980',
+          productPriceDesc: '1980',
           id: 3,
-          status: 1
+          redirectFlag: 0
         }, {
           sellerName: '德玛西亚',
           sellerLogo: '',
           createTime: '2018-12-23 13:21:12',
-          desc: '人生大起大落完全了解进',
-          imgUrl: '',
+          productDesc: '人生大起大落完全了解进',
+          productPic: '',
           productName: '渠道革命',
-          totalFeeDesc: '1980',
+          productPriceDesc: '1980',
           id: 4,
-          status: 2
+          redirectFlag: 1
         }
-      ]
+      ],
+      requestData: {
+        productType: 0,
+        pageNum: 1,
+        pageSize: 50
+      }
     }
   },
 
@@ -79,11 +85,15 @@ export default {
 
   computed: {},
 
-  mounted() { },
+  mounted() {
+    getOrderList(this.requestData).then(res => {
+      console.log(res)
+    })
+  },
 
   methods: {
-    push(status) {
-      if (status === 1) {
+    push(redirectFlag) {
+      if (redirectFlag === 1) {
         this.$router.push({ name: 'order-result' })
       } else {
         alert(6666)

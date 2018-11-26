@@ -29,7 +29,7 @@
       </router-link>
     </div>
     <div class="inner layout borderSty">
-      <router-link to="/mine-order">
+      <router-link to="/mine-manage">
         <div class="fs18px v100 flex-be sty">
           <img class="leftimg" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/7050ef793a6d446089cc9032300a3206.png" alt="">
           <span class="posi">账户管理</span>

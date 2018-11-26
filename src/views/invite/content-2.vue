@@ -29,67 +29,67 @@ export default {
   data() {
     return {
       orderList: [
-        // {
-        //   sellerName: '德玛西亚',
-        //   sellerLogo: '',
-        //   createTime: '2018-12-23 13:21:12',
-        //   desc: '人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进',
-        //   imgUrl: '',
-        //   productName: '渠道革命',
-        //   totalFeeDesc: '1980',
-        //   id: 1,
-        //   status: 1
-        // }, {
-        //   sellerName: '德玛西亚',
-        //   sellerLogo: '',
-        //   createTime: '2018-12-23 13:21:12',
-        //   desc: '人生大起大落完全了解进',
-        //   imgUrl: '',
-        //   productName: '渠道革命',
-        //   totalFeeDesc: '1980',
-        //   id: 2,
-        //   status: 2
-        // }, {
-        //   sellerName: '德玛西亚',
-        //   sellerLogo: '',
-        //   createTime: '2018-12-23 13:21:12',
-        //   desc: '人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进',
-        //   imgUrl: '',
-        //   productName: '渠道革命',
-        //   totalFeeDesc: '1980',
-        //   id: 3,
-        //   status: 1
-        // }, {
-        //   sellerName: '德玛西亚',
-        //   sellerLogo: '',
-        //   createTime: '2018-12-23 13:21:12',
-        //   desc: '人生大起大落完全了解进',
-        //   imgUrl: '',
-        //   productName: '渠道革命',
-        //   totalFeeDesc: '1980',
-        //   id: 4,
-        //   status: 2
-        // }, {
-        //   sellerName: '德玛西亚',
-        //   sellerLogo: '',
-        //   createTime: '2018-12-23 13:21:12',
-        //   desc: '人生大起大落完全了解进',
-        //   imgUrl: '',
-        //   productName: '渠道革命',
-        //   totalFeeDesc: '1980',
-        //   id: 5,
-        //   status: 2
-        // }, {
-        //   sellerName: '德玛西亚',
-        //   sellerLogo: '',
-        //   createTime: '2018-12-23 13:21:12',
-        //   desc: '人生大起大落完全了解进',
-        //   imgUrl: '',
-        //   productName: '渠道革命',
-        //   totalFeeDesc: '1980',
-        //   id: 6,
-        //   status: 2
-        // }
+        {
+          sellerName: '德玛西亚',
+          sellerLogo: '',
+          createTime: '2018-12-23 13:21:12',
+          desc: '人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进',
+          imgUrl: '',
+          productName: '渠道革命',
+          totalFeeDesc: '1980',
+          id: 1,
+          status: 1
+        }, {
+          sellerName: '德玛西亚',
+          sellerLogo: '',
+          createTime: '2018-12-23 13:21:12',
+          desc: '人生大起大落完全了解进',
+          imgUrl: '',
+          productName: '渠道革命',
+          totalFeeDesc: '1980',
+          id: 2,
+          status: 2
+        }, {
+          sellerName: '德玛西亚',
+          sellerLogo: '',
+          createTime: '2018-12-23 13:21:12',
+          desc: '人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进',
+          imgUrl: '',
+          productName: '渠道革命',
+          totalFeeDesc: '1980',
+          id: 3,
+          status: 1
+        }, {
+          sellerName: '德玛西亚',
+          sellerLogo: '',
+          createTime: '2018-12-23 13:21:12',
+          desc: '人生大起大落完全了解进',
+          imgUrl: '',
+          productName: '渠道革命',
+          totalFeeDesc: '1980',
+          id: 4,
+          status: 2
+        }, {
+          sellerName: '德玛西亚',
+          sellerLogo: '',
+          createTime: '2018-12-23 13:21:12',
+          desc: '人生大起大落完全了解进',
+          imgUrl: '',
+          productName: '渠道革命',
+          totalFeeDesc: '1980',
+          id: 5,
+          status: 2
+        }, {
+          sellerName: '德玛西亚',
+          sellerLogo: '',
+          createTime: '2018-12-23 13:21:12',
+          desc: '人生大起大落完全了解进',
+          imgUrl: '',
+          productName: '渠道革命',
+          totalFeeDesc: '1980',
+          id: 6,
+          status: 2
+        }
       ]
     }
   },
