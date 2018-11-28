@@ -51,13 +51,11 @@ export default {
 
     getmineData().then(res => {
       if (res) {
-        if (res.reCode === 200) {
-          // res.data.memberLevel = 1;
-          // res.data.referrer = true
-          this.mineData = res.data
-          this.ok = res.data.memberLevel
-        } else {
+        console.log(res) 
+        if(res.userVip){
+          res.userVip.expiresAt = res.userVip.expiresAt.substring(0,10)
         }
+        this.mineData = res
       }
     })
   }

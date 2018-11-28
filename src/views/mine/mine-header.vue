@@ -5,12 +5,12 @@
       <div class="header">
         <div class="header-content flex-st">
           <div class="avatar">
-            <img :src="minedata.logoUrl" alt="">
+            <img :src="minedata.userInfo.avatar" alt="">
           </div>
           <div class="sty">
-            <div class="nickname" v-if="!minedata.realName">{{minedata.nickName}}<span :class="minedata.memberLevel == 99?'memberSty':'nomemberSty'"></span> </div>
+            <div class="nickname" v-if="minedata.userInfo">{{minedata.userInfo.nickname}}<span :class="minedata.memberLevel == 99?'memberSty':'nomemberSty'"></span> </div>
             <div class="nickname" v-else-if="minedata.realName">{{minedata.realName}}<span :class="minedata.memberLevel == 99?'memberSty':'nomemberSty'"></span></div>
-            <div class="users" v-if="minedata.memberLevel == 99">2018-12-22到期</div>
+            <div class="users" v-if="minedata.vip">{{minedata.userVip.expiresAt}}到期</div>
             <div class="users" v-else>您暂未开通会员</div>
           </div>
         </div>

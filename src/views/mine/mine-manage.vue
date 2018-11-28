@@ -13,11 +13,11 @@
     <div class="line">
       <div class="inner layout">
         <div
-          v-if="minedata.registerMobile"
+          v-if="minedata.userInfo"
           class="fs18px v100 flex-be sty"
         >
           <span class="posi">手机号</span>
-          <span class="item-rigth-0">{{minedata.registerMobile}}</span>
+          <span class="item-rigth-0">{{minedata.userInfo.cellphone}}</span>
           <!-- <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth"> -->
         </div>
         <div
@@ -269,33 +269,14 @@ export default {
     }
   },
   mounted() {
-    getUserBindWechat().then(res => {
-      if (res.data && res.data.wechatAccount) {
-        this.wechatAccount = res.data.wechatAccount
-      }
-    })
+    // getUserBindWechat().then(res => {
+    //   if (res.data && res.data.wechatAccount) {
+    //     this.wechatAccount = res.data.wechatAccount
+    //   }
+    // })
     getmineData().then(res => {
-      if (res) {
-        if (res.code === 200) {
-          this.minedata = res.data
-          this.select1 = this.minedata.gender
-          if (this.minedata.certificationStatus === 0) {
-            this.hint = '未实名'
-          } else if (this.minedata.certificationStatus === 1) {
-            this.hint = '审核中'
-          } else if (this.minedata.certificationStatus === 3) {
-            this.hint = '未通过'
-          }
-        } else {
-          // layer.open({
-          //   content: res.message,
-          //   skin: 'msg',
-          //   time: 2,
-          //   end: () => {
-          //   }
-          // })
-        }
-      }
+      this.minedata = res
+      
     })
   },
   created() {

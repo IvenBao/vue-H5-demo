@@ -70,15 +70,14 @@ export const getCourseAudioList = (courseId) => {
 // 我的 - 首页
 export const getmineData = (data) => {
     return axios.request({
-        url: '/qudao-member/saas/member/auth/getAllUserInfo',
-        method: 'post',
-        data: data
+        url: '/api/user/my/detail',
+        method: 'get'
     })
 }
 
 export const browerCourse = (id) => {
     return axios.request({
-        url: '/qudao-member/saas/classset/addClassSetBrowseCount',
+        url: '/qudao-membe/saas/classset/addClassSetBrowseCount',
         method: 'post',
         data: {
             classInfoId: id
