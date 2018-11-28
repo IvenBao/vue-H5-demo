@@ -10,7 +10,7 @@
 <script>
 import { Qrcode } from 'vux'
 import { setTimeout } from 'timers'
-
+import { getPosterInfo } from '@/api'
 export default {
     data() {
         return {
@@ -26,6 +26,11 @@ export default {
     computed: {},
 
     mounted() {
+        getPosterInfo({ goodsId: '1' }).then(res => {
+            console.log(res)
+        }, rej => {
+            console.log(rej)
+        })
         let canvas = document.getElementById('postreCtx')
         let ctx = canvas.getContext('2d')
         let nWidth = document.body.clientWidth // 屏幕可视区域 宽度

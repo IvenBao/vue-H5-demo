@@ -8,6 +8,8 @@ import MintUI, {
     Toast
 } from 'mint-ui'
 import 'mint-ui/lib/style.css'
+// import VConsole from 'vconsole'
+// new VConsole()
 promise.polyfill()
 Vue.use(MintUI)
 Vue.config.productionTip = false

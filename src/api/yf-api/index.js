@@ -20,3 +20,23 @@ export const getWXconfig = (data) => {
         }
     })
 }
+// 购买下单接口
+export const buy = (data) => {
+    return axios.request({
+        url: '/api/user/order/pay',
+        method: 'post',
+        data: {
+            ...data
+        }
+    })
+}
+// 获取海报背景图
+export const getPosterInfo = (data) => {
+    return axios.request({
+        url: `/api/auth/shareImg/getShareImg?goodsId=${data.goodsId}`,
+        method: 'post',
+        data: {
+            ...data
+        }
+    })
+}

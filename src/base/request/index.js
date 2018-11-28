@@ -25,7 +25,8 @@ class HttpRequest {
     interceptors(instance, url) {
         // 添加请求拦截器
         instance.interceptors.request.use(config => {
-            config.url = `${baseConfig.baseUrl}${url}?r=${sessionStorage.getItem('_r')}` // 请求接口时后台添加上随机数,以便于后端记录用户操作
+            // config.url = `${baseConfig.baseUrl}${url}?r=${sessionStorage.getItem('_r')}` // 请求接口时后台添加上随机数,以便于后端记录用户操作
+            config.url = `${baseConfig.baseUrl}${url}`
             // 请求拦截器中可以添加请求前需要用到的公用参数（统一添加即可），减少再业务逻辑中重复添加参数
             // 在发送请求之前做些什么
             return config
@@ -48,13 +49,26 @@ class HttpRequest {
     }
     // 创建实例
     create() {
-        let conf = {
-            // timeout: 2000,
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-                // 'X-URL-PATH': location.pathname
+        let conf
+        if (window.localStorage.getItem('token')) {
+            conf = {
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    // 'X-URL-PATH': location.pathname
+                    'Authorization': `Bearer ${window.localStorage.getItem('token')}`
+                }
+            }
+        } else {
+            conf = {
+                // timeout: 2000,
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                    // 'X-URL-PATH': location.pathname
+                }
             }
         }
+
         return Axios.create(conf)
     }
     // 合并请求实例
