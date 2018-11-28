@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import Vuex from 'vuex'
 import 'lib-flexible'
 import promise from 'es6-promise'
 import MintUI, {
@@ -12,6 +13,7 @@ import 'mint-ui/lib/style.css'
 // new VConsole()
 promise.polyfill()
 Vue.use(MintUI)
+Vue.use(Vuex)
 Vue.config.productionTip = false
 Vue.component(Toast.name, Toast)
 new Vue({

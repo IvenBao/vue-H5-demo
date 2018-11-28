@@ -26,7 +26,7 @@ export default {
     data() {
         return {
             is_scollup: false, // 是否向上滚动,用作上滑时的效果触发
-            close_player: false, // 关闭播放器
+            close_player: true, // 关闭播放器
             playerList: [
                 {
                     mp3Src: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181126/be1c3e57467d4a36ac9d5a3602c691b9.mp3', // mp3地址
@@ -97,6 +97,9 @@ export default {
         },
         // 音频加载成功
         ready() {
+            if (this.close_player) {
+                return false
+            }
             let audio = this.$refs.audioPlayer
             if (window.WeixinJSBridge) {
                 // eslint-disable-next-line

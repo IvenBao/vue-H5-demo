@@ -3,6 +3,9 @@ import {
     randomWord
 } from 'base/global/tools'
 import baseConfig from 'base/global/config'
+import {
+    login
+} from 'base/global/g'
 if (!sessionStorage.getItem('_r')) {
     sessionStorage.setItem('_r', randomWord(false, 32))
 }
@@ -39,13 +42,59 @@ class HttpRequest {
             let {
                 data
             } = res
-            console.log(data)
-            return data
+            if (!res.errno) {
+                return data
+            } else {
+                return Promise.reject(data)
+            }
             // alert('请求成功')
         }, error => {
             // alert('请求失败')
+            if (error && error.response) {
+                switch (error.response.status) {
+                    case 400:
+                        error.message = `请求错误`
+                        break
+                    case 401:
+                        error.message = `无权访问,请登录!`
+                        break
+                    case 403:
+                        error.message = `无权访问,请登录!`
+                        break
+                    case 404:
+                        error.message = `请求地址出错: ${error.response.config.url}`
+                        break
+                    case 408:
+                        error.message = `请求超时`
+                        break
+                    case 500:
+                        error.message = '服务器内部错误'
+                        break
+                    case 501:
+                        error.message = '服务未实现'
+                        break
+                    case 502:
+                        error.message = '网关错误'
+                        break
+                    case 503:
+                        error.message = '服务不可用'
+                        break
+                    case 504:
+                        error.message = '网关超时'
+                        break
+                    case 505:
+                        error.message = 'HTTP版本不受支持'
+                        break
+                    default:
+                        break
+                }
+            }
+            if (error.response.status === 403) {
+                login()
+                return new Promise(() => {})
+            }
             // 对响应错误做点什么
-            return Promise.reject(error)
+            return Promise.reject(error.response)
         })
     }
     // 创建实例

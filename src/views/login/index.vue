@@ -4,25 +4,32 @@
         <h4>登录</h4>
         <div class="input_div phone">
             <div class="area_code">+86</div>
-            <input type="tel" placeholder="请输入手机号">
+            <input type="tel" placeholder="请输入手机号" v-model="loginInfo.phone" @input="checkValue" @paste="pastePhone">
             <div class="get_code">获取验证码</div>
         </div>
         <div class="input_div msg_code">
             <div class="area_code">验证码</div>
-            <input type="tel" placeholder="请输入手机号">
+            <input type="tel" placeholder="请输入手机号" v-model="loginInfo.code" @input="checkValue" @paste="pasteCode">
         </div>
-        <div class="bind" :class='{active: active}'>登录</div>
+        <div class="bind" :class='{active: active}' @click="tologin">登录</div>
     </div>
 </template>
 
 <script>
 import { tips, WXAuthorize } from 'base/global/g'
-import { isWX } from 'base/global/tools'
-import { Indicator } from 'mint-ui'
+import { isWX, trimIn } from 'base/global/tools'
+import { weblogin } from '@/api'
+import {
+    Indicator
+} from 'mint-ui'
 export default {
     data() {
         return {
-            active: false // 登录按钮的样式
+            loginInfo: {
+                phone: '18658859571',
+                code: '1234'
+            },
+            active: true // 登录按钮的样式
         }
     },
     components: {
@@ -30,10 +37,10 @@ export default {
 
     computed: {},
     beforeRouteEnter(to, from, next) {
-        Indicator.open({
-            text: '请稍后...',
-            spinnerType: 'double-bounce'
-        })
+        // Indicator.open({
+        //     text: '请稍后...',
+        //     spinnerType: 'double-bounce'
+        // })
         // ...
         if (isWX) {
             if (to.query.code) {
@@ -48,18 +55,56 @@ export default {
         }
     },
     mounted() {
-        tips({
-            message: '111222333'
-        }).then(() => {
-            tips({
-                message: '444555666'
-            }).then(() => {
-                Indicator.close()
-            })
-        })
     },
 
-    methods: {}
+    methods: {
+        tologin() {
+            if (this.active) {
+                Indicator.open({
+                    text: '登录中...',
+                    spinnerType: 'double-bounce'
+                })
+                weblogin(this.loginInfo).then(res => {
+                    Indicator.close()
+                    console.log(res)
+                    if (res.errno === 0) {
+                    }
+                }, rej => {
+                    Indicator.close()
+                    console.log(rej)
+                })
+            } else {
+                if (!this.loginInfo.phone) {
+                    tips({
+                        message: '请填写手机号码'
+                    })
+                } else if (!this.loginInfo.code) {
+                    tips({
+                        message: '请填写手机验证码'
+                    })
+                }
+            }
+        },
+        checkValue() {
+            this.loginInfo.phone = trimIn(this.loginInfo.phone)
+            this.$nextTick()
+            if (this.loginInfo.phone && this.loginInfo.code) {
+                this.active = true
+            } else {
+                this.active = false
+            }
+        },
+        pastePhone() {
+
+        },
+        pasteCode() {
+
+        },
+        // 获取二维码
+        getCode() {
+
+        }
+    }
 }
 
 </script>

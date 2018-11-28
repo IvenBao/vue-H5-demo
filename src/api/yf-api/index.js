@@ -20,6 +20,34 @@ export const getWXconfig = (data) => {
         }
     })
 }
+// web端登录接口
+export const weblogin = (data) => {
+    return new Promise((resolve, reject) => {
+        axios.request({
+            url: `/api/auth/phone_code?phone=${data.phone}&code=${data.code}`,
+            method: 'post'
+        }).then(res => {
+            if (res.errno === 0) {
+                window.localStorage.setItem('token', res.data.userAccessToken.token)
+            }
+            resolve(res)
+        }, rej => {
+            reject(rej)
+        })
+    })
+}
+
+// 绑定手机号接口
+export const bindMobile = (data) => {
+    return axios.request({
+        url: 'bindMobile',
+        method: 'post',
+        data: {
+            ...data
+        }
+    })
+}
+
 // 购买下单接口
 export const buy = (data) => {
     return axios.request({
@@ -33,10 +61,7 @@ export const buy = (data) => {
 // 获取海报背景图
 export const getPosterInfo = (data) => {
     return axios.request({
-        url: `/api/auth/shareImg/getShareImg?goodsId=${data.goodsId}`,
-        method: 'post',
-        data: {
-            ...data
-        }
+        url: `/api/user/shareImg/getShareImg?goodsId=${data.goodsId}`,
+        method: 'post'
     })
 }

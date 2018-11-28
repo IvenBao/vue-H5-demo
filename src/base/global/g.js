@@ -19,34 +19,41 @@ export const env = process.env.NODE_ENV
  * callbackUrl 登录成功后需要会跳的业务逻辑，默认从哪里来回哪里去
  */
 export const login = (callbackUrl) => {
-    let redirecturl = callbackUrl || window.location.href
-    let query = urlParameData(redirecturl)
-    if (query.code) {
-        delete query.code
-    }
-    // eslint-disable-next-line
-    function* objectEntries() {
-        let propKeys = Object.keys(this)
-        for (let propKey of propKeys) {
-            yield [propKey, this[propKey]]
+    tips({
+        message: '需要登录...',
+        duration: 1200
+    }).then(
+        () => {
+            let redirecturl = callbackUrl || window.location.href
+            let query = urlParameData(redirecturl)
+            if (query.code) {
+                delete query.code
+            }
+            // eslint-disable-next-line
+            function* objectEntries() {
+                let propKeys = Object.keys(this)
+                for (let propKey of propKeys) {
+                    yield [propKey, this[propKey]]
+                }
+            }
+            query[Symbol.iterator] = objectEntries
+            let backUrl = window.location.origin + window.location.pathname + '?'
+            for (let [k, v] of query) {
+                backUrl += `${k}=${v}&`
+            }
+            backUrl = backUrl.slice(0, -1)
+            window.sessionStorage.setItem('backUrl', backUrl)
+            if (isWX) {
+                // 微信中登录
+                window.location.href = window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appId + '&redirect_uri=' + backUrl + '&response_type=code&scope=snsapi_base&state=test#wechat_redirect'
+            } else {
+                // web中登录
+                router.push({
+                    name: 'login'
+                })
+            }
         }
-    }
-    query[Symbol.iterator] = objectEntries
-    let backUrl = window.location.origin + window.location.pathname + '?'
-    for (let [k, v] of query) {
-        backUrl += `${k}=${v}&`
-    }
-    backUrl = backUrl.slice(0, -1)
-    window.sessionStorage.setItem('backUrl', backUrl)
-    if (isWX) {
-        // 微信中登录
-        window.location.href = window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appId + '&redirect_uri=' + backUrl + '&response_type=code&scope=snsapi_base&state=test#wechat_redirect'
-    } else {
-        // web中登录
-        router.push({
-            name: 'login'
-        })
-    }
+    )
 }
 /**
  * 微信授权
