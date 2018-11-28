@@ -2,5 +2,6 @@ import {
     env
 } from './g'
 export default {
-    baseUrl: env === 'production' ? '' : '/dev'
+    // eslint-disable-next-line
+    baseUrl: env == 'production' ? '' : '/dev'
 }
