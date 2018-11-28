@@ -31,6 +31,7 @@
     "postcss-px2rem-exclude": "0.0.6",
     "postcss-pxtorem": "^4.0.1",
     "sass-loader": "^7.0.1",
+    "vconsole": "^3.2.0",
     "vue-loader": "^14.2.2",
     "vue-template-compiler": "^2.5.17",
     "vux": "^2.9.2",

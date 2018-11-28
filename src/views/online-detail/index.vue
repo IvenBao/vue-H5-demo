@@ -5,7 +5,10 @@
     <top :doemData="doemData"></top>
     <course :doemData="doemData"></course>
     <synopsis :doemData="doemData.content"></synopsis>
-    <div class="but" @click="dredge" v-show="mineData.dj == 0">
+    <div
+      class="but"
+      @click="dredge"
+    >
       <span>立即加入会员</span>
     </div>
   </div>
@@ -20,33 +23,30 @@ import Synopsis from '@/views/online-detail/synopsis.vue'
 export default {
   data() {
     return {
-      mineData: {
-        dj: 1
-      },
       doemData: {
         title: '快速卖货的方法',
         text: '非常有效、百试不爽的快速卖货的方式发送到发送到防守打法',
         num: '10',
-        iffree: 1,
+        dj: 1,
         list: [
           {
             title: '01-人人可行的8条移动互联网创业之路',
-            id: 10,
+            id: 1,
             isFree: 0
           },
           {
             title: '02-人人可行的8条移动互联网创业之路',
-            id: 15,
+            id: 2,
             isFree: 1
           },
           {
             title: '03-人人可行的8条移动互联网创业之路',
-            id: 17,
+            id: 3,
             isFree: 0
           },
           {
             title: '04-人人可行的8条移动互联网创业之路',
-            id: 19,
+            id: 4,
             isFree: 1
           }
         ],
@@ -70,9 +70,6 @@ export default {
 
   methods: {
     dredge() {
-      // tips({
-      //   message: 'mmp'
-      // })
       this.$router.push({ name: 'dredge' })
     }
   }

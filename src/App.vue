@@ -5,9 +5,21 @@
       <router-link to="/about">About</router-link>
     </div> -->
         <router-view/>
+        <player></player>
     </div>
 </template>
-
+<script>
+import player from '@/components/mp3player/index.vue'
+export default {
+    data() {
+        return {
+        }
+    },
+    components: {
+        player
+    }
+}
+</script>
 <style lang="scss">
 html {
   min-height: 100%;

@@ -17,11 +17,10 @@ export const Order = (productId) => {}
  * num 传入需要加购的商品数量
  * addShoppingCart(..., ...)
  */
-export const addShoppingCart = (productId, num) => {
-
-}
+export const addShoppingCart = (productId, num) => {}
 /**
  * 唤起微信h5支付
+ * openwechatpay({...}, ()=>{ })
  */
 export const openwechatpay = (config, callback) => {
     config = {
@@ -40,7 +39,6 @@ export const openwechatpay = (config, callback) => {
             'getBrandWCPayRequest',
             config,
             function(res) {
-                console.log(res)
                 Object.assign(res.data || {})
                 if (res.err_msg === 'get_brand_wcpay_request:ok') {
                     // 支付成功
