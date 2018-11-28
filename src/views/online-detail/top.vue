@@ -2,12 +2,19 @@
 <template>
   <div>
     <div class="imgSty">
-      <img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181121/c07eafaacac242febf990e02e87685d5.png" alt="">
+      <img
+        :src="doemData.picUrl"
+        alt=""
+      >
     </div>
     <div class="content">
-      <span>{{doemData.title}}</span>
-      <p>{{doemData.text}}</p>
-      <img @click="share" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181121/1b4c378527ba4df485193a05ee4f45d9.png" alt="">
+      <span>{{doemData.name}}</span>
+      <p>{{doemData.brief}}</p>
+      <img
+        @click="share"
+        src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181121/1b4c378527ba4df485193a05ee4f45d9.png"
+        alt=""
+      >
     </div>
   </div>
 </template>

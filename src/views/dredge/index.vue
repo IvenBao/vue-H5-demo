@@ -1,15 +1,24 @@
 <template>
   <div>
     <div class="cardBox">
-      <div class="card" v-if="memberLevel == 99">
+      <div
+        class="card"
+        v-if="memberLevel == 99"
+      >
         <h4>会员用户</h4>
         <p>
-          <img :src="mineData.logoUrl" alt="">
+          <img
+            :src="mineData.logoUrl"
+            alt=""
+          >
           <span>{{mineData.realName}}</span>
         </p>
         <span class="textSty">有效期至 2020-01-01</span>
       </div>
-      <div class="card" v-else>
+      <div
+        class="card"
+        v-else
+      >
         <h4>加入会员享会员专属课程</h4>
         <p>有效期 1年</p>
         <span class="text">立即开通</span>
@@ -19,14 +28,24 @@
       <p class="leftSty">一年期VIP</p>
       <p class="rightSty">￥399</p>
     </div>
-    <div class="butSty" v-if="memberLevel == 99">
+    <div
+      class="butSty"
+      v-if="memberLevel == 99"
+    >
       <div>
         <span>已开通</span>
       </div>
     </div>
-    <div class="but" v-else>
+    <div
+      class="but"
+      v-else
+      @click="playbuy"
+    >
       <div>
-        <img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/afa4bb073e6740f79adaca52a5950248.png" alt="">
+        <img
+          src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/afa4bb073e6740f79adaca52a5950248.png"
+          alt=""
+        >
         <span>立即付款学习</span>
       </div>
     </div>
@@ -38,13 +57,17 @@
   </div>
 </template>
 <script>
-import { getmineData } from '@/api'
+import { getmineData, buy } from '@/api'
 import LiNe from '@/views/home/line.vue'
 export default {
   data() {
     return {
       memberLevel: '',
-      mineData: {}
+      mineData: {},
+      postData: {
+        productId: null,
+        productType: 3
+      }
     }
   },
   mounted() {
@@ -59,6 +82,15 @@ export default {
   },
   components: {
     LiNe
+  },
+  methods: {
+    playbuy() {
+      let params = { ...this.$route.params, ...this.$route.query }
+      this.postData.productId = params.productId
+      buy(this.postData).then(res => {
+        console.log(res)
+      })
+    }
   }
 }
 </script>

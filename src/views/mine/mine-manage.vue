@@ -3,70 +3,159 @@
     <div class="inner layout herd">
       <div class="fs18px v100 flex-be sty">
         <span class="posi">头像</span>
-        <img :src="minedata.logoUrl" alt="" class="imgurl">
+        <img
+          :src="minedata.logoUrl"
+          alt=""
+          class="imgurl"
+        >
       </div>
     </div>
     <div class="line">
       <div class="inner layout">
-        <div v-if="minedata.registerMobile" class="fs18px v100 flex-be sty">
+        <div
+          v-if="minedata.registerMobile"
+          class="fs18px v100 flex-be sty"
+        >
           <span class="posi">手机号</span>
           <span class="item-rigth-0">{{minedata.registerMobile}}</span>
           <!-- <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth"> -->
         </div>
-        <div v-else @click="bangding" class="fs18px v100 flex-be sty">
+        <div
+          v-else
+          @click="bangding"
+          class="fs18px v100 flex-be sty"
+        >
           <span class="posi">手机号</span>
           <span class="item-rigth">未绑定</span>
-          <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
+          <img
+            src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
+            alt=""
+            class="imgrigth"
+          >
         </div>
       </div>
       <div class="inner layout">
-        <div v-if="minedata.gender == 0 || minedata.gender == 1" class="fs18px v100 flex-be sty">
+        <div
+          v-if="minedata.gender == 0 || minedata.gender == 1"
+          class="fs18px v100 flex-be sty"
+        >
           <span class="posi">性别</span>
-          <select v-model="select1" class="selecss1" @change="chooseMedicine1(select1)">
-            <option v-for="(a,index) in arr1" :key="index" :value="a.id">{{ a.name }}</option>
+          <select
+            v-model="select1"
+            class="selecss1"
+            @change="chooseMedicine1(select1)"
+          >
+            <option
+              v-for="(a,index) in arr1"
+              :key="index"
+              :value="a.id"
+            >{{ a.name }}</option>
           </select>
-          <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
+          <img
+            src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
+            alt=""
+            class="imgrigth"
+          >
         </div>
-        <div v-else class="fs18px v100 flex-be sty">
+        <div
+          v-else
+          class="fs18px v100 flex-be sty"
+        >
           <span class="posi">性别</span>
-          <select v-model="select" class="selecss" @change="chooseMedicine(select)">
-            <option v-for="(a,index) in arr" :key="index" :value="a.id">{{ a.name }}</option>
+          <select
+            v-model="select"
+            class="selecss"
+            @change="chooseMedicine(select)"
+          >
+            <option
+              v-for="(a,index) in arr"
+              :key="index"
+              :value="a.id"
+            >{{ a.name }}</option>
           </select>
-          <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
+          <img
+            src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
+            alt=""
+            class="imgrigth"
+          >
         </div>
       </div>
 
       <div class="inner layout">
-        <div v-if="minedata.city" class="fs18px v100 flex-be sty" @click="popupVisible = true ">
+        <div
+          v-if="minedata.city"
+          class="fs18px v100 flex-be sty"
+          @click="popupVisible = true "
+        >
           <span class="posi">现居城市</span>
           <span class="item-rigth">{{minedata.province}} {{minedata.city}}</span>
-          <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
+          <img
+            src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
+            alt=""
+            class="imgrigth"
+          >
         </div>
-        <div v-else class="fs18px v100 flex-be sty">
+        <div
+          v-else
+          class="fs18px v100 flex-be sty"
+        >
           <span class="posi">现居城市</span>
-          <p @click="popupVisible = true " class="rightSty">未设置</p>
-          <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
+          <p
+            @click="popupVisible = true "
+            class="rightSty"
+          >未设置</p>
+          <img
+            src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
+            alt=""
+            class="imgrigth"
+          >
         </div>
       </div>
       <div class="inner layout">
-        <div v-if="wechatAccount" class="fs18px v100 flex-be sty">
+        <div
+          v-if="wechatAccount"
+          class="fs18px v100 flex-be sty"
+        >
           <span class="posi">微信号</span>
           <span class="item-rigth-0">{{wechatAccount}}</span>
           <!-- <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth"> -->
         </div>
-        <div v-else @click="bangdingWechatId" class="fs18px v100 flex-be sty">
+        <div
+          v-else
+          @click="bangdingWechatId"
+          class="fs18px v100 flex-be sty"
+        >
           <span class="posi">微信号</span>
           <span class="item-rigth">未设置</span>
-          <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
+          <img
+            src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
+            alt=""
+            class="imgrigth"
+          >
         </div>
       </div>
     </div>
-    <mt-popup v-model="popupVisible" position="bottom" class="mint-popup-4">
+    <mt-popup
+      v-model="popupVisible"
+      position="bottom"
+      class="mint-popup-4"
+    >
       <div class="picker-toolbar">
-        <span class="mint-datetime-action mint-datetime-cancel" @click="cancleaddress">取消</span>
-        <span class="mint-datetime-action mint-datetime-confirm" @click="selectaddress">确定</span>
+        <span
+          class="mint-datetime-action mint-datetime-cancel"
+          @click="cancleaddress"
+        >取消</span>
+        <span
+          class="mint-datetime-action mint-datetime-confirm"
+          @click="selectaddress"
+        >确定</span>
       </div>
-      <mt-picker ref="address" :slots="addressSlots" @change="onMyAddressChange" :visible-item-count="5"></mt-picker>
+      <mt-picker
+        ref="address"
+        :slots="addressSlots"
+        @change="onMyAddressChange"
+        :visible-item-count="5"
+      ></mt-picker>
     </mt-popup>
   </div>
 </template>
@@ -127,6 +216,7 @@ export default {
       }
     },
     selectaddress() {
+      debugger
       this.popupVisible = false
       this.saveData.province = this.addressProvince
       this.saveData.city = this.addressCity

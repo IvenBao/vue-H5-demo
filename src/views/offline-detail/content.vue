@@ -1,15 +1,37 @@
 <template>
   <div class="big1">
     <div>
-      <video id="productVideo" ref="videoDetail" controls playsinline webkit-playsinline :src="productData.gallery" preload="auto" autoplay @click="make()" v-if="productData.themeType === 1" x5-video-player-type='h5'></video>
-      <img :src="productData.gallery" alt="" class="demoSty" v-else-if="productData.themeType === 0">
+      <!-- <video
+        id="productVideo"
+        ref="videoDetail"
+        controls
+        playsinline
+        webkit-playsinline
+        :src="productData.picUrl"
+        preload="auto"
+        autoplay
+        @click="make()"
+        v-if="productData.themeType === 1"
+        x5-video-player-type='h5'
+      ></video> -->
+      <img
+        :src="productData.picUrl"
+        alt=""
+        class="demoSty"
+      >
       <div class="content">
         <p class="titleSty">{{productData.name}}</p>
         <p class="contxt">{{productData.brief}}</p>
-        <img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181121/1b4c378527ba4df485193a05ee4f45d9.png" alt="">
+        <img
+          src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181121/1b4c378527ba4df485193a05ee4f45d9.png"
+          alt=""
+        >
         <div style="margin-top: 12px;">
-          <h4 class="timeSty">￥{{productData.retailPriceDesc}} <span class="original" v-show="productData.showPriceDesc">原价:￥{{productData.showPriceDesc}}</span> </h4>
-          <span class="personSty">已有{{productData.salesNumberDesc}}人报名</span>
+          <h4 class="timeSty">￥{{productData.retailPriceDesc}} <span
+              class="original"
+              v-show="productData.showPriceDesc"
+            >原价:￥{{productData.showPriceDesc}}</span> </h4>
+          <span class="personSty">{{productData.salesNumberDesc}}</span>
         </div>
       </div>
     </div>
@@ -18,7 +40,10 @@
         课程简介
       </h4>
     </div>
-    <div class="sale-letter richText" v-html="productData.detail"></div>
+    <div
+      class="sale-letter richText"
+      v-html="productData.detail"
+    ></div>
   </div>
 </template>
 <script>
