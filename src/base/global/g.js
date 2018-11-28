@@ -11,7 +11,7 @@ import {
 } from '@/api'
 import router from '@/router'
 // 微信公众号appid
-export const appId = '123456'
+export const appId = '123456' || 'wx2531d3b9ec1a6f93'
 // 当前环境变量 development/production
 export const env = process.env.NODE_ENV
 /**
@@ -43,6 +43,9 @@ export const login = (callbackUrl) => {
             }
             backUrl = backUrl.slice(0, -1)
             window.sessionStorage.setItem('backUrl', backUrl)
+            let reUri = window.document.createElement('a')
+            reUri.href = backUrl
+            window.sessionStorage.setItem('backVueRouter', `${reUri.pathname}${reUri.search}`)
             if (isWX) {
                 // 微信中登录
                 window.location.href = window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appId + '&redirect_uri=' + backUrl + '&response_type=code&scope=snsapi_base&state=test#wechat_redirect'

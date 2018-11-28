@@ -1,6 +1,7 @@
 import {
     axios
 } from 'base/request'
+import router from '@/router'
 export const xx = (data) => {
     return axios.request({
         url: '/api-member/saas/member/login',
@@ -27,8 +28,11 @@ export const weblogin = (data) => {
             url: `/api/auth/phone_code?phone=${data.phone}&code=${data.code}`,
             method: 'post'
         }).then(res => {
-            if (res.errno === 0) {
+            if (!res.errno) {
                 window.localStorage.setItem('token', res.data.userAccessToken.token)
+                router.push({
+                    path: window.sessionStorage.getItem('backVueRouter') || '/home'
+                })
             }
             resolve(res)
         }, rej => {
@@ -62,6 +66,14 @@ export const buy = (data) => {
 export const getPosterInfo = (data) => {
     return axios.request({
         url: `/api/user/shareImg/getShareImg?goodsId=${data.goodsId}`,
+        method: 'post'
+    })
+}
+
+// 获取报名信息
+export const getActivityFormByOrderSn = (data) => {
+    return axios.request({
+        url: `/api/user/getActivityFormByOrderSn?orderSn=${data.orderSn}`,
         method: 'post'
     })
 }

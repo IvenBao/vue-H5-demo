@@ -16,26 +16,38 @@
                 </div>
                 <div class="line Required">
                     <span>手机号</span>
-                    <input type="tel" v-model="fromData.phone" placeholder="请输入您的手机号" @input="fromVaildate('phone')" @paste="pasteData">
+                    <input type="tel" v-model="fromData.contactCellphone" placeholder="请输入您的手机号" @input="fromVaildate('phone')" @paste="pasteData">
                 </div>
                 <div class="line Required">
                     <span>姓名</span>
-                    <input type="text" v-model="fromData.name" placeholder="请输入您的姓名" @input="fromVaildate('name')" @paste="pasteData">
+                    <input type="text" v-model="fromData.applicantName" placeholder="请输入您的姓名" @input="fromVaildate('name')" @paste="pasteData">
                 </div>
                 <div class="line Required">
                     <span>身份证</span>
-                    <input type="text" v-model="fromData.IDcard" placeholder="请输入您的身份证号" @input="fromVaildate('IDcard')" @paste="pasteData">
+                    <input type="text" v-model="fromData.applicantIdcard" placeholder="请输入您的身份证号" @input="fromVaildate('IDcard')" @paste="pasteData">
                 </div>
                 <div class="line Required">
                     <span>微信</span>
                     <input type="text" v-model="fromData.WXcode" placeholder="请输入您的微信号" @input="fromVaildate('WXcode')" @paste="pasteData">
                 </div>
-                <div class="line">
+                <div class="line Required">
+                    <span>公司</span>
+                    <input type="text" v-model="fromData.company" placeholder="请输入您的公司" @input="fromVaildate('WXcode')" @paste="pasteData">
+                </div>
+                <div class="line Required">
+                    <span>品牌</span>
+                    <input type="text" v-model="fromData.brand" placeholder="请输入您的品牌" @input="fromVaildate('WXcode')" @paste="pasteData">
+                </div>
+                <div class="line Required">
+                    <span>职位</span>
+                    <input type="text" v-model="fromData.jobTitle" placeholder="请输入您的职位" @input="fromVaildate('WXcode')" @paste="pasteData">
+                </div>
+                <div class="line Required">
                     <span>性别</span>
-                    <radio v-model="fromData.sex" :options="['男', '女']" @click="fromVaildate('sex')">
+                    <radio v-model="fromData.gender" :options="[{label: '男', value: '0'}, {label: '女', value: '1'}]" @click="fromVaildate('sex')">
                     </radio>
                 </div>
-                <div class="line" @click="showAddress=true">
+                <div class="line Required" @click="showAddress=true">
                     <span>现居城市</span>
                     <p v-if="false" class="hasCity">
                         <i class="province">{{nowAddress.provinceString}}</i>
@@ -55,21 +67,26 @@
 <script>
 import { Radio } from 'mint-ui'
 import { XAddress, ChinaAddressV4Data, Value2nameFilter as value2name } from 'vux'
+import { getActivityFormByOrderSn } from '@/api'
 export default {
     data() {
         return {
+            orderSn: '', // 订单id
             active: false,
             sex: '',
             title: '', // x-address中必须甜的字段，没用也必须写，服了
             VUXaddressData: ChinaAddressV4Data,
             showAddress: false,
             fromData: {
-                phone: '',
-                name: '',
-                IDcard: '',
-                WXcode: '',
-                addressClass: '1',
-                sex: ''
+                contactCellphone: '', // 手机号码
+                applicantName: '', // 姓名
+                applicantIdcard: '', // 身份证
+                WXcode: '', // 微信code
+                addressClass: '1', // 上课地址id
+                gender: '', // 性别
+                company: '', // 公司
+                brand: '', // 品牌
+                jobTitle: '' // 职位
             }, // 提交的表单数据
             nowAddress: {
                 nowAddressArr: [],
@@ -83,15 +100,28 @@ export default {
             } // 现居地址的数据
         }
     },
-
     components: {
         Radio,
         XAddress
     },
-
     computed: {},
-
-    mounted() { },
+    beforeRouteEnter(to, from, next) {
+        if (to.query.orderSn) {
+            next()
+        } else {
+            next({ name: 'home', replace: true })
+        }
+    },
+    mounted() {
+        this.orderSn = this.$route.query.orderSn
+        getActivityFormByOrderSn({
+            orderSn: this.orderSn
+        }).then(res => {
+            console.log(res)
+        }, rej => {
+            console.log(rej)
+        })
+    },
 
     methods: {
         /**
