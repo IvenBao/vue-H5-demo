@@ -4,21 +4,24 @@
     <div class="sty">
       <p class="title"> <span>课程目录</span> <span>共{{doemData.num}}节课</span></p>
     </div>
-    <ul v-if="doemData.iffree == 0">
-      <li v-for="item in doemData.list" :key="item.id" @click="play(item.id,item.isFree)">
-        <span>{{item.title}}</span>
-        <div>
-          <div class="img1" :class="{img3:changeRed == item.id}"></div>
-        </div>
-      </li>
-    </ul>
-    <ul v-else>
-      <li v-for="item in doemData.list" :key="item.id" @click="play(item.id,item.isFree)">
-        <span>{{item.title}}</span>
-        <span v-if="item.isFree == 0 && dj != 1">试听</span>
+    <ul>
+      <li
+        v-for="item in list"
+        :key="item.id"
+        @click="play(item.id,item.isFree)"
+      >
+        <span>{{item.name}}</span>
+        <span v-if="item.isFree && !doemData.isplay">试听</span>
         <div v-else>
-          <div class="img1" v-if="dj == 1" :class="{img3:changeRed == item.id}"></div>
-          <div class="img2" v-else></div>
+          <div
+            class="img1"
+            v-if="doemData.isplay"
+            :class="{img3:changeRed == item.id}"
+          ></div>
+          <div
+            class="img2"
+            v-else
+          ></div>
         </div>
       </li>
     </ul>
@@ -26,11 +29,14 @@
 </template>
 
 <script>
+import { getCourseAudioList } from '@/api'
+import { tips } from 'base/global/g'
 export default {
   data() {
     return {
       changeRed: 0,
-      dj: 1
+      list: [],
+      productId: ''
     }
   },
 
@@ -38,26 +44,73 @@ export default {
 
   computed: {},
 
-  mounted() { },
+  mounted() {
+    let params = { productId: 0, ...this.$route.params, ...this.$route.query }
+    this.productId = Number(params.productId)
+    getCourseAudioList(this.productId).then(res => {
+      this.list = res.data
+    })
+  },
 
   methods: {
     play(id, isFree) {
-      if (this.doemData.iffree === 0) {
+      // if (this.doemData.isFree) {
+      //   this.changeRed = id
+      //   // alert('直接听')
+      // } else if (!this.doemData.isVipFree) {
+      //   tips({
+      //     message: '请单独购买该课程'
+      //   })
+      // } else {
+      //   if (this.dj === 1) {
+      //     this.changeRed = id // tab切换效果
+      //   } else if (isFree) {
+      //     alert('可以试听')
+      //   } else if (this.dj !== 1) {
+      //     tips({
+      //       message: '请先去开通会员'
+      //     })
+      //   }
+      // }
+      if (this.doemData.isplay) { // 判断是否能听
         this.changeRed = id
-        // alert('直接听')
       } else {
-        if (this.dj === 1) {
-          this.changeRed = id // tab切换效果
-        } else if (isFree === 0) {
-          alert('可以试听')
-        } else if (this.dj !== 1) {
-          alert('傻屌！不是会员还想听课')
+        if (this.doemData.isooo === 0) { // 判断是否绑定手机
+          if (isFree) {
+            alert('可以试听')
+          } else {
+            tips({
+              message: '请先去绑定手机号'
+            }).then(res => {
+              this.$router.push({ name: 'bindMobile' })
+            })
+          }
+        } else if (this.doemData.isooo === 1) { // 判断是否开通会员
+          if (isFree) {
+            alert('可以试听')
+          } else {
+            tips({
+              message: '请先去开通会员'
+            }).then(res => {
+              this.$router.push({ name: 'dredge', query: { productId: this.productId } })
+            })
+          }
+        } else if (this.doemData.isooo === 2) { // 判断是否购买
+          if (isFree) {
+            alert('可以试听')
+          } else {
+            tips({
+              message: '请单独购买该课程'
+            }).then(res => {
+              alert('买买买')
+            })
+          }
         }
       }
     }
   },
 
-  props: ['doemData']
+  props: ['doemData', 'dj']
 }
 
 </script>

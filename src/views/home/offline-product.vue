@@ -23,14 +23,7 @@
             <p class="sty">
               ￥<span>{{item.showPriceDesc}}</span>
             </p>
-            <span
-              class="price"
-              v-if="item.isOnlinePay"
-            >报名</span>
-            <span
-              class="price"
-              v-else
-            >咨询</span>
+            <span class="price">报名</span>
           </div>
         </div>
       </li>
@@ -65,10 +58,7 @@ export default {
       pageSize: 20
     }
     getOfflineActivityThemeList(o).then(res => {
-      this.productList = res.data.map(itme => {
-        itme.isOnlinePay = false
-        return itme
-      })
+      this.productList = res.data
     })
   },
   props: ['isok'],

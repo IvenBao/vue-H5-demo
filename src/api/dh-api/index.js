@@ -15,7 +15,7 @@ export const getOfflineActivityThemeList = (data) => {
 // 获取线下活动主题详情
 export const getActivityProductDetailById = (data) => {
     return axios.request({
-        url: '/getActivityProductDetailById',
+        url: '/api/auth/activityProduct/getActivityProductDetailById',
         method: 'post',
         data: data
 
@@ -33,11 +33,13 @@ export const getCourseProductList = (data) => {
 }
 
 // 获取线上课程详情
-export const getCourseProductDetailById = (data) => {
+export const getCourseProductDetailById = (id) => {
     return axios.request({
-        url: '/getCourseProductDetailById',
+        url: '/api/auth/courseProduct/getCourseProductDetailById',
         method: 'post',
-        data: data
+        data: {
+            id
+        }
 
     })
 }
@@ -55,12 +57,12 @@ export const getBannerList = (data) => {
 }
 
 // 获取线上课程音频列表
-export const getCourseAudioList = (data) => {
+export const getCourseAudioList = (courseId) => {
     return axios.request({
-        url: 'api/auth/getCourseAudioList',
+        url: '/api/auth/courseAudio/getCourseAudioList',
         method: 'post',
         data: {
-            ...data
+            courseId
         }
     })
 }

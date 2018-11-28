@@ -32,11 +32,11 @@
             </p>
             <span
               class="price"
-              v-if="isok == 0"
+              v-if="!productList.isVipFree"
             >会员免费</span>
             <span
               class="price"
-              v-else-if="isok == 1"
+              v-else-if="productList.isVipFree"
             >立即学习</span>
           </div>
         </div>
@@ -59,24 +59,24 @@ export default {
           'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180917/7373c0c6badb448890338f796394a0be.png'
       },
       productList: [
-        {
-          brief: '按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店',
-          name: '爱是飞洒撒旦撒',
-          listenCountDesc: '157万',
-          id: 1
-        },
-        {
-          brief: '按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店',
-          name: '爱是飞洒撒旦撒',
-          listenCountDesc: '157万',
-          id: 2
-        },
-        {
-          brief: '按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店',
-          name: '爱是飞洒撒旦撒',
-          listenCountDesc: '157万',
-          id: 3
-        }
+        // {
+        //   brief: '按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店',
+        //   name: '爱是飞洒撒旦撒',
+        //   listenCountDesc: '157万',
+        //   id: 1
+        // },
+        // {
+        //   brief: '按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店',
+        //   name: '爱是飞洒撒旦撒',
+        //   listenCountDesc: '157万',
+        //   id: 2
+        // },
+        // {
+        //   brief: '按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店',
+        //   name: '爱是飞洒撒旦撒',
+        //   listenCountDesc: '157万',
+        //   id: 3
+        // }
       ]
 
     }

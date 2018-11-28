@@ -3,49 +3,95 @@
     <div class="inner layout">
       <a href="/poster">
         <div class="fs18px v100 flex-be sty">
-          <img class="leftimg" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/b737523b5c624d13a3d7157269a4a119.png" alt="">
+          <img
+            class="leftimg"
+            src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/b737523b5c624d13a3d7157269a4a119.png"
+            alt=""
+          >
           <span class="posi">邀请好友来学习</span>
-          <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
+          <img
+            src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
+            alt=""
+            class="imgrigth"
+          >
         </div>
       </a>
     </div>
     <div class="inner layout borderSty">
       <a href="/order-list">
         <div class="fs18px v100 flex-be sty">
-          <img class="leftimg" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/52f9cbd04e47421d9996ced9882d30aa.png" alt="">
+          <img
+            class="leftimg"
+            src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/52f9cbd04e47421d9996ced9882d30aa.png"
+            alt=""
+          >
           <span class="posi">我的订单</span>
-          <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
+          <img
+            src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
+            alt=""
+            class="imgrigth"
+          >
         </div>
       </a>
     </div>
     <div class="inner layout borderSty">
       <router-link to="/invite">
         <div class="fs18px v100 flex-be sty">
-          <img class="leftimg" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/f2ba819fa0aa4f43b4993c2709fc3526.png" alt="">
+          <img
+            class="leftimg"
+            src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/f2ba819fa0aa4f43b4993c2709fc3526.png"
+            alt=""
+          >
           <span class="posi">我的邀请</span>
           <!-- <span class="item-rigth">{{minedata.bindCount}}人</span> -->
-          <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
+          <img
+            src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
+            alt=""
+            class="imgrigth"
+          >
         </div>
       </router-link>
     </div>
     <div class="inner layout borderSty">
       <router-link to="/mine-manage">
         <div class="fs18px v100 flex-be sty">
-          <img class="leftimg" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/7050ef793a6d446089cc9032300a3206.png" alt="">
+          <img
+            class="leftimg"
+            src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/7050ef793a6d446089cc9032300a3206.png"
+            alt=""
+          >
           <span class="posi">账户管理</span>
           <!-- <span class="item-rigth">{{minedata.userOrderCount}}</span> -->
-          <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
+          <img
+            src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
+            alt=""
+            class="imgrigth"
+          >
         </div>
       </router-link>
     </div>
-    <div class="inner layout top20" @click="confirm">
+    <div
+      class="inner layout top20"
+      @click="confirm"
+    >
       <div class="fs18px v100 flex-be sty">
-        <img class="leftimg" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/73c32aaba0ae4c588be1efb95754676b.png" alt="">
+        <img
+          class="leftimg"
+          src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/73c32aaba0ae4c588be1efb95754676b.png"
+          alt=""
+        >
         <span class="posi">我的客服</span>
         <!-- <span class="item-rigth">{{minedata.userOnlineOrderCount}}</span> -->
-        <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
+        <img
+          src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
+          alt=""
+          class="imgrigth"
+        >
       </div>
     </div>
+    <p class="shangji">
+      <span>我的学伴:{{1341245212}}</span>
+    </p>
   </div>
 </template>
 <script>
@@ -87,6 +133,12 @@ a {
 }
 .content {
   padding-bottom: 140px;
+}
+.shangji {
+  font-size: 26px;
+  color: rgba(152, 152, 152, 1);
+  text-align: center;
+  margin-top: 26px;
 }
 .top20 {
   margin-top: 20px;
