@@ -1,7 +1,14 @@
 
 <template>
   <div>
-    <swiper :list="list" auto style="width:100%;margin:0 auto;" height="180px" dots-class="custom-bottom" dots-position="center"></swiper>
+    <swiper
+      :list="swiperVal"
+      auto
+      style="width:100%;margin:0 auto;"
+      height="180px"
+      dots-class="custom-bottom"
+      dots-position="center"
+    ></swiper>
   </div>
 </template>
 
@@ -10,18 +17,18 @@ import { Swiper } from 'vux'
 export default {
   data() {
     return {
-      list: [
-        {
-          url: 'javascript:',
-          img: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181121/c07eafaacac242febf990e02e87685d5.png'
-        }, {
-          url: 'javascript:',
-          img: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181121/c07eafaacac242febf990e02e87685d5.png'
-        }
-      ]
+      // list: [
+      //   {
+      //     url: 'javascript:',
+      //     img: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181121/c07eafaacac242febf990e02e87685d5.png'
+      //   }, {
+      //     url: 'javascript:',
+      //     img: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181121/c07eafaacac242febf990e02e87685d5.png'
+      //   }
+      // ]
     }
   },
-  props: [],
+  props: ['swiperVal'],
   mounted() {
     // console.log('swiper', this.swiper, this.pageType);
     // swiper

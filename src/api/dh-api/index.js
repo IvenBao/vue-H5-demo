@@ -5,7 +5,7 @@ import {
 // 获取线下活动主题列表
 export const getOfflineActivityThemeList = (data) => {
     return axios.request({
-        url: '/getActivityProductList',
+        url: '/api/auth/activityProduct/getActivityProductList',
         method: 'post',
         data: data
 
@@ -25,7 +25,7 @@ export const getActivityProductDetailById = (data) => {
 // 获取线上课程列表
 export const getCourseProductList = (data) => {
     return axios.request({
-        url: '/getCourseProductList',
+        url: '/api/auth/courseProduct/getCourseProductList',
         method: 'post',
         data: data
 
@@ -45,7 +45,7 @@ export const getCourseProductDetailById = (data) => {
 // 首页－获取banner
 export const getBannerList = (data) => {
     return axios.request({
-        url: '/getBannerList',
+        url: '/api/auth/banner/getBannerList',
         method: 'post',
         data: {
             portType: 1,
@@ -57,7 +57,7 @@ export const getBannerList = (data) => {
 // 获取线上课程音频列表
 export const getCourseAudioList = (data) => {
     return axios.request({
-        url: '/getCourseAudioList',
+        url: 'api/auth/getCourseAudioList',
         method: 'post',
         data: {
             ...data

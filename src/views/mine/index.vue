@@ -1,9 +1,10 @@
 <template>
   <div class="pad64px">
     <mine-header :minedata="mineData"></mine-header>
-    <me-mber :isok=ok></me-mber>
+    <me-mber :isok='ok'></me-mber>
     <mine-content :minedata="mineData"></mine-content>
     <mine-footer></mine-footer>
+    <ti-shi v-show="show"></ti-shi>
   </div>
 </template>
 <script>
@@ -11,6 +12,7 @@ import MineHeader from '@/views/mine/mine-header.vue'
 import MineContent from '@/views/mine/mine-content.vue'
 import MineFooter from '@/views/mine/footer-tab.vue'
 import MeMber from '@/views/home/member.vue'
+import TiShi from '@/views/mine/tishi.vue'
 import { getmineData } from '@/api'
 export default {
   data() {
@@ -23,14 +25,16 @@ export default {
         // registerMobile: '13866365214'
         memberLevel: 99
       },
-      ok: ''
+      ok: '',
+      show: false
     }
   },
   components: {
     MineHeader,
     MineContent,
     MineFooter,
-    MeMber
+    MeMber,
+    TiShi
   },
   // beforeRouteEnter(to, from, next) {
   //   if (window.localStorage.getItem('gm-token')) {

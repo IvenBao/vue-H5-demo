@@ -1,7 +1,10 @@
 <!-- 首页 -->
 <template>
   <div class="bigbox">
-    <swiper-comm :swiperVal="bannerData" :swiperType="1"></swiper-comm>
+    <swiper-comm
+      :swiperVal="bannerData"
+      :swiperType="1"
+    ></swiper-comm>
     <me-mber :isok="ok"></me-mber>
     <product :isok='ok'></product>
     <online-learning :isok='ok'></online-learning>
@@ -25,8 +28,8 @@ export default {
     return {
       attentionShow: true,
       show: false,
-      ok: '',
-      bannerData: {},
+      ok: 1,
+      bannerData: [],
       portType: {
         portType: 1
       }
@@ -47,17 +50,20 @@ export default {
 
   mounted() {
     getBannerList(this.portType).then(res => {
-      this.bannerData = res.data
+      this.bannerData = res.data.map(item => {
+        item.img = item.imageUrl
+        item.url = item.hrefUrl
+        return item
+      })
+      console.log(this.bannerData)
     })
     getmineData().then(res => {
-      res.data.memberLevel = 1
+      // res.data.memberLevel = 1
       this.ok = res.data.memberLevel
     })
   },
   methods: {
-    isok(isok) {
-      this.ok = isok
-    }
+
   }
 }
 </script>

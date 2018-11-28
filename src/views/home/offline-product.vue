@@ -1,19 +1,36 @@
 <template>
   <div class="product">
     <!-- <ly-line v-show="productList.length > 0"></ly-line> -->
-    <head-line :headTitle="headTitle" v-show="productList.length > 0"></head-line>
+    <head-line
+      :headTitle="headTitle"
+      v-show="productList.length > 0"
+    ></head-line>
     <ul>
-      <li class="flex-row flex-st" v-for="item in productList" :key="item.id" @click="getProductById(item.id)">
-        <img :src="item.imgUrl" alt="" />
+      <li
+        class="flex-row flex-st"
+        v-for="item in productList"
+        :key="item.id"
+        @click="getProductById(item.id)"
+      >
+        <img
+          :src="item.picUrl"
+          alt=""
+        />
         <div class="left flex-col">
-          <h3 class="productName color36">{{item.themeName}}</h3>
-          <p class=" color97 contentText">{{item.contentText}}</p>
+          <h3 class="productName color36">{{item.name}}</h3>
+          <p class=" color97 contentText">{{item.brief}}</p>
           <div class=" color97 position">
             <p class="sty">
-              ￥<span>{{item.priceDesc}}</span>
+              ￥<span>{{item.showPriceDesc}}</span>
             </p>
-            <span class="price">报名</span>
-            <span class="price">咨询</span>
+            <span
+              class="price"
+              v-if="item.isOnlinePay"
+            >报名</span>
+            <span
+              class="price"
+              v-else
+            >咨询</span>
           </div>
         </div>
       </li>
@@ -35,9 +52,7 @@ export default {
           'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180917/7373c0c6badb448890338f796394a0be.png'
       },
       productList: [
-        {
-          id: 32
-        }
+
       ]
     }
   },
@@ -50,7 +65,10 @@ export default {
       pageSize: 20
     }
     getOfflineActivityThemeList(o).then(res => {
-      this.productList = res.data
+      this.productList = res.data.map(itme => {
+        itme.isOnlinePay = false
+        return itme
+      })
     })
   },
   props: ['isok'],

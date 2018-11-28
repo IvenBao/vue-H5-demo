@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="inner layout">
-      <a href="/letter-list">
+      <a href="/poster">
         <div class="fs18px v100 flex-be sty">
           <img class="leftimg" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/b737523b5c624d13a3d7157269a4a119.png" alt="">
           <span class="posi">邀请好友来学习</span>
