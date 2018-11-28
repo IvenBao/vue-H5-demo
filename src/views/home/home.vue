@@ -28,7 +28,7 @@ export default {
     return {
       attentionShow: true,
       show: false,
-      ok: 1,
+      ok: '',
       bannerData: [],
       portType: {
         portType: 1
@@ -59,7 +59,8 @@ export default {
     })
     getmineData().then(res => {
       // res.data.memberLevel = 1
-      this.ok = res.data.memberLevel
+      // res.data.isVIP = true
+      this.ok = res.data.isVIP
     })
   },
   methods: {

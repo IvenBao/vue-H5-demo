@@ -5,10 +5,9 @@ import {
 // 获取线下活动主题列表
 export const getOfflineActivityThemeList = (data) => {
     return axios.request({
-        url: '/api/auth/activityProduct/getActivityProductList',
+        url: `/api/auth/activityProduct/getActivityProductList?pageSize=${data.pageSize}&pageNum=${data.pageNum}`,
         method: 'post',
         data: data
-
     })
 }
 
@@ -25,7 +24,7 @@ export const getActivityProductDetailById = (data) => {
 // 获取线上课程列表
 export const getCourseProductList = (data) => {
     return axios.request({
-        url: '/api/auth/courseProduct/getCourseProductList',
+        url: `/api/auth/courseProduct/getCourseProductList?pageSize=${data.pageSize}&pageNum=${data.pageNum}`,
         method: 'post',
         data: data
 
@@ -70,7 +69,16 @@ export const getCourseAudioList = (courseId) => {
 // 我的 - 首页
 export const getmineData = (data) => {
     return axios.request({
-        url: '/qudao-member/saas/member/auth/getAllUserInfo',
+        url: '/api/user/user/getMyInfoById',
+        method: 'post',
+        data: data
+    })
+}
+
+// 我的 - 账户管理
+export const getUserInfoById = (data) => {
+    return axios.request({
+        url: '/api/user/user/getUserInfoById',
         method: 'post',
         data: data
     })

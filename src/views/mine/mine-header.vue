@@ -5,22 +5,37 @@
       <div class="header">
         <div class="header-content flex-st">
           <div class="avatar">
-            <img :src="minedata.logoUrl" alt="">
+            <img
+              :src="minedata.logoUrl"
+              alt=""
+            >
           </div>
           <div class="sty">
-            <div class="nickname" v-if="!minedata.realName">{{minedata.nickName}}<span :class="minedata.memberLevel == 99?'memberSty':'nomemberSty'"></span> </div>
-            <div class="nickname" v-else-if="minedata.realName">{{minedata.realName}}<span :class="minedata.memberLevel == 99?'memberSty':'nomemberSty'"></span></div>
-            <div class="users" v-if="minedata.memberLevel == 99">2018-12-22到期</div>
-            <div class="users" v-else>您暂未开通会员</div>
+            <div
+              class="nickname"
+              v-if="!minedata.realName"
+            >{{minedata.nickName}}<span :class="minedata.isVIP?'memberSty':'nomemberSty'"></span> </div>
+            <div
+              class="nickname"
+              v-else-if="minedata.realName"
+            >{{minedata.realName}}<span :class="minedata.isVIP?'memberSty':'nomemberSty'"></span></div>
+            <div
+              class="users"
+              v-if="minedata.isVIP"
+            >{{minedata.expiresTime}}到期</div>
+            <div
+              class="users"
+              v-else
+            >您暂未开通会员</div>
           </div>
         </div>
         <div class="content">
           <div class="indentNum">
-            <p>100</p>
+            <p>{{minedata.orderCount}}</p>
             <span>订单总数（个）</span>
           </div>
           <div class="inviteNum">
-            <p>100</p>
+            <p>{{minedata.referVIPCount}}</p>
             <span>邀请会员数（个）</span>
           </div>
         </div>
@@ -76,7 +91,6 @@ export default {
   p {
     color: rgba(54, 54, 54, 1);
     font-size: 52px;
-    font-weight: 600;
   }
   span {
     color: rgba(152, 152, 152, 1);
