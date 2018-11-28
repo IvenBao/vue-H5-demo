@@ -2,5 +2,5 @@ import {
     env
 } from './g'
 export default {
-    baseUrl: env === 'production' ? '/' : '/dev'
+    baseUrl: env === 'production' ? '' : '/dev'
 }
