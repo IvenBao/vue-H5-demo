@@ -14,7 +14,6 @@ import router from '@/router'
 export const appId = '123456' || 'wx2531d3b9ec1a6f93'
 // 当前环境变量 development/production
 export const env = process.env.NODE_ENV
-alert(env)
 /**
  * 登录方法
  * callbackUrl 登录成功后需要会跳的业务逻辑，默认从哪里来回哪里去
