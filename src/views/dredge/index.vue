@@ -3,17 +3,17 @@
     <div class="cardBox">
       <div
         class="card"
-        v-if="memberLevel == 99"
+        v-if="isVip"
       >
         <h4>会员用户</h4>
         <p>
           <img
-            :src="mineData.logoUrl"
+            :src="mineData.avatar"
             alt=""
           >
           <span>{{mineData.realName}}</span>
         </p>
-        <span class="textSty">有效期至 2020-01-01</span>
+        <span class="textSty">有效期至{{mineData.expiresTime}}</span>
       </div>
       <div
         class="card"
@@ -21,7 +21,10 @@
       >
         <h4>加入会员享会员专属课程</h4>
         <p>有效期 1年</p>
-        <span class="text">立即开通</span>
+        <span
+          class="text"
+          @click="playbuy"
+        >立即开通</span>
       </div>
     </div>
     <div class="money">
@@ -30,7 +33,7 @@
     </div>
     <div
       class="butSty"
-      v-if="memberLevel == 99"
+      v-if="isVip"
     >
       <div>
         <span>已开通</span>
@@ -49,7 +52,7 @@
         <span>立即付款学习</span>
       </div>
     </div>
-    <li-ne></li-ne>
+    <k-k></k-k>
     <div class="title">
       <h4>会员权益说明</h4>
       <div></div>
@@ -58,11 +61,11 @@
 </template>
 <script>
 import { getmineData, buy } from '@/api'
-import LiNe from '@/views/home/line.vue'
+import KK from '@/views/home/line.vue'
 export default {
   data() {
     return {
-      memberLevel: '',
+      isVip: '',
       mineData: {},
       postData: {
         productId: null,
@@ -72,8 +75,8 @@ export default {
   },
   mounted() {
     let params = { ...this.$route.params, ...this.$route.query }
-    this.memberLevel = params.memberLevel
-    if (this.memberLevel === 99) {
+    this.isVip = params.isVIP
+    if (this.isVip) {
       getmineData().then(res => {
         // res.data.memberLevel = 1;
         this.mineData = res.data
@@ -81,7 +84,7 @@ export default {
     }
   },
   components: {
-    LiNe
+    KK
   },
   methods: {
     playbuy() {
@@ -144,6 +147,7 @@ export default {
       font-size: 36px;
       color: #fff;
       text-align: center;
+      width: 100%;
       line-height: 88px;
     }
   }

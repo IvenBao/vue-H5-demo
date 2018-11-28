@@ -160,8 +160,9 @@
   </div>
 </template>
 <script>
-import { getUserBindWechat, getmineData, saveUserInfo } from '@/api'
+import { getUserInfoById, saveUserInfo } from '@/api'
 import { address } from '@/utils/address'
+import { XAddress, ChinaAddressV4Data, Value2nameFilter as value2name } from 'vux'
 export default {
   data() {
     return {
@@ -216,7 +217,6 @@ export default {
       }
     },
     selectaddress() {
-      debugger
       this.popupVisible = false
       this.saveData.province = this.addressProvince
       this.saveData.city = this.addressCity
@@ -225,7 +225,7 @@ export default {
           this.saveData.province = ''
           this.saveData.city = ''
         }
-        getmineData().then(res => {
+        getUserInfoById().then(res => {
           this.minedata = res.data
         })
       })
@@ -239,7 +239,7 @@ export default {
         if (res.code === 200) {
           this.saveData.gender = ''
         }
-        getmineData().then(res => {
+        getUserInfoById().then(res => {
           this.minedata = res.data
         })
       })
@@ -250,7 +250,7 @@ export default {
         if (res.code === 200) {
           this.genderData.gender = ''
         }
-        getmineData().then(res => {
+        getUserInfoById().then(res => {
           this.minedata = res.data
         })
       })
@@ -269,33 +269,15 @@ export default {
     }
   },
   mounted() {
-    getUserBindWechat().then(res => {
-      if (res.data && res.data.wechatAccount) {
-        this.wechatAccount = res.data.wechatAccount
-      }
-    })
-    getmineData().then(res => {
-      if (res) {
-        if (res.code === 200) {
-          this.minedata = res.data
-          this.select1 = this.minedata.gender
-          if (this.minedata.certificationStatus === 0) {
-            this.hint = '未实名'
-          } else if (this.minedata.certificationStatus === 1) {
-            this.hint = '审核中'
-          } else if (this.minedata.certificationStatus === 3) {
-            this.hint = '未通过'
-          }
-        } else {
-          // layer.open({
-          //   content: res.message,
-          //   skin: 'msg',
-          //   time: 2,
-          //   end: () => {
-          //   }
-          // })
-        }
-      }
+    // debugger
+    // getUserBindWechat().then(res => {
+    //   if (res.data && res.data.wechatAccount) {
+    //     this.wechatAccount = res.data.wechatAccount
+    //   }
+    // })
+    getUserInfoById().then(res => {
+      this.minedata = res.data
+      this.select1 = this.minedata.gender
     })
   },
   created() {
