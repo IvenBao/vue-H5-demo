@@ -5,7 +5,7 @@
     <top :doemData="doemData"></top>
     <course :doemData="doemData"></course>
     <synopsis :doemData="doemData.content"></synopsis>
-    <div class="but" @click="dredge">
+    <div class="but" @click="dredge" v-show="mineData.dj == 0">
       <span>立即加入会员</span>
     </div>
   </div>
@@ -16,33 +16,37 @@ import HerDer from '@/views/common/herder.vue'
 import Top from '@/views/online-detail/top.vue'
 import Course from '@/views/online-detail/course.vue'
 import Synopsis from '@/views/online-detail/synopsis.vue'
+// import { tips } from 'base/global/g.js'
 export default {
   data() {
     return {
+      mineData: {
+        dj: 1
+      },
       doemData: {
         title: '快速卖货的方法',
         text: '非常有效、百试不爽的快速卖货的方式发送到发送到防守打法',
         num: '10',
-        dj: 1,
+        iffree: 1,
         list: [
           {
             title: '01-人人可行的8条移动互联网创业之路',
-            id: 1,
+            id: 10,
             isFree: 0
           },
           {
             title: '02-人人可行的8条移动互联网创业之路',
-            id: 2,
+            id: 15,
             isFree: 1
           },
           {
             title: '03-人人可行的8条移动互联网创业之路',
-            id: 3,
+            id: 17,
             isFree: 0
           },
           {
             title: '04-人人可行的8条移动互联网创业之路',
-            id: 4,
+            id: 19,
             isFree: 1
           }
         ],
@@ -66,6 +70,9 @@ export default {
 
   methods: {
     dredge() {
+      // tips({
+      //   message: 'mmp'
+      // })
       this.$router.push({ name: 'dredge' })
     }
   }

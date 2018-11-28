@@ -4,7 +4,15 @@
     <div class="sty">
       <p class="title"> <span>课程目录</span> <span>共{{doemData.num}}节课</span></p>
     </div>
-    <ul>
+    <ul v-if="doemData.iffree == 0">
+      <li v-for="item in doemData.list" :key="item.id" @click="play(item.id,item.isFree)">
+        <span>{{item.title}}</span>
+        <div>
+          <div class="img1" :class="{img3:changeRed == item.id}"></div>
+        </div>
+      </li>
+    </ul>
+    <ul v-else>
       <li v-for="item in doemData.list" :key="item.id" @click="play(item.id,item.isFree)">
         <span>{{item.title}}</span>
         <span v-if="item.isFree == 0 && dj != 1">试听</span>
@@ -12,7 +20,6 @@
           <div class="img1" v-if="dj == 1" :class="{img3:changeRed == item.id}"></div>
           <div class="img2" v-else></div>
         </div>
-
       </li>
     </ul>
   </div>
@@ -23,7 +30,7 @@ export default {
   data() {
     return {
       changeRed: 0,
-      dj: 0
+      dj: 1
     }
   },
 
@@ -35,12 +42,17 @@ export default {
 
   methods: {
     play(id, isFree) {
-      if (this.dj === 1) {
-        this.changeRed = id // tab切换效果
-      } else if (isFree === 0) {
-        alert('可以试听')
-      } else if (this.dj !== 1) {
-        alert('傻屌！不是会员还想听课')
+      if (this.doemData.iffree === 0) {
+        this.changeRed = id
+        // alert('直接听')
+      } else {
+        if (this.dj === 1) {
+          this.changeRed = id // tab切换效果
+        } else if (isFree === 0) {
+          alert('可以试听')
+        } else if (this.dj !== 1) {
+          alert('傻屌！不是会员还想听课')
+        }
       }
     }
   },

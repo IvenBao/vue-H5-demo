@@ -8,7 +8,7 @@
         <p class="contxt">{{productData.brief}}</p>
         <img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181121/1b4c378527ba4df485193a05ee4f45d9.png" alt="">
         <div style="margin-top: 12px;">
-          <h4 class="timeSty">￥{{productData.retailPriceDesc}}</h4>
+          <h4 class="timeSty">￥{{productData.retailPriceDesc}} <span class="original" v-show="productData.showPriceDesc">原价:￥{{productData.showPriceDesc}}</span> </h4>
           <span class="personSty">已有{{productData.salesNumberDesc}}人报名</span>
         </div>
       </div>
@@ -67,6 +67,13 @@ export default {
   padding-bottom: 20px;
   margin-top: 20px;
   background-color: #fff;
+}
+.original {
+  font-size: 12px;
+  font-weight: 500;
+  margin-left: 10px;
+  color: rgba(152, 152, 152, 1);
+  text-decoration: line-through;
 }
 .tib {
   padding: 40px 0px 8px 0px;

@@ -2,20 +2,42 @@
 <template>
   <div class="product">
     <!-- <ly-line v-show="productList.length > 0"></ly-line> -->
-    <head-line :headTitle="headTitle" v-show="productList.length > 0"></head-line>
+    <head-line
+      :headTitle="headTitle"
+      v-show="productList.length > 0"
+    ></head-line>
     <ul>
-      <li class="flex-row flex-st" v-for="item in productList" :key="item.id" @click="getProductById(item.id)">
-        <img class="url" :src="item.picUrl" alt="" />
+      <li
+        class="flex-row flex-st"
+        v-for="item in productList"
+        :key="item.id"
+        @click="getProductById(item.id)"
+      >
+        <img
+          class="url"
+          :src="item.picUrl"
+          alt=""
+        />
         <div class="left flex-col">
           <h3 class="productName color36">{{item.name}}</h3>
           <p class=" color97 contentText">{{item.brief}}</p>
           <div class=" color97 position">
-            <img class="player" src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/f9f2a39d507e4055b9eaee0643d13ed6.png" alt="">
+            <img
+              class="player"
+              src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/f9f2a39d507e4055b9eaee0643d13ed6.png"
+              alt=""
+            >
             <p class="sty">
               <span>{{item.listenCountDesc}}</span>
             </p>
-            <span class="price">会员免费</span>
-            <span class="price">立即学习</span>
+            <span
+              class="price"
+              v-if="isok == 0"
+            >会员免费</span>
+            <span
+              class="price"
+              v-else-if="isok == 1"
+            >立即学习</span>
           </div>
         </div>
       </li>
@@ -182,8 +204,8 @@ export default {
     color: rgba(152, 152, 152, 1);
     display: inline-block;
     position: absolute;
-    top: 10px;
-    margin-left: 8px;
+    top: 13px;
+    margin-left: 4px;
   }
 }
 .player {

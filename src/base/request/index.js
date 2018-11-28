@@ -39,6 +39,7 @@ class HttpRequest {
                 data
             } = res
             console.log(data)
+            return data
             // alert('请求成功')
         }, error => {
             // alert('请求失败')
