@@ -1,18 +1,18 @@
 <!-- 吸底的mp3播放器组件 -->
 <template>
-    <div v-if="!close_player" id="mp3player" :class="{'hidePlayer': is_scollup}">
+    <div v-if="!$store.state.Player.close_player" id="mp3player" :class="{'hidePlayer': this.$store.state.Player.is_scollup}">
         <div class="player">
             <div class="close iconfont icon-chacopy" :class="{'isClose':playStatus}" @click="_close"></div>
-            <img class="mp3_img" :src="playerList[playingIndex].mp3Img" alt="">
+            <img class="mp3_img" :src="$store.state.Player.playerList[$store.state.Player.playingIndex].mp3Img" alt="" @click="doFunction">
             <div class="mp3_info" @click="doFunction">
-                <span class="title">快速卖货方法</span>
+                <span class="title">{{$store.state.Player.playerList[$store.state.Player.playingIndex].mp3Title}}</span>
                 <span class="time">
                     <em class="playing_time">{{playingTime}}</em> /
                     <em class="all_play_time">{{playerTime}}</em>
                 </span>
             </div>
             <div class="play_btn iconfont icon-bofangzanting" :class="{ 'icon-bofanging': playStatus}" @click="control_audio"></div>
-            <audio @canplay="ready" @error="error" @timeupdate="updateTime" controlos="controls" loop='false' :src="playerList[playingIndex].mp3Src" ref='audioPlayer'></audio>
+            <audio @canplay="ready" @error="error" @timeupdate="updateTime" controlos="controls" loop='false' :src="$store.state.Player.playerList[$store.state.Player.playingIndex].mp3Src" ref='audioPlayer'></audio>
         </div>
     </div>
 </template>
@@ -55,10 +55,10 @@ export default {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
             if (scrollTop > top) {
                 top = scrollTop
-                this.is_scollup = true
+                this.$store.state.Player.is_scollup = true
             } else {
                 top = scrollTop
-                this.is_scollup = false
+                this.$store.state.Player.is_scollup = false
             }
         },
         // 播放功能
@@ -72,9 +72,9 @@ export default {
         // 关闭播放器
         _close() {
             this._pause()
-            this.is_scollup = true
+            this.$store.state.Player.is_scollup = true
             setTimeout(() => {
-                this.close_player = true
+                this.$store.commit('closePlayer')
             }, 500)
         },
         // 开始播放
@@ -97,7 +97,7 @@ export default {
         },
         // 音频加载成功
         ready() {
-            if (this.close_player) {
+            if (this.$store.state.Player.close_player) {
                 return false
             }
             let audio = this.$refs.audioPlayer

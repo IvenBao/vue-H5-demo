@@ -1,7 +1,4 @@
-import {
-    env
-} from './g'
 export default {
     // eslint-disable-next-line
-    baseUrl: env == 'production' ? '' : ''
+    baseUrl: process.env.NODE_ENV == 'production' ? '' : '/dev'
 }
