@@ -1,140 +1,190 @@
 <!--  -->
 <template>
-    <div id="information">
-        <div class="form">
-            <h4>渠道革命</h4>
-            <form>
-                <div class="line Required">
-                    <span>上课城市</span>
-                    <select name="classAddress" v-model="fromData.addressClass" @change="addressClassCheck">
-                        <option value="1">－请选择－</option>
-                        <option value="2">上海</option>
-                        <option value="3">北京</option>
-                        <option value="4">杭州</option>
-                    </select>
-                    <em class="iconfont icon-jiantou"></em>
-                </div>
-                <div class="line Required">
-                    <span>手机号</span>
-                    <input type="tel" v-model="fromData.phone" placeholder="请输入您的手机号" @input="fromVaildate('phone')" @paste="pasteData">
-                </div>
-                <div class="line Required">
-                    <span>姓名</span>
-                    <input type="text" v-model="fromData.name" placeholder="请输入您的姓名" @input="fromVaildate('name')" @paste="pasteData">
-                </div>
-                <div class="line Required">
-                    <span>身份证</span>
-                    <input type="text" v-model="fromData.IDcard" placeholder="请输入您的身份证号" @input="fromVaildate('IDcard')" @paste="pasteData">
-                </div>
-                <div class="line Required">
-                    <span>微信</span>
-                    <input type="text" v-model="fromData.WXcode" placeholder="请输入您的微信号" @input="fromVaildate('WXcode')" @paste="pasteData">
-                </div>
-                <div class="line">
-                    <span>性别</span>
-                    <radio v-model="fromData.sex" :options="['男', '女']" @click="fromVaildate('sex')">
-                    </radio>
-                </div>
-                <div class="line" @click="showAddress=true">
-                    <span>现居城市</span>
-                    <p v-if="false" class="hasCity">
-                        <i class="province">{{nowAddress.provinceString}}</i>
-                        <i class="city">{{nowAddress.cityString}}</i>
-                        <i class="area">{{nowAddress.areaString}}</i>
-                    </p>
-                    <p v-else>{{nowAddress.nowAddressString || '请选择'}}</p>
-                    <em class="iconfont icon-jiantou"></em>
-                </div>
-                <x-address style="display:none;" :title='title' :hide-district='true' @on-shadow-change="onShadowChange" v-model="nowAddress.nowAddressArr" :list="VUXaddressData" :show.sync="showAddress" :raw-value="true"></x-address>
-            </form>
+  <div id="information">
+    <div class="form">
+      <h4>渠道革命</h4>
+      <form>
+        <div class="line Required">
+          <span>上课城市</span>
+          <select
+            name="classAddress"
+            v-model="fromData.addressClass"
+            @change="addressClassCheck"
+          >
+            <option value="1">－请选择－</option>
+            <option value="2">上海</option>
+            <option value="3">北京</option>
+            <option value="4">杭州</option>
+          </select>
+          <em class="iconfont icon-jiantou"></em>
         </div>
-        <div class="btn" :class='{active: active}'>提交报名</div>
+        <div class="line Required">
+          <span>手机号</span>
+          <input
+            type="tel"
+            v-model="fromData.phone"
+            placeholder="请输入您的手机号"
+            @input="fromVaildate('phone')"
+            @paste="pasteData"
+          >
+        </div>
+        <div class="line Required">
+          <span>姓名</span>
+          <input
+            type="text"
+            v-model="fromData.name"
+            placeholder="请输入您的姓名"
+            @input="fromVaildate('name')"
+            @paste="pasteData"
+          >
+        </div>
+        <div class="line Required">
+          <span>身份证</span>
+          <input
+            type="text"
+            v-model="fromData.IDcard"
+            placeholder="请输入您的身份证号"
+            @input="fromVaildate('IDcard')"
+            @paste="pasteData"
+          >
+        </div>
+        <div class="line Required">
+          <span>微信</span>
+          <input
+            type="text"
+            v-model="fromData.WXcode"
+            placeholder="请输入您的微信号"
+            @input="fromVaildate('WXcode')"
+            @paste="pasteData"
+          >
+        </div>
+        <div class="line">
+          <span>性别</span>
+          <radio
+            v-model="fromData.sex"
+            :options="['男', '女']"
+            @click="fromVaildate('sex')"
+          >
+          </radio>
+        </div>
+        <div
+          class="line"
+          @click="showAddress=true"
+        >
+          <span>现居城市</span>
+          <p
+            v-if="false"
+            class="hasCity"
+          >
+            <i class="province">{{nowAddress.provinceString}}</i>
+            <i class="city">{{nowAddress.cityString}}</i>
+            <i class="area">{{nowAddress.areaString}}</i>
+          </p>
+          <p v-else>{{nowAddress.nowAddressString || '请选择'}}</p>
+          <em class="iconfont icon-jiantou"></em>
+        </div>
+        <x-address
+          style="display:none;"
+          :title='title'
+          :hide-district='true'
+          @on-shadow-change="onShadowChange"
+          v-model="nowAddress.nowAddressArr"
+          :list="VUXaddressData"
+          :show.sync="showAddress"
+          :raw-value="true"
+        ></x-address>
+      </form>
     </div>
+    <div
+      class="btn"
+      :class='{active: active}'
+    >提交报名</div>
+  </div>
 </template>
 
 <script>
 import { Radio } from 'mint-ui'
 import { XAddress, ChinaAddressV4Data, Value2nameFilter as value2name } from 'vux'
 export default {
-    data() {
-        return {
-            active: false,
-            sex: '',
-            title: '', // x-address中必须甜的字段，没用也必须写，服了
-            VUXaddressData: ChinaAddressV4Data,
-            showAddress: false,
-            fromData: {
-                phone: '',
-                name: '',
-                IDcard: '',
-                WXcode: '',
-                addressClass: '1',
-                sex: ''
-            }, // 提交的表单数据
-            nowAddress: {
-                nowAddressArr: [],
-                nowAddressString: '',
-                provinceString: '',
-                cityString: '',
-                areaString: '',
-                provinceCode: '',
-                cityCode: '',
-                areaCode: ''
-            } // 现居地址的数据
-        }
-    },
-
-    components: {
-        Radio,
-        XAddress
-    },
-
-    computed: {},
-
-    mounted() { },
-
-    methods: {
-        /**
-         * start 现居地址逻辑方法
-         */
-        doShowAddress() {
-            this.showAddress = true
-        },
-        onShadowChange(ids, names) {
-            console.log(ids, names)
-            this.nowAddress.nowAddressString = this.getName(ids)
-        },
-        getName(value) {
-            return value2name(value, ChinaAddressV4Data)
-        },
-        /**
-         * end 现居地址逻辑方法
-         */
-        /**
-         * start 必填字段判断逻辑方法
-         * todo 需等后端联调时完善
-         */
-        addressClassCheck() {
-            console.log('select')
-        }, // 选择上课城市
-        fromVaildate(data) {
-            console.log(data)
-        },
-        pasteData() {
-            console.log('paste')
-        },
-        isSubmitFrom() {
-            if (this.active) {
-
-            } else {
-
-            }
-            return true
-        }
-        /**
-         * end 必填字段判断逻辑方法
-         */
+  data() {
+    return {
+      active: false,
+      sex: '',
+      title: '', // x-address中必须甜的字段，没用也必须写，服了
+      VUXaddressData: ChinaAddressV4Data,
+      showAddress: false,
+      fromData: {
+        phone: '',
+        name: '',
+        IDcard: '',
+        WXcode: '',
+        addressClass: '1',
+        sex: ''
+      }, // 提交的表单数据
+      nowAddress: {
+        nowAddressArr: [],
+        nowAddressString: '',
+        provinceString: '',
+        cityString: '',
+        areaString: '',
+        provinceCode: '',
+        cityCode: '',
+        areaCode: ''
+      } // 现居地址的数据
     }
+  },
+
+  components: {
+    Radio,
+    XAddress
+  },
+
+  computed: {},
+
+  mounted() { },
+
+  methods: {
+    /**
+     * start 现居地址逻辑方法
+     */
+    doShowAddress() {
+      this.showAddress = true
+    },
+    onShadowChange(ids, names) {
+      console.log(ids, names)
+      this.nowAddress.nowAddressString = this.getName(ids)
+    },
+    getName(value) {
+      return value2name(value, ChinaAddressV4Data)
+    },
+    /**
+     * end 现居地址逻辑方法
+     */
+    /**
+     * start 必填字段判断逻辑方法
+     * todo 需等后端联调时完善
+     */
+    addressClassCheck() {
+      console.log('select')
+    }, // 选择上课城市
+    fromVaildate(data) {
+      console.log(data)
+    },
+    pasteData() {
+      console.log('paste')
+    },
+    isSubmitFrom() {
+      if (this.active) {
+
+      } else {
+
+      }
+      return true
+    }
+    /**
+     * end 必填字段判断逻辑方法
+     */
+  }
 }
 
 </script>

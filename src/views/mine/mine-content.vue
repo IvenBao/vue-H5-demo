@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="inner layout">
-      <a href="/poster">
+      <router-link to="/poster#">
         <div class="fs18px v100 flex-be sty">
           <img
             class="leftimg"
@@ -15,7 +15,7 @@
             class="imgrigth"
           >
         </div>
-      </a>
+      </router-link>
     </div>
     <div class="inner layout borderSty">
       <a href="/order-list">

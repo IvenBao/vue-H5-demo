@@ -4,7 +4,7 @@
       <div class="fs18px v100 flex-be sty">
         <span class="posi">头像</span>
         <img
-          :src="minedata.logoUrl"
+          :src="minedata.avatar"
           alt=""
           class="imgurl"
         >
@@ -85,7 +85,7 @@
         <div
           v-if="minedata.city"
           class="fs18px v100 flex-be sty"
-          @click="popupVisible = true "
+          @click="popupVisible=true"
         >
           <span class="posi">现居城市</span>
           <span class="item-rigth">{{minedata.province}} {{minedata.city}}</span>
@@ -98,12 +98,10 @@
         <div
           v-else
           class="fs18px v100 flex-be sty"
+          @click="popupVisible=true"
         >
           <span class="posi">现居城市</span>
-          <p
-            @click="popupVisible = true "
-            class="rightSty"
-          >未设置</p>
+          <p class="rightSty">{{nowAddress.nowAddressString || '未设置'}} </p>
           <img
             src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
             alt=""
@@ -111,6 +109,17 @@
           >
         </div>
       </div>
+      <x-address
+        style="display:none;"
+        :title='title'
+        :hide-district='true'
+        @on-shadow-change="onShadowChange"
+        v-model="nowAddress.nowAddressArr"
+        :list="VUXaddressData"
+        :show.sync="popupVisible"
+        :raw-value="true"
+        @on-hide="updata"
+      ></x-address>
       <div class="inner layout">
         <div
           v-if="wechatAccount"
@@ -135,37 +144,16 @@
         </div>
       </div>
     </div>
-    <mt-popup
-      v-model="popupVisible"
-      position="bottom"
-      class="mint-popup-4"
-    >
-      <div class="picker-toolbar">
-        <span
-          class="mint-datetime-action mint-datetime-cancel"
-          @click="cancleaddress"
-        >取消</span>
-        <span
-          class="mint-datetime-action mint-datetime-confirm"
-          @click="selectaddress"
-        >确定</span>
-      </div>
-      <mt-picker
-        ref="address"
-        :slots="addressSlots"
-        @change="onMyAddressChange"
-        :visible-item-count="5"
-      ></mt-picker>
-    </mt-popup>
   </div>
 </template>
 <script>
 import { getUserInfoById, saveUserInfo } from '@/api'
-import { address } from '@/utils/address'
 import { XAddress, ChinaAddressV4Data, Value2nameFilter as value2name } from 'vux'
 export default {
   data() {
     return {
+      title: '',
+      VUXaddressData: ChinaAddressV4Data,
       minedata: {},
       wechatAccount: '',
       arr: [{ id: '0', name: '男' }, { id: '1', name: '女' }, { id: '3', name: '未设置', disabled: 'disabled' }],
@@ -183,55 +171,40 @@ export default {
       select1: '',
       gender: '',
       popupVisible: false,
-
-      addressSlots: [
-        {
-          flex: 1,
-          values: Object.keys(address),
-          className: 'slot1',
-          textAlign: 'center'
-        },
-        {
-          divider: true,
-          content: '-',
-          className: 'slot2'
-        },
-        {
-          flex: 1,
-          values: ['北京'],
-          className: 'slot3',
-          textAlign: 'center'
-        }
-      ]
+      nowAddress: {
+        nowAddressArr: [],
+        nowAddressString: '',
+        provinceString: '',
+        cityString: '',
+        areaString: '',
+        provinceCode: '',
+        cityCode: '',
+        areaCode: ''
+      }, // 现居地址的数据
+      postData: {
+        gender: '', // 性别
+        province: '', // 省
+        city: '' // 市
+      }
     }
   },
   methods: {
-    addressList() {
-      this.$router.push({ name: 'addressList' })
+    updata() {
+      console.log(this.nowAddress.nowAddressString)
     },
-    onMyAddressChange(picker, values) {
-      if (address[values[0]]) {
-        picker.setSlotValues(1, address[values[0]]) // Object.keys()会返回一个数组，当前省的数组
-        this.addressProvince = values[0]
-        this.addressCity = values[1]
-      }
+    onShadowChange(ids, names) {
+      console.log(names)
+      this.postData
+      this.nowAddress.nowAddressString = this.getName(ids)
+      // console.log(this.nowAddress.nowAddressString)
     },
-    selectaddress() {
-      this.popupVisible = false
-      this.saveData.province = this.addressProvince
-      this.saveData.city = this.addressCity
-      saveUserInfo(this.saveData).then(res => {
-        if (res.code === 200) {
-          this.saveData.province = ''
-          this.saveData.city = ''
-        }
-        getUserInfoById().then(res => {
-          this.minedata = res.data
-        })
-      })
+    getName(value) {
+      // console.log(value)
+      return value2name(value, ChinaAddressV4Data)
     },
-    cancleaddress() {
-      this.popupVisible = false
+    showaddress() {
+      this.popupVisible = true
+      // console.log(this.popupVisible)
     },
     chooseMedicine(id) {
       this.saveData.gender = id
@@ -275,13 +248,16 @@ export default {
     //     this.wechatAccount = res.data.wechatAccount
     //   }
     // })
-    getUserInfoById().then(res => {
-      this.minedata = res.data
-      this.select1 = this.minedata.gender
-    })
+    // getUserInfoById().then(res => {
+    //   this.minedata = res.data
+    //   this.select1 = this.minedata.gender
+    // })
   },
   created() {
     this.select = this.arr[2].id // 如果没有这句代码，select中初始化会是空白的，默认选中就无法实现
+  },
+  components: {
+    XAddress
   }
 }
 </script>

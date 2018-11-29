@@ -109,3 +109,13 @@ export const getOrderList = (data) => {
         data: data
     })
 }
+
+// 修改性别和现居地址
+export const changeGenderAndCityById = (data) => {
+    return axios.request({
+        url: `/api/user/user/changeGenderAndCityById?pageSize=${data.pageSize}&pageNum=${data.pageNum}`,
+        method: 'post',
+        data: data
+
+    })
+}
