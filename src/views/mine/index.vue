@@ -23,6 +23,7 @@ export default {
         // nickName: 'D_H',
         // xiaxianCount: 15,
         // registerMobile: '13866365214'
+        memberLevel: 99
       },
       ok: '',
       show: false
@@ -49,13 +50,13 @@ export default {
      */
 
     getmineData().then(res => {
-      // res.data.referrer = true
-      res.data.isVIP = true
-      res.data.nickname = '德玛西亚'
-      res.data.expiresTime = '2018-12-31'
-      this.mineData = res.data
-      this.ok = res.data.isVIP
-      console.log(this.ok)
+      if (res) {
+        console.log(res)
+        if (res.userVip) {
+          res.userVip.expiresAt = res.userVip.expiresAt.substring(0, 10)
+        }
+        this.mineData = res
+      }
     })
   }
 }

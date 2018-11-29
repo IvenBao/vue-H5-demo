@@ -5,8 +5,8 @@ import {
 // 获取线下活动主题列表
 export const getOfflineActivityThemeList = (data) => {
     return axios.request({
-        url: `/api/auth/activityProduct/getActivityProductList?pageSize=${data.pageSize}&pageNum=${data.pageNum}`,
-        method: 'post',
+        url: '/api/auth/activityProduct/getActivityProductList',
+        method: 'get',
         data: data
     })
 }
@@ -15,7 +15,7 @@ export const getOfflineActivityThemeList = (data) => {
 export const getActivityProductDetailById = (data) => {
     return axios.request({
         url: '/api/auth/activityProduct/getActivityProductDetailById',
-        method: 'post',
+        method: 'get',
         data: data
 
     })
@@ -24,10 +24,9 @@ export const getActivityProductDetailById = (data) => {
 // 获取线上课程列表
 export const getCourseProductList = (data) => {
     return axios.request({
-        url: `/api/auth/courseProduct/getCourseProductList?pageSize=${data.pageSize}&pageNum=${data.pageNum}`,
-        method: 'post',
+        url: '/api/auth/courseProduct/getCourseProductList',
+        method: 'get',
         data: data
-
     })
 }
 
@@ -35,11 +34,10 @@ export const getCourseProductList = (data) => {
 export const getCourseProductDetailById = (id) => {
     return axios.request({
         url: '/api/auth/courseProduct/getCourseProductDetailById',
-        method: 'post',
+        method: 'get',
         data: {
             id
         }
-
     })
 }
 
@@ -47,7 +45,7 @@ export const getCourseProductDetailById = (id) => {
 export const getBannerList = (data) => {
     return axios.request({
         url: '/api/auth/banner/getBannerList',
-        method: 'post',
+        method: 'get',
         data: {
             portType: 1,
             ...data
@@ -59,7 +57,7 @@ export const getBannerList = (data) => {
 export const getCourseAudioList = (courseId) => {
     return axios.request({
         url: '/api/auth/courseAudio/getCourseAudioList',
-        method: 'post',
+        method: 'get',
         data: {
             courseId
         }
@@ -70,7 +68,7 @@ export const getCourseAudioList = (courseId) => {
 export const getmineData = (data) => {
     return axios.request({
         url: '/api/user/user/getMyInfoById',
-        method: 'post',
+        method: 'get',
         data: data
     })
 }
@@ -79,7 +77,7 @@ export const getmineData = (data) => {
 export const getUserInfoById = (data) => {
     return axios.request({
         url: '/api/user/user/getUserInfoById',
-        method: 'post',
+        method: 'get',
         data: data
     })
 }
@@ -87,7 +85,7 @@ export const getUserInfoById = (data) => {
 export const browerCourse = (id) => {
     return axios.request({
         url: '/qudao-member/saas/classset/addClassSetBrowseCount',
-        method: 'post',
+        method: 'get',
         data: {
             classInfoId: id
         }
@@ -105,7 +103,7 @@ export const browerCourse = (id) => {
 export const getOrderList = (data) => {
     return axios.request({
         url: '/getOrderList',
-        method: 'post',
+        method: 'get',
         data: data
     })
 }
@@ -113,7 +111,7 @@ export const getOrderList = (data) => {
 // 修改性别和现居地址
 export const changeGenderAndCityById = (data) => {
     return axios.request({
-        url: `/api/user/user/changeGenderAndCityById?pageSize=${data.pageSize}&pageNum=${data.pageNum}`,
+        url: '/api/user/user/changeGenderAndCityById',
         method: 'post',
         data: data
 

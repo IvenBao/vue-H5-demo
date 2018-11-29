@@ -66,12 +66,8 @@ export default {
                 })
                 weblogin(this.loginInfo).then(res => {
                     Indicator.close()
-                    console.log(res)
-                    if (res.errno === 0) {
-                    }
                 }, rej => {
                     Indicator.close()
-                    console.log(rej)
                 })
             } else {
                 if (!this.loginInfo.phone) {

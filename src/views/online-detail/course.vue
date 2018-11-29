@@ -6,9 +6,9 @@
     </div>
     <ul>
       <li
-        v-for="item in list"
-        :key="item.id"
-        @click="play(item.id,item.isFree)"
+        v-for="(item, index) in list"
+        :key="index"
+        @click="play(item.id,item.isFree,item, index)"
       >
         <span>{{item.name}}</span>
         <span v-if="item.isFree && !doemData.isplay">试听</span>
@@ -53,7 +53,19 @@ export default {
   },
 
   methods: {
-    play(id, isFree) {
+    playPalyer(playerList, index) {
+      debugger
+      this.$store.commit('playPlayer', {
+        playerList: playerList,
+        playingIndex: 0
+      })
+    },
+    play(id, isFree, item, index) {
+      let playerList = [{
+        mp3Src: item.url, // mp3地址
+        mp3Img: item.picUrl || 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181126/cb72633a7fb74c2c8d0f110a2f68a3f6.png', // mp3封面图
+        mp3Title: item.name // mp3标题
+      }]
       // if (this.doemData.isFree) {
       //   this.changeRed = id
       //   // alert('直接听')
@@ -72,10 +84,11 @@ export default {
       //     })
       //   }
       // }
-      if (this.doemData.isplay) { // 判断是否能听
+      if (this.doemData.isListen === 1) { // 判断是否能听
         this.changeRed = id
+        this.playPalyer(playerList, index)
       } else {
-        if (this.doemData.isooo === 0) { // 判断是否绑定手机
+        if (this.doemData.errorType === 0) { // 判断是否绑定手机
           if (isFree) {
             alert('可以试听')
           } else {
@@ -85,7 +98,7 @@ export default {
               this.$router.push({ name: 'bindMobile' })
             })
           }
-        } else if (this.doemData.isooo === 1) { // 判断是否开通会员
+        } else if (this.doemData.errorType === 1) { // 判断是否开通会员
           if (isFree) {
             alert('可以试听')
           } else {
@@ -95,7 +108,7 @@ export default {
               this.$router.push({ name: 'dredge', query: { productId: this.productId } })
             })
           }
-        } else if (this.doemData.isooo === 2) { // 判断是否购买
+        } else if (this.doemData.errorType === 2) { // 判断是否购买
           if (isFree) {
             alert('可以试听')
           } else {

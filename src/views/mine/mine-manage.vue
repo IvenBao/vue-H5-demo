@@ -13,11 +13,11 @@
     <div class="line">
       <div class="inner layout">
         <div
-          v-if="minedata.registerMobile"
+          v-if="minedata.userInfo"
           class="fs18px v100 flex-be sty"
         >
           <span class="posi">手机号</span>
-          <span class="item-rigth-0">{{minedata.registerMobile}}</span>
+          <span class="item-rigth-0">{{minedata.userInfo.cellphone}}</span>
           <!-- <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth"> -->
         </div>
         <div
@@ -101,7 +101,7 @@
           @click="popupVisible=true"
         >
           <span class="posi">现居城市</span>
-          <p class="rightSty">{{nowAddress.nowAddressString || '未设置'}} </p>
+          <p class="rightSty">{{postData.province}} {{postData.city}} </p>
           <img
             src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
             alt=""
@@ -147,7 +147,7 @@
   </div>
 </template>
 <script>
-import { getUserInfoById, saveUserInfo } from '@/api'
+import { saveUserInfo } from '@/api'
 import { XAddress, ChinaAddressV4Data, Value2nameFilter as value2name } from 'vux'
 export default {
   data() {
@@ -190,11 +190,12 @@ export default {
   },
   methods: {
     updata() {
-      console.log(this.nowAddress.nowAddressString)
+      console.log(this.postData)
     },
     onShadowChange(ids, names) {
       console.log(names)
-      this.postData
+      this.postData.province = names[0]
+      this.postData.city = names[1]
       this.nowAddress.nowAddressString = this.getName(ids)
       // console.log(this.nowAddress.nowAddressString)
     },
@@ -202,19 +203,15 @@ export default {
       // console.log(value)
       return value2name(value, ChinaAddressV4Data)
     },
-    showaddress() {
-      this.popupVisible = true
-      // console.log(this.popupVisible)
-    },
     chooseMedicine(id) {
       this.saveData.gender = id
       saveUserInfo(this.saveData).then(res => {
         if (res.code === 200) {
           this.saveData.gender = ''
         }
-        getUserInfoById().then(res => {
-          this.minedata = res.data
-        })
+        // getmineData().then(res => {
+        //   this.minedata = res.data
+        // })
       })
     },
     chooseMedicine1(id) {
@@ -223,9 +220,9 @@ export default {
         if (res.code === 200) {
           this.genderData.gender = ''
         }
-        getUserInfoById().then(res => {
-          this.minedata = res.data
-        })
+        // getmineData().then(res => {
+        //   this.minedata = res.data
+        // })
       })
     },
     reminder() {
@@ -242,7 +239,6 @@ export default {
     }
   },
   mounted() {
-    // debugger
     // getUserBindWechat().then(res => {
     //   if (res.data && res.data.wechatAccount) {
     //     this.wechatAccount = res.data.wechatAccount
