@@ -15,7 +15,7 @@
 
 <script>
 // import { Indicator } from 'mint-ui';
-import { getBannerList, getmineData } from '@/api'
+import { getBannerList, getmineData,getAccessToken } from '@/api'
 import SwiperComm from '@/views/home/swiper-comm.vue'
 import FooterTab from '@/views/home/footer-tab.vue'
 import MeMber from '@/views/home/member.vue'
@@ -29,6 +29,7 @@ export default {
       attentionShow: true,
       show: false,
       ok: '',
+      isVip: false,
       bannerData: [],
       portType: {
         portType: 1
@@ -57,11 +58,16 @@ export default {
       })
       console.log(this.bannerData)
     })
-    getmineData().then(res => {
-      // res.data.memberLevel = 1
-      // res.data.isVIP = true
-      this.ok = res.data.isVIP
-    })
+    const accessToken = getAccessToken()
+    if(accessToken == undefined){
+      //未登录
+    }else{
+      getmineData().then(userDetail => {
+          console.log(userDetail);
+          this.isVip = userDetail.vip;
+      })
+    }
+    
   },
   methods: {
 
