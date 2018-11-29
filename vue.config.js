@@ -12,19 +12,19 @@ module.exports = {
     // webpack-dev-server 相关配置,它支持webPack-dev-server的所有选项
     devServer: {
         open: true,
-        host: 'paul.cn',
+        host: 'mall.xc2018.com.cn',
         port: 80,
         https: false,
         hotOnly: false,
         proxy: { // 设置代理
-            '/api': {
-                target: 'http://localhost:8080',
+            '/dev': {
+                target: 'http://192.168.0.160:8080',
                 // target: 'http://192.168.0.121:8080', // 陈 本地
                 ws: true,
                 changeOrigin: true,
-                // pathRewrite: {
-                //     '^/api': '/' // 需要rewrite重写的,
-                // }
+                pathRewrite: {
+                    '^/dev': '/' // 需要rewrite重写的,
+                }
             }
         }
     },

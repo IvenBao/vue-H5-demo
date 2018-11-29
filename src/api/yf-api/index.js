@@ -63,11 +63,21 @@ export const buy = (data) => {
         }
     })
 }
+// // 获取海报背景图
+// export const getPosterInfo = (data) => {
+//     return axios.request({
+//         url: `/api/user/shareImg/getShareImg?goodsId=${data.goodsId}`,
+//         method: 'post'
+//     })
+// }
 // 获取海报背景图
 export const getPosterInfo = (data) => {
     return axios.request({
-        url: `/api/user/shareImg/getShareImg?goodsId=${data.goodsId}`,
-        method: 'post'
+        url: `/api/user/shareImg/getShareImg`,
+        method: 'get',
+        data: {
+            ...data
+        }
     })
 }
 
