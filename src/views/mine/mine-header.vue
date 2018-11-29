@@ -5,13 +5,28 @@
       <div class="header">
         <div class="header-content flex-st">
           <div class="avatar">
-            <img :src="minedata.userInfo.avatar" alt="">
+            <img
+              :src="minedata.avatar"
+              alt=""
+            >
           </div>
           <div class="sty">
-            <div class="nickname" v-if="minedata.userInfo">{{minedata.userInfo.nickname}}<span :class="minedata.memberLevel == 99?'memberSty':'nomemberSty'"></span> </div>
-            <div class="nickname" v-else-if="minedata.realName">{{minedata.realName}}<span :class="minedata.memberLevel == 99?'memberSty':'nomemberSty'"></span></div>
-            <div class="users" v-if="minedata.vip">{{minedata.userVip.expiresAt}}到期</div>
-            <div class="users" v-else>您暂未开通会员</div>
+            <div
+              class="nickname"
+              v-if="minedata.nickname"
+            >{{minedata.nickname}}<span :class="minedata.isVIP?'memberSty':'nomemberSty'"></span> </div>
+            <div
+              class="nickname"
+              v-else-if="minedata.realName"
+            >{{minedata.realName}}<span :class="minedata.isVIP == 99?'memberSty':'nomemberSty'"></span></div>
+            <div
+              class="users"
+              v-if="minedata.vip"
+            >{{minedata.userVip.expiresAt}}到期</div>
+            <div
+              class="users"
+              v-else
+            >您暂未开通会员</div>
           </div>
         </div>
         <div class="content">
@@ -41,18 +56,6 @@ export default {
     }
   },
   methods: {
-    show() {
-      if (this.minedata.memberLevel === 2) {
-        this.superior = true
-        // getUserReferrerInfo().then(res => {
-        //   this.ReferrerData = res.data
-        // })
-      } else if (this.minedata.memberLevel === 99) {
-        this.$router.push({ name: 'invite' })
-      } else if (this.minedata.memberLevel === 1) {
-        this.$router.push({ name: 'real-name' })
-      }
-    },
     status(status) {
       this.superior = status
     }

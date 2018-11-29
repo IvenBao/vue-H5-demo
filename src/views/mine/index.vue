@@ -55,7 +55,8 @@ export default {
         if (res.userVip) {
           res.userVip.expiresAt = res.userVip.expiresAt.substring(0, 10)
         }
-        this.mineData = res
+        res.data.isVIP = true
+        this.mineData = res.data
       }
     })
   }

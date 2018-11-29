@@ -11,11 +11,11 @@
         @click="play(item.id,item.isFree,item, index)"
       >
         <span>{{item.name}}</span>
-        <span v-if="item.isFree && !doemData.isplay">试听</span>
+        <span v-if="item.isFree && !doemData.isListen">试听</span>
         <div v-else>
           <div
             class="img1"
-            v-if="doemData.isplay"
+            v-if="doemData.isListen"
             :class="{img3:changeRed == item.id}"
           ></div>
           <div
@@ -53,7 +53,7 @@ export default {
   },
 
   methods: {
-    playPalyer(playerList, index) {
+    playPalyers(playerList, index) {
       debugger
       this.$store.commit('playPlayer', {
         playerList: playerList,
@@ -86,7 +86,7 @@ export default {
       // }
       if (this.doemData.isListen === 1) { // 判断是否能听
         this.changeRed = id
-        this.playPalyer(playerList, index)
+        this.playPalyers(playerList, index)
       } else {
         if (this.doemData.errorType === 0) { // 判断是否绑定手机
           if (isFree) {

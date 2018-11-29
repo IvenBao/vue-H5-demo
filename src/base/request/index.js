@@ -132,6 +132,10 @@ class HttpRequest {
         options = Object.assign({
             method: 'post'
         }, options)
+        if (options.method === 'get' && options.data) {
+            options['params'] = options.data
+            delete options.data
+        }
         this.queue[options.url] = instance
         return instance(options)
     }

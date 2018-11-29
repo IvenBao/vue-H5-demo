@@ -13,11 +13,11 @@
     <div class="line">
       <div class="inner layout">
         <div
-          v-if="minedata.userInfo"
+          v-if="minedata.phone"
           class="fs18px v100 flex-be sty"
         >
           <span class="posi">手机号</span>
-          <span class="item-rigth-0">{{minedata.userInfo.cellphone}}</span>
+          <span class="item-rigth-0">{{minedata.phone}}</span>
           <!-- <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth"> -->
         </div>
         <div
@@ -88,7 +88,7 @@
           @click="popupVisible=true"
         >
           <span class="posi">现居城市</span>
-          <span class="item-rigth">{{minedata.province}} {{minedata.city}}</span>
+          <span class="item-rigth">{{minedata.city}}</span>
           <img
             src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
             alt=""
@@ -101,7 +101,7 @@
           @click="popupVisible=true"
         >
           <span class="posi">现居城市</span>
-          <p class="rightSty">{{postData.province}} {{postData.city}} </p>
+          <p class="rightSty">{{address || '未设置'}} </p>
           <img
             src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png"
             alt=""
@@ -118,7 +118,7 @@
         :list="VUXaddressData"
         :show.sync="popupVisible"
         :raw-value="true"
-        @on-hide="updata"
+        @on-hide='dada'
       ></x-address>
       <div class="inner layout">
         <div
@@ -147,19 +147,19 @@
   </div>
 </template>
 <script>
-import { saveUserInfo } from '@/api'
+import { changeGenderAndCityById, getUserInfoById } from '@/api'
 import { XAddress, ChinaAddressV4Data, Value2nameFilter as value2name } from 'vux'
 export default {
   data() {
     return {
       title: '',
       VUXaddressData: ChinaAddressV4Data,
-      minedata: {},
+      minedata: {
+      },
       wechatAccount: '',
       arr: [{ id: '0', name: '男' }, { id: '1', name: '女' }, { id: '3', name: '未设置', disabled: 'disabled' }],
       arr1: [{ id: '0', name: '男' }, { id: '1', name: '女' }],
-      saveData: {
-        province: '',
+      addressData: {
         city: '',
         gender: ''
       },
@@ -167,6 +167,7 @@ export default {
       genderData: {
         gender: ''
       },
+      address: '',
       select: '',
       select1: '',
       gender: '',
@@ -182,47 +183,53 @@ export default {
         areaCode: ''
       }, // 现居地址的数据
       postData: {
-        gender: '', // 性别
-        province: '', // 省
-        city: '' // 市
+
       }
     }
   },
   methods: {
-    updata() {
-      console.log(this.postData)
+    dada(value) {
+      if (value) {
+        this.postData.province = this.addressData.province
+        this.postData.city = this.addressData.city
+        this.address = this.nowAddress.nowAddressString
+        changeGenderAndCityById(this.postData).then(res => {
+          getUserInfoById().then(res => {
+            this.minedata = res.data
+          })
+        })
+      }
     },
     onShadowChange(ids, names) {
-      console.log(names)
-      this.postData.province = names[0]
-      this.postData.city = names[1]
+      this.addressData.province = names[0]
+      this.addressData.city = names[1]
       this.nowAddress.nowAddressString = this.getName(ids)
-      // console.log(this.nowAddress.nowAddressString)
     },
     getName(value) {
       // console.log(value)
       return value2name(value, ChinaAddressV4Data)
     },
+    showaddress() {
+      this.popupVisible = true
+    },
     chooseMedicine(id) {
-      this.saveData.gender = id
-      saveUserInfo(this.saveData).then(res => {
+      this.postData.gender = id
+      changeGenderAndCityById(this.postData).then(res => {
         if (res.code === 200) {
-          this.saveData.gender = ''
         }
-        // getmineData().then(res => {
-        //   this.minedata = res.data
-        // })
+        getUserInfoById().then(res => {
+          this.minedata = res.data
+        })
       })
     },
     chooseMedicine1(id) {
       this.genderData.gender = id
-      saveUserInfo(this.genderData).then(res => {
+      changeGenderAndCityById(this.genderData).then(res => {
         if (res.code === 200) {
-          this.genderData.gender = ''
         }
-        // getmineData().then(res => {
-        //   this.minedata = res.data
-        // })
+        getUserInfoById().then(res => {
+          this.minedata = res.data
+        })
       })
     },
     reminder() {
@@ -239,15 +246,16 @@ export default {
     }
   },
   mounted() {
-    // getUserBindWechat().then(res => {
-    //   if (res.data && res.data.wechatAccount) {
-    //     this.wechatAccount = res.data.wechatAccount
-    //   }
-    // })
-    // getUserInfoById().then(res => {
-    //   this.minedata = res.data
-    //   this.select1 = this.minedata.gender
-    // })
+    getUserInfoById().then(res => {
+      if (res.data.gender === '男') {
+        res.data.gender = 0
+      } else if (res.data.gender === '女') {
+        res.data.gender = 1
+      }
+      this.minedata = res.data
+      this.select1 = this.minedata.gender
+      console.log(this.minedata)
+    })
   },
   created() {
     this.select = this.arr[2].id // 如果没有这句代码，select中初始化会是空白的，默认选中就无法实现
