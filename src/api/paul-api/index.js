@@ -7,6 +7,19 @@ export const getAccessToken = () => {
     return accessToken
 }
 
+export const getAccessTokenByWxCode = (code) => {
+    return axios.request({
+        url: '/api/auth/wx/wx_code?code=' + code,
+        method: 'get'
+    }).then(res => {
+        if (!res.errno) {
+            window.localStorage.setItem('token', res.data.userAccessToken.token)
+            window.localStorage.setItem('access_token', res.data.userAccessToken)
+        }
+        return res
+    })
+}
+
 export const refreshToken = () => {
     return axios.request({
         url: 'getWXconfig',

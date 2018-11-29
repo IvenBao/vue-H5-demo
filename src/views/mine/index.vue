@@ -13,7 +13,7 @@ import MineContent from '@/views/mine/mine-content.vue'
 import MineFooter from '@/views/mine/footer-tab.vue'
 import MeMber from '@/views/home/member.vue'
 import TiShi from '@/views/mine/tishi.vue'
-import { getmineData } from '@/api'
+import { getmineData , getAccessTokenByWxCode } from '@/api'
 export default {
   data() {
     return {
@@ -48,16 +48,35 @@ export default {
     /**
      * 测试流程用代码，无用代码
      */
+    const code =  this.$route.query.code 
+    
 
-    getmineData().then(res => {
+    if(code == undefined){
+      getmineData().then(res => {
       if (res) {
         console.log(res) 
         if(res.userVip){
           res.userVip.expiresAt = res.userVip.expiresAt.substring(0,10)
         }
         this.mineData = res
-      }
-    })
+        }
+      })
+    }else{
+      console.log('code = ' + code);
+      getAccessTokenByWxCode(code).then(token=>{
+        console.log(token)
+        getmineData().then(res => {
+        if (res) {
+          console.log(res) 
+          if(res.userVip){
+            res.userVip.expiresAt = res.userVip.expiresAt.substring(0,10)
+          }
+          this.mineData = res
+          }
+        })
+      })
+    }
+    
   }
 }
 </script>
