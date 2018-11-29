@@ -5,7 +5,7 @@
         <div class="input_div phone">
             <div class="area_code">+86</div>
             <input type="tel" placeholder="请输入手机号" v-model="loginInfo.phone" @input="checkValue" @paste="pastePhone">
-            <div class="get_code">获取验证码</div>
+            <div class="get_code" @click="getCode">获取验证码</div>
         </div>
         <div class="input_div msg_code">
             <div class="area_code">验证码</div>
@@ -18,7 +18,7 @@
 <script>
 import { tips, WXAuthorize } from 'base/global/g'
 import { isWX, trimIn } from 'base/global/tools'
-import { weblogin } from '@/api'
+import { weblogin, sendCode } from '@/api'
 import {
     Indicator
 } from 'mint-ui'
@@ -98,7 +98,11 @@ export default {
         },
         // 获取二维码
         getCode() {
-
+            sendCode({
+                phone: this.loginInfo.phone
+            }).then(res => {
+                console.log(res)
+            })
         }
     }
 }

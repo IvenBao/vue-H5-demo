@@ -4,7 +4,7 @@
         <div class="form">
             <h4>渠道革命</h4>
             <form>
-                <div class="line Required">
+                <div class="line Required" :class='{"hide": !RequiredfromData.locations}'>
                     <span>上课城市</span>
                     <select name="classAddress" v-model="fromData.addressClass" @change="addressClassCheck">
                         <option value="1">－请选择－</option>
@@ -14,40 +14,40 @@
                     </select>
                     <em class="iconfont icon-jiantou"></em>
                 </div>
-                <div class="line Required">
+                <div class="line Required" :class='{"hide": !RequiredfromData.cellphone}'>
                     <span>手机号</span>
                     <input type="tel" v-model="fromData.contactCellphone" placeholder="请输入您的手机号" @input="fromVaildate('phone')" @paste="pasteData">
                 </div>
-                <div class="line Required">
+                <div class="line Required" :class='{"hide": !RequiredfromData.name}'>
                     <span>姓名</span>
                     <input type="text" v-model="fromData.applicantName" placeholder="请输入您的姓名" @input="fromVaildate('name')" @paste="pasteData">
                 </div>
-                <div class="line Required">
+                <div class="line Required" :class='{"hide": !RequiredfromData.idcard}'>
                     <span>身份证</span>
                     <input type="text" v-model="fromData.applicantIdcard" placeholder="请输入您的身份证号" @input="fromVaildate('IDcard')" @paste="pasteData">
                 </div>
-                <div class="line Required">
+                <div class="line Required" :class='{"hide": !RequiredfromData.WXcode}'>
                     <span>微信</span>
                     <input type="text" v-model="fromData.WXcode" placeholder="请输入您的微信号" @input="fromVaildate('WXcode')" @paste="pasteData">
                 </div>
-                <div class="line Required">
+                <div class="line Required" :class='{"hide": !RequiredfromData.company}'>
                     <span>公司</span>
                     <input type="text" v-model="fromData.company" placeholder="请输入您的公司" @input="fromVaildate('WXcode')" @paste="pasteData">
                 </div>
-                <div class="line Required">
+                <div class="line Required" :class='{"hide": !RequiredfromData.brand}'>
                     <span>品牌</span>
                     <input type="text" v-model="fromData.brand" placeholder="请输入您的品牌" @input="fromVaildate('WXcode')" @paste="pasteData">
                 </div>
-                <div class="line Required">
+                <div class="line Required" :class='{"hide": !RequiredfromData.jobTitle}'>
                     <span>职位</span>
                     <input type="text" v-model="fromData.jobTitle" placeholder="请输入您的职位" @input="fromVaildate('WXcode')" @paste="pasteData">
                 </div>
-                <div class="line Required">
+                <div class="line Required" :class='{"hide": !RequiredfromData.gender}'>
                     <span>性别</span>
                     <radio v-model="fromData.gender" :options="[{label: '男', value: '0'}, {label: '女', value: '1'}]" @click="fromVaildate('sex')">
                     </radio>
                 </div>
-                <div class="line Required" @click="showAddress=true">
+                <div class="line Required" @click="showAddress=true" :class='{"hide": !RequiredfromData.nowAddress}'>
                     <span>现居城市</span>
                     <p v-if="false" class="hasCity">
                         <i class="province">{{nowAddress.provinceString}}</i>
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { Radio } from 'mint-ui'
+import { Radio, Indicator } from 'mint-ui'
 import { XAddress, ChinaAddressV4Data, Value2nameFilter as value2name } from 'vux'
 import { getActivityFormByOrderSn } from '@/api'
 export default {
@@ -74,9 +74,21 @@ export default {
             orderSn: '', // 订单id
             active: false,
             sex: '',
-            title: '', // x-address中必须甜的字段，没用也必须写，服了
+            title: '', // x-address中必须填的字段，没用也必须写，服了
             VUXaddressData: ChinaAddressV4Data,
-            showAddress: false,
+            showAddress: false, // 地址选择框唤起与否
+            RequiredfromData: { // 判断表单中的字段是否必填
+                cellphone: false, // 手机号码
+                name: false, // 姓名
+                idcard: false, // 身份证
+                WXcode: false, // 微信code
+                addrClass: false, // 上课城市
+                gender: false, // 性别
+                company: false, // 公司
+                brand: false, // 品牌
+                jobTitle: false, // 职位
+                nowAddress: false // 现居城市
+            },
             fromData: {
                 contactCellphone: '', // 手机号码
                 applicantName: '', // 姓名
@@ -109,16 +121,27 @@ export default {
         if (to.query.orderSn) {
             next()
         } else {
+            // 如果没有传给我orderSn则跳转到首页
             next({ name: 'home', replace: true })
         }
     },
     mounted() {
         this.orderSn = this.$route.query.orderSn
+        Indicator.open({
+            text: '初始化中...',
+            spinnerType: 'double-bounce'
+        })
         getActivityFormByOrderSn({
             orderSn: this.orderSn
         }).then(res => {
+            Indicator.close()
             console.log(res)
+            // eslint-disable-next-line
+            let Required = eval('(' + res.data.appForm + ')')
+            this.RequiredfromData = Required
+            console.log(Required)
         }, rej => {
+            Indicator.close()
             console.log(rej)
         })
     },
@@ -131,7 +154,7 @@ export default {
             this.showAddress = true
         },
         onShadowChange(ids, names) {
-            console.log(ids, names)
+            // console.log(ids, names)
             this.nowAddress.nowAddressString = this.getName(ids)
         },
         getName(value) {
