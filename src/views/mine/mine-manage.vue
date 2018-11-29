@@ -13,11 +13,11 @@
     <div class="line">
       <div class="inner layout">
         <div
-          v-if="minedata.registerMobile"
+          v-if="minedata.userInfo"
           class="fs18px v100 flex-be sty"
         >
           <span class="posi">手机号</span>
-          <span class="item-rigth-0">{{minedata.registerMobile}}</span>
+          <span class="item-rigth-0">{{minedata.userInfo.cellphone}}</span>
           <!-- <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth"> -->
         </div>
         <div
@@ -160,9 +160,8 @@
   </div>
 </template>
 <script>
-import { getUserInfoById, saveUserInfo } from '@/api'
+import { getUserBindWechat, getmineData, saveUserInfo } from '@/api'
 import { address } from '@/utils/address'
-import { XAddress, ChinaAddressV4Data, Value2nameFilter as value2name } from 'vux'
 export default {
   data() {
     return {
@@ -217,6 +216,7 @@ export default {
       }
     },
     selectaddress() {
+      debugger
       this.popupVisible = false
       this.saveData.province = this.addressProvince
       this.saveData.city = this.addressCity
@@ -225,7 +225,7 @@ export default {
           this.saveData.province = ''
           this.saveData.city = ''
         }
-        getUserInfoById().then(res => {
+        getmineData().then(res => {
           this.minedata = res.data
         })
       })
@@ -239,7 +239,7 @@ export default {
         if (res.code === 200) {
           this.saveData.gender = ''
         }
-        getUserInfoById().then(res => {
+        getmineData().then(res => {
           this.minedata = res.data
         })
       })
@@ -250,7 +250,7 @@ export default {
         if (res.code === 200) {
           this.genderData.gender = ''
         }
-        getUserInfoById().then(res => {
+        getmineData().then(res => {
           this.minedata = res.data
         })
       })
@@ -269,15 +269,14 @@ export default {
     }
   },
   mounted() {
-    // debugger
     // getUserBindWechat().then(res => {
     //   if (res.data && res.data.wechatAccount) {
     //     this.wechatAccount = res.data.wechatAccount
     //   }
     // })
-    getUserInfoById().then(res => {
-      this.minedata = res.data
-      this.select1 = this.minedata.gender
+    getmineData().then(res => {
+      this.minedata = res
+      
     })
   },
   created() {

@@ -30,6 +30,7 @@ export const weblogin = (data) => {
         }).then(res => {
             if (!res.errno) {
                 window.localStorage.setItem('token', res.data.userAccessToken.token)
+                window.localStorage.setItem('access_token', res.data.userAccessToken)
                 router.push({
                     path: window.sessionStorage.getItem('backVueRouter') || '/home'
                 })
