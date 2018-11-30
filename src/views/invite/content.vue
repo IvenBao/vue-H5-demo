@@ -18,19 +18,28 @@
         type="tel"
         placeholder='请输入手机号'
         v-if="select == 1"
-        v-model="searchData.phone"
+        v-model="searchData.cellphone"
       >
       <input
         type="text"
         placeholder='请输入姓名'
         v-else-if="select == 2"
-        v-model="searchData.realName"
+        v-model="searchData.nickname"
       >
-      <span v-else-if="select == 3">
+      <span
+        v-else-if="select == 3"
+        style="margin-left:15px;"
+      >
         <datetime
-          v-model="minuteListValue"
+          v-model="dateData.startTime"
           format="YYYY-MM-DD"
-        >{{minuteListValue}}</datetime>
+          class="dateSty"
+        >{{dateData.startTime}}</datetime>
+        <datetime
+          v-model="dateData.endTime"
+          format="YYYY-MM-DD"
+          class="dateSty1"
+        >{{dateData.endTime}}</datetime>
       </span>
       <div
         class="but"
@@ -51,15 +60,15 @@
         >
           <div class="itme-l">
             <img
-              :src="itme.logoUrl"
+              :src="itme.avatar"
               alt=""
               class="img100"
             >
           </div>
           <div class="item-c flex-cl">
             <div>
-              <div class="fs16px">{{itme.realName||itme.nickName}}</div>
-              <div class="color666">{{itme.registerMobile}}</div>
+              <div class="fs16px">{{itme.nickname}}</div>
+              <div class="color666">{{itme.cellphone}}</div>
             </div>
           </div>
           <div class="item-r">
@@ -91,102 +100,33 @@ export default {
       searchBarFixed: false,
       pagedata: {
         pageNum: 1,
-        pageSize: 100
+        pageSize: 10
         // startTime:'2017-12-6 16:22:22',
         // endTime:'2018-12-6 16:22:22',
         // cellphone:15755029592,
         // nickname:'null'
       },
-      minuteListValue: '2018-10-10',
       select: '',
+      dateData: {
+        startTime: '开始时间',
+        endTime: '结束时间',
+        pageSize: 10,
+        pageNum: 1
+      },
       searchData: {
-        dateType: null,
-        phone: null,
-        realName: null,
+        cellphone: null,
+        nickname: null,
         pageSize: 10,
         pageNum: 1
       },
       invireData: [
-        {
-          logoUrl: '',
-          nickName: '王大娘',
-          registerMobile: '15755029598',
-          modifyTime: '2018-12-23 13:21:12'
-        },
-        {
-          logoUrl: '',
-          nickName: '王二娘',
-          registerMobile: '15755029598',
-          modifyTime: '2018-12-23 13:21:12'
-        },
-        {
-          logoUrl: '',
-          nickName: '王大娘',
-          registerMobile: '15755029598',
-          modifyTime: '2018-12-23 13:21:12'
-        },
-        {
-          logoUrl: '',
-          nickName: '王大娘',
-          registerMobile: '15755029598',
-          modifyTime: '2018-12-23 13:21:12'
-        },
-        {
-          logoUrl: '',
-          nickName: '王大娘',
-          registerMobile: '15755029598',
-          modifyTime: '2018-12-23 13:21:12'
-        },
-        {
-          logoUrl: '',
-          nickName: '王三娘',
-          registerMobile: '15755029598',
-          modifyTime: '2018-12-23 13:21:12'
-        },
-        {
-          logoUrl: '',
-          nickName: '王四娘',
-          registerMobile: '15755029598',
-          modifyTime: '2018-12-23 13:21:12'
-        },
-        {
-          logoUrl: '',
-          nickName: '王五娘',
-          registerMobile: '15755029598',
-          modifyTime: '2018-12-23 13:21:12'
-        },
-        {
-          logoUrl: '',
-          nickName: '王六娘',
-          registerMobile: '15755029598',
-          modifyTime: '2018-12-23 13:21:12'
-        },
-        {
-          logoUrl: '',
-          nickName: '王七娘',
-          registerMobile: '15755029598',
-          modifyTime: '2018-12-23 13:21:12'
-        },
-        {
-          logoUrl: '',
-          nickName: '王八娘',
-          registerMobile: '15755029598',
-          modifyTime: '2018-12-23 13:21:12'
-        }
       ],
-      arr: [{ id: '1', name: '手机号' }, { id: '2', name: '姓名' }, { id: '3', name: '日期' }]
+      arr: [{ id: '1', name: '手机号' }, { id: '2', name: '昵称' }, { id: '3', name: '日期' }]
     }
   },
-  // props: ['invireData'],
   mounted() {
-    // getMaidInfoList(this.pagedata.pageNum, this.pagedata.pageSize).then(res => {
-    //     this.invireData = res.data.maidInfoVoList
-    //     this.pagedata.pageNum++
-    //     console.log(this.pagedata.pageNum)
-    //     // console.log(this.invireData)
-    // })
     getUserListByReferUid(this.pagedata).then(res => {
-      console.log(res)
+      this.invireData = res.data
     })
     window.addEventListener('scroll', this.handleScroll)
   },
@@ -207,32 +147,21 @@ export default {
       this.$router.push({ name: 'mineOrder', query: { userId: id } })
     },
     submitData() {
-      //   let that = this;
-      if (this.select === 1) {
-        // let dd = /^[0-9]*[1-9][0-9]*$/;
-        // if(dd.test(that.searchData.phone)){
-        console.log(this.searchData)
-        this.searchData.pageNum = 1
-        document.documentElement.scrollTop = document.body.scrollTop = 0
-        // getMyUserList(this.searchData).then(res => {
-        //     this.listData = res.data
-        // })
-        this.searchData.realName = null
-        //   }else{
-        //       layer.open({
-        //         content: '手机号格式不正确',
-        //         skin: "msg",
-        //         time: 2,
-        //     });
-        //   }
-      } else if (this.select === 2) {
-        console.log(this.searchData)
-        this.searchData.pageNum = 1
-        document.documentElement.scrollTop = document.body.scrollTop = 0
-        // getMyUserList(this.searchData).then(res => {
-        //     this.listData = res.data
-        // })
-        this.searchData.phone = null
+      /* eslint-disable */
+      if (this.select == 1) {
+        getUserListByReferUid(this.searchData).then(res => {
+          this.invireData = res.data
+          this.searchData.cellphone = null
+        })
+      } else if (this.select == 2) {
+        getUserListByReferUid(this.searchData).then(res => {
+          this.invireData = res.data
+          this.searchData.nickname = null
+        })
+      } else if (this.select == 3) {
+        getUserListByReferUid(this.dateData).then(res => {
+          this.invireData = res.data
+        })
       }
     }
   },
@@ -249,6 +178,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.dateSty {
+  font-size: 30px;
+  text-decoration: none;
+  color: inherit;
+  color: #656565;
+  width: 150px;
+}
+.dateSty1 {
+  font-size: 30px;
+  text-decoration: none;
+  color: inherit;
+  color: #656565;
+  margin-left: 50px;
+}
 .selecss {
   height: 74px;
   font-size: 30px;
@@ -350,6 +293,8 @@ export default {
   line-height: 100px;
 }
 .ulList {
+  width: 100vw;
+  height: 100vh;
   padding: 32px 32px 0 32px;
   box-sizing: border-box;
   background-color: #ffffff;
@@ -362,9 +307,9 @@ export default {
   color: #979797;
   white-space: normal;
   text-overflow: ellipsis;
-  width: 480px;
+  width: 100%;
   overflow: hidden;
-  height: 96px;
+  height: 100%;
   line-height: 96px;
 }
 .itme {

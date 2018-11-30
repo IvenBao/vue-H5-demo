@@ -27,6 +27,21 @@
         v-else-if="select == 2"
         v-model="searchData.realName"
       >
+      <span
+        v-else-if="select == 3"
+        style="margin-left:15px;"
+      >
+        <datetime
+          v-model="dateData.startTime"
+          format="YYYY-MM-DD"
+          class="dateSty"
+        >{{dateData.startTime}}</datetime>
+        <datetime
+          v-model="dateData.endTime"
+          format="YYYY-MM-DD"
+          class="dateSty1"
+        >{{dateData.endTime}}</datetime>
+      </span>
       <div
         class="but"
         @click="submitData"
@@ -52,13 +67,13 @@
         </div>
         <div class="content">
           <img
-            :src="item.imgUrl"
+            :src="item.productPic"
             alt=""
           />
           <div class="rigth">
             <h3 class="productName">{{item.productName}}</h3>
             <p class="contentText">{{item.desc}}</p>
-            <span class="moneySty">￥{{item.totalFeeDesc}}</span>
+            <span class="moneySty">￥{{item.productPriceDesc}}</span>
           </div>
         </div>
       </li>
@@ -77,6 +92,7 @@
 
 <script>
 import { getOrderListByReferUid } from '@/api'
+import { Datetime } from 'vux'
 export default {
   data() {
     return {
@@ -86,72 +102,77 @@ export default {
           sellerLogo: '',
           createTime: '2018-12-23 13:21:12',
           desc: '人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进',
-          imgUrl: '',
+          productPic: '',
           productName: '渠道革命',
-          totalFeeDesc: '1980',
+          productPriceDesc: '1980',
           id: 1,
-          status: 1
+          orderStatusDesc: 1
         }, {
           sellerName: '德玛西亚',
           sellerLogo: '',
           createTime: '2018-12-23 13:21:12',
           desc: '人生大起大落完全了解进',
-          imgUrl: '',
+          productPic: '',
           productName: '渠道革命',
-          totalFeeDesc: '1980',
+          productPriceDesc: '1980',
           id: 2,
-          status: 2
+          orderStatusDesc: 2
         }, {
           sellerName: '德玛西亚',
           sellerLogo: '',
           createTime: '2018-12-23 13:21:12',
           desc: '人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进人生大起大落完全了解进',
-          imgUrl: '',
+          productPic: '',
           productName: '渠道革命',
-          totalFeeDesc: '1980',
+          productPriceDesc: '1980',
           id: 3,
-          status: 1
+          orderStatusDesc: 1
         }, {
           sellerName: '德玛西亚',
           sellerLogo: '',
           createTime: '2018-12-23 13:21:12',
           desc: '人生大起大落完全了解进',
-          imgUrl: '',
+          productPic: '',
           productName: '渠道革命',
-          totalFeeDesc: '1980',
+          productPriceDesc: '1980',
           id: 4,
-          status: 2
+          orderStatusDesc: 2
         }, {
           sellerName: '德玛西亚',
           sellerLogo: '',
           createTime: '2018-12-23 13:21:12',
           desc: '人生大起大落完全了解进',
-          imgUrl: '',
+          productPic: '',
           productName: '渠道革命',
-          totalFeeDesc: '1980',
+          productPriceDesc: '1980',
           id: 5,
-          status: 2
+          orderStatusDesc: 2
         }, {
           sellerName: '德玛西亚',
           sellerLogo: '',
           createTime: '2018-12-23 13:21:12',
           desc: '人生大起大落完全了解进',
-          imgUrl: '',
+          productPic: '',
           productName: '渠道革命',
-          totalFeeDesc: '1980',
+          productPriceDesc: '1980',
           id: 6,
-          status: 2
+          orderStatusDesc: 2
         }
       ],
       pagedata: {
         pageNum: 1,
         pageSize: 100
       },
-      arr: [{ id: '1', name: '手机号' }, { id: '2', name: '姓名' }],
+      arr: [{ id: '1', name: '手机号' }, { id: '2', name: '昵称' }, { id: '3', name: '日期' }],
+      dateData: {
+        startTime: '开始时间',
+        endTime: '结束时间',
+        pageSize: 10,
+        pageNum: 1
+      },
       searchData: {
-        dateType: null,
-        phone: null,
-        realName: null,
+        cellphone: null,
+        nickname: null,
         pageSize: 10,
         pageNum: 1
       },
@@ -160,13 +181,15 @@ export default {
     }
   },
 
-  components: {},
+  components: {
+    Datetime
+  },
 
   computed: {},
 
   mounted() {
     getOrderListByReferUid(this.pagedata).then(res => {
-      console.log(res)
+      this.invireData = res.data
     })
     window.addEventListener('scroll', this.handleScroll)
   },
@@ -182,32 +205,21 @@ export default {
       }
     },
     submitData() {
-      //   let that = this;
-      if (this.select === 1) {
-        // let dd = /^[0-9]*[1-9][0-9]*$/;
-        // if(dd.test(that.searchData.phone)){
-        console.log(this.searchData)
-        this.searchData.pageNum = 1
-        document.documentElement.scrollTop = document.body.scrollTop = 0
-        // getMyUserList(this.searchData).then(res => {
-        //     this.listData = res.data
-        // })
-        this.searchData.realName = null
-        //   }else{
-        //       layer.open({
-        //         content: '手机号格式不正确',
-        //         skin: "msg",
-        //         time: 2,
-        //     });
-        //   }
-      } else if (this.select === 2) {
-        console.log(this.searchData)
-        this.searchData.pageNum = 1
-        document.documentElement.scrollTop = document.body.scrollTop = 0
-        // getMyUserList(this.searchData).then(res => {
-        //     this.listData = res.data
-        // })
-        this.searchData.phone = null
+      /* eslint-disable */
+      if (this.select == 1) {
+        getUserListByReferUid(this.searchData).then(res => {
+          this.invireData = res.data
+          this.searchData.cellphone = null
+        })
+      } else if (this.select == 2) {
+        getUserListByReferUid(this.searchData).then(res => {
+          this.invireData = res.data
+          this.searchData.nickname = null
+        })
+      } else if (this.select == 3) {
+        getUserListByReferUid(this.dateData).then(res => {
+          this.invireData = res.data
+        })
       }
     }
   },
@@ -221,6 +233,20 @@ export default {
 
 </script>
 <style lang='scss' scoped>
+.dateSty {
+  font-size: 30px;
+  text-decoration: none;
+  color: inherit;
+  color: #656565;
+  width: 150px;
+}
+.dateSty1 {
+  font-size: 30px;
+  text-decoration: none;
+  color: inherit;
+  color: #656565;
+  margin-left: 50px;
+}
 .selecss {
   height: 74px;
   font-size: 30px;

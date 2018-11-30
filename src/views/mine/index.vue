@@ -55,8 +55,21 @@ export default {
         if (res.userVip) {
           res.userVip.expiresAt = res.userVip.expiresAt.substring(0, 10)
         }
-        res.data.isVIP = true
-        this.mineData = res.data
+        // res.data.isVIP = true
+        /* eslint-disable */
+        if (res.data.isVIP) {
+          var arr = []
+          var dd = ''
+          dd = res.data.expiresTime
+          arr = dd.split(" ")
+          res.data.expiresTime = arr[0]
+          this.ok = res.data.isVIP
+          this.mineData = res.data
+        } else {
+          this.ok = res.data.isVIP
+          this.mineData = res.data
+        }
+
       }
     })
   }

@@ -102,7 +102,7 @@ export const browerCourse = (id) => {
 // 我的 - 订单列表
 export const getOrderList = (data) => {
     return axios.request({
-        url: '/getOrderList',
+        url: '/api/user/order/getOrderList',
         method: 'get',
         data: data
     })
@@ -119,7 +119,7 @@ export const changeGenderAndCityById = (data) => {
 }
 
 // 修改性别和现居地址
-export const xiadan = (data) => {
+export const buyOrder = (data) => {
     return axios.request({
         url: '/api/user/order/buy',
         method: 'get',

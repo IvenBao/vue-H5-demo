@@ -11,7 +11,7 @@ import {
 } from '@/api'
 import router from '@/router'
 // 微信公众号appid
-export const appId = '123456' || 'wx2531d3b9ec1a6f93'
+export const appId = 'wxddeae171b97e3c19' || 'wx2531d3b9ec1a6f93'
 // 当前环境变量 development/production
 export const env = process.env.NODE_ENV
 /**

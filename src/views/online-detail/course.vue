@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { getCourseAudioList, xiadan, buy } from '@/api'
+import { getCourseAudioList, buyOrder, buy } from '@/api'
 import { openwechatpay } from 'base/global/pay'
 import { tips } from 'base/global/g'
 export default {
@@ -58,6 +58,36 @@ export default {
       this.$store.commit('playPlayer', {
         playerList: playerList,
         playingIndex: index
+      })
+    },
+    placeOrder() {
+      let postData = {
+        productId: this.productid,
+        productType: this.doemData.productType
+      }
+      buyOrder(postData).then(res => {
+        // eslint-disable-next-line
+        if (res.errno == 0) {
+          let data = {
+            orderSn: res.data.orderSn
+          }
+          buy(data).then(res => {
+            // eslint-disable-next-line
+            if (res.errno == 0) {
+              var config = {
+                'appId': res.data.appid,
+                'nonceStr': res.data.nonceStr,
+                'package': res.data.packageStr,
+                'paySign': res.data.paySign,
+                'signType': res.data.signType,
+                'timeStamp': res.data.timeStamp
+              }
+              openwechatpay(config, res => {
+                console.log(res)
+              })
+            }
+          })
+        }
       })
     },
     play(id, isFree, list, index) {
@@ -111,34 +141,7 @@ export default {
             tips({
               message: '请先购买课程'
             }).then(res => {
-              let postData = {
-                productId: this.productid,
-                productType: this.doemData.productType
-              }
-              xiadan(postData).then(res => {
-                // eslint-disable-next-line
-                if (res.errno == 0) {
-                  let data = {
-                    orderSn: res.data.orderSn
-                  }
-                  buy(data).then(res => {
-                    // eslint-disable-next-line
-                    if (res.errno == 0) {
-                      var config = {
-                        'appId': res.data.appid,
-                        'nonceStr': res.data.nonceStr,
-                        'package': res.data.packageStr,
-                        'paySign': res.data.paySign,
-                        'signType': res.data.signType,
-                        'timeStamp': res.data.timeStamp
-                      }
-                      openwechatpay(config, res => {
-                        console.log(res)
-                      })
-                    }
-                  })
-                }
-              })
+              this.placeOrder()
             })
           }
         }

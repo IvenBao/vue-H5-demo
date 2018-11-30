@@ -46,7 +46,6 @@
 </template>
 
 <script>
-import { getCourseProductList } from '@/api'
 import HeadLine from '@/views/home/headline.vue'
 export default {
   data() {
@@ -57,27 +56,7 @@ export default {
         type: 1,
         imgUrl:
           'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180917/7373c0c6badb448890338f796394a0be.png'
-      },
-      productList: [
-        // {
-        //   brief: '按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店',
-        //   name: '爱是飞洒撒旦撒',
-        //   listenCountDesc: '157万',
-        //   id: 1
-        // },
-        // {
-        //   brief: '按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店',
-        //   name: '爱是飞洒撒旦撒',
-        //   listenCountDesc: '157万',
-        //   id: 2
-        // },
-        // {
-        //   brief: '按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店按大萨达撒大赛的积极的奋斗覅国际饭店',
-        //   name: '爱是飞洒撒旦撒',
-        //   listenCountDesc: '157万',
-        //   id: 3
-        // }
-      ]
+      }
 
     }
   },
@@ -85,15 +64,8 @@ export default {
     HeadLine
   },
   mounted() {
-    let o = {
-      pageNum: 1,
-      pageSize: 20
-    }
-    getCourseProductList(o).then(res => {
-      this.productList = res.data
-    })
   },
-  props: ['isok'],
+  props: ['isok', 'productList'],
   methods: {
     getProductById(id) {
       this.$router.push({ name: 'online-detail', query: { productId: id } })

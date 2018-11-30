@@ -29,7 +29,7 @@ import Course from '@/views/online-detail/course.vue'
 import Synopsis from '@/views/online-detail/synopsis.vue'
 import { openwechatpay } from 'base/global/pay'
 // import { tips } from 'base/global/g.js'
-import { getCourseProductDetailById, xiadan, buy } from '@/api'
+import { getCourseProductDetailById, buyOrder, buy } from '@/api'
 export default {
   data() {
     return {
@@ -116,7 +116,7 @@ export default {
         let params = { productId: 0, ...this.$route.params, ...this.$route.query }
         postData.productId = Number(params.productId)
         postData.productType = this.doemData.productType
-        xiadan(postData).then(res => {
+        buyOrder(postData).then(res => {
           // eslint-disable-next-line
           if (res.errno == 0) {
             let data = {
