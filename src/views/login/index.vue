@@ -4,32 +4,36 @@
         <h4>登录</h4>
         <div class="input_div phone">
             <div class="area_code">+86</div>
-            <input type="tel" placeholder="请输入手机号" v-model="loginInfo.phone" @input="checkValue" @paste="pastePhone">
-            <div class="get_code">获取验证码</div>
+            <input type="tel" placeholder="请输入手机号" v-model="loginInfo.phone" @input="checkValue('phone')" @paste="pastePhone">
+            <div class="get_code" :class="{gray: grayGetCode}" @click="getCode">{{getCodeText}}</div>
         </div>
         <div class="input_div msg_code">
             <div class="area_code">验证码</div>
-            <input type="tel" placeholder="请输入手机号" v-model="loginInfo.code" @input="checkValue" @paste="pasteCode">
+            <input type="tel" placeholder="请输入验证码" v-model="loginInfo.code" @input="checkValue('code')" @paste="pasteCode">
         </div>
         <div class="bind" :class='{active: active}' @click="tologin">登录</div>
     </div>
 </template>
 
 <script>
-import { tips, WXAuthorize } from 'base/global/g'
+import { tips, WXAuthorize, countdown } from 'base/global/g'
 import { isWX, trimIn } from 'base/global/tools'
-import { weblogin } from '@/api'
+import { weblogin, sendCode, getAccessTokenByWxCode } from '@/api'
+import { testPhone } from 'base/vaildate'
 import {
     Indicator
 } from 'mint-ui'
 export default {
     data() {
         return {
+            grayGetCode: true, // 获取验证码按钮是否灰显
+            getCodeText: '获取验证码',
+            isGetCodeing: false, // 是否在获取验证码中 , 也就是是否倒计时结束
             loginInfo: {
-                phone: '18658859571',
-                code: '1234'
+                phone: '',
+                code: ''
             },
-            active: true // 登录按钮的样式
+            active: false // 登录按钮的样式
         }
     },
     components: {
@@ -46,9 +50,22 @@ export default {
             if (to.query.code) {
                 // todo
                 // 调用后端的接口去实现微信登录
+                getAccessTokenByWxCode({
+                    code: to.query.code
+                }).then(res => {
+                    if (res.errmsg) {
+                        tips({ message: res.errmsg }).then(() => {
+                            next({
+                                name: 'home'
+                            })
+                        })
+                    }
+                }, rej => {
+                    WXAuthorize(window.location.origin + to.path)
+                })
             } else {
                 // 去授权
-                WXAuthorize(window.location.origin + window.location.pathname)
+                WXAuthorize(window.location.origin + to.path)
             }
         } else {
             next()
@@ -66,8 +83,14 @@ export default {
                 })
                 weblogin(this.loginInfo).then(res => {
                     Indicator.close()
+                    tips({
+                        message: '登录成功'
+                    })
                 }, rej => {
                     Indicator.close()
+                    tips({
+                        message: '登录失败'
+                    })
                 })
             } else {
                 if (!this.loginInfo.phone) {
@@ -81,24 +104,64 @@ export default {
                 }
             }
         },
-        checkValue() {
-            this.loginInfo.phone = trimIn(this.loginInfo.phone)
-            this.$nextTick()
-            if (this.loginInfo.phone && this.loginInfo.code) {
-                this.active = true
+        loginStatus() {
+            this.active = !!(this.loginInfo.phone && testPhone(this.loginInfo.phone) && this.loginInfo.code)
+        },
+        checkValue(env) {
+            if (env == 'phone') {
+                this.loginInfo.phone = trimIn(this.loginInfo.phone)
+                this.$nextTick(() => {
+                    this.loginStatus()
+                    if (this.isGetCodeing) return
+                    this.grayGetCode = !testPhone(this.loginInfo.phone)
+                })
             } else {
-                this.active = false
+                this.$nextTick(() => {
+                    this.loginStatus()
+                })
             }
         },
         pastePhone() {
-
+            this.loginInfo.phone = trimIn(this.loginInfo.phone)
+            this.$nextTick(() => {
+                this.loginStatus()
+                if (!testPhone(this.loginInfo.phone)) {
+                    tips({
+                        message: '手机号格式不正确'
+                    })
+                    return false
+                }
+            })
         },
         pasteCode() {
-
+            this.$nextTick(() => {
+                this.loginStatus()
+            })
         },
         // 获取二维码
         getCode() {
-
+            if (this.grayGetCode) {
+                return false
+            }
+            this.isGetCodeing = true
+            this.grayGetCode = true
+            this.getCodeText = `59s后获取`
+            countdown(59, (time) => {
+                if (time > 0) {
+                    this.getCodeText = `${time}s后获取`
+                } else {
+                    this.getCodeText = `获取验证码`
+                    this.grayGetCode = false
+                    this.isGetCodeing = false
+                }
+            })
+            sendCode({
+                phone: this.loginInfo.phone
+            }).then(res => {
+                tips({
+                    message: res.errmsg || '获取验证码成功'
+                })
+            })
         }
     }
 }
@@ -159,6 +222,9 @@ export default {
       font-size: 28px;
       color: #f43231;
       line-height: 48px;
+    }
+    .gray {
+      color: #999999;
     }
   }
   .bind {

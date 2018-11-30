@@ -1,8 +1,8 @@
 <!-- 吸底的mp3播放器组件 -->
 <template>
-    <div v-if="!$store.state.Player.close_player" id="mp3player" :class="{'hidePlayer': this.$store.state.Player.is_scollup}">
+    <div v-if="!$store.state.Player.close_player" id="mp3player" :class="{'hidePlayer': $store.state.Player.is_scollup}">
         <div class="player">
-            <div class="close iconfont icon-chacopy" :class="{'isClose':playStatus}" @click="_close"></div>
+            <div class="close iconfont icon-chacopy" :class="{'isClose':$store.state.Player.playStatus}" @click="_close"></div>
             <img class="mp3_img" :src="$store.state.Player.playerList[$store.state.Player.playingIndex].mp3Img" alt="" @click="doFunction">
             <div class="mp3_info" @click="doFunction">
                 <span class="title">{{$store.state.Player.playerList[$store.state.Player.playingIndex].mp3Title}}</span>
@@ -11,8 +11,8 @@
                     <em class="all_play_time">{{playerTime}}</em>
                 </span>
             </div>
-            <div class="play_btn iconfont icon-bofangzanting" :class="{ 'icon-bofanging': playStatus}" @click="control_audio"></div>
-            <audio @canplay="ready" @error="error" @timeupdate="updateTime" controlos="controls" loop='false' :src="$store.state.Player.playerList[$store.state.Player.playingIndex].mp3Src" ref='audioPlayer'></audio>
+            <div class="play_btn iconfont icon-bofangzanting" :class="{ 'icon-bofanging': $store.state.Player.playStatus, 'icon-loading': loading}" @click="control_audio"></div>
+            <audio autoplay @error="error" @timeupdate="updateTime" controlos="controls" loop='false' :src="$store.state.Player.playerList[$store.state.Player.playingIndex].mp3Src" ref='audioPlayer'></audio>
         </div>
     </div>
 </template>
@@ -27,23 +27,22 @@ export default {
         return {
             is_scollup: false, // 是否向上滚动,用作上滑时的效果触发
             close_player: true, // 关闭播放器
-            playerList: [
-                {
-                    mp3Src: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181126/be1c3e57467d4a36ac9d5a3602c691b9.mp3', // mp3地址
-                    mp3Img: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181126/cb72633a7fb74c2c8d0f110a2f68a3f6.png', // mp3封面图
-                    mp3Title: '35-小点成交法话术与策略' // mp3标题
-                }
-            ], // 播放列表
-            playingIndex: 0, // 当前播放的是哪一个
+            // playerList: [
+            //     {
+            //         mp3Src: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181126/be1c3e57467d4a36ac9d5a3602c691b9.mp3', // mp3地址
+            //         mp3Img: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181126/cb72633a7fb74c2c8d0f110a2f68a3f6.png', // mp3封面图
+            //         mp3Title: '35-小点成交法话术与策略' // mp3标题
+            //     }
+            // ], // 播放列表
+            // playingIndex: 0, // 当前播放的是哪一个
             playingTime: '00:00', // 已播放时间
             playerTime: '00:00', // 音频所有时长
-            playStatus: true // 播放状态是否为正在播放
+            playStatus: false, // 播放状态是否为正在播放
+            loading: true // 是否在加载中
         }
     },
 
     components: {},
-
-    computed: {},
 
     mounted() {
         window.addEventListener('scroll', this.handleScroll)
@@ -63,7 +62,8 @@ export default {
         },
         // 播放功能
         control_audio() {
-            if (this.playStatus) {
+            console.log(this.$store.state.Player.playStatus)
+            if (this.$store.state.Player.playStatus) {
                 this._pause()
             } else {
                 this._play()
@@ -79,13 +79,35 @@ export default {
         },
         // 开始播放
         _play() {
-            this.playStatus = true
-            this.$refs.audioPlayer.play()
+            if (this.$refs.audioPlayer) {
+                this._pause()
+            }
+            this.$nextTick(() => {
+                this.$store.state.Player.playStatus = true
+                let audio = this.$refs.audioPlayer
+                if (window.WeixinJSBridge) {
+                    // eslint-disable-next-line
+                    WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                        audio.play()
+                    }, false)
+                } else {
+                    // eslint-disable-next-line
+                    document.addEventListener("WeixinJSBridgeReady", function () {
+                        // eslint-disable-next-line
+                        WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+                            audio.play()
+                        })
+                    }, false)
+                }
+                audio.play()
+            })
         },
         // 暂停播放
         _pause() {
-            this.playStatus = false
-            this.$refs.audioPlayer.pause()
+            this.$nextTick(() => {
+                this.$store.state.Player.playStatus = false
+                this.$refs.audioPlayer.pause()
+            })
         },
         // 保存当前播放器播放的内容提供下次进入后播放
         save_play_info() {
@@ -94,28 +116,6 @@ export default {
         // 自动播放
         auto_play() {
 
-        },
-        // 音频加载成功
-        ready() {
-            if (this.$store.state.Player.close_player) {
-                return false
-            }
-            let audio = this.$refs.audioPlayer
-            if (window.WeixinJSBridge) {
-                // eslint-disable-next-line
-                WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
-                    audio.play()
-                }, false)
-            } else {
-                // eslint-disable-next-line
-                document.addEventListener("WeixinJSBridgeReady", function () {
-                    // eslint-disable-next-line
-                    WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
-                        audio.play()
-                    })
-                }, false)
-            }
-            this._play()
         },
         // 加载出错
         error() {
@@ -146,6 +146,16 @@ export default {
         // 点击标题后的逻辑
         doFunction(fn) {
             fn && fn()
+        }
+    },
+    computed: {
+        playerSrc() {
+            return this.$store.state.Player.playerList[this.$store.state.Player.playingIndex].mp3Src // 'sdsadasdas.mp3'
+        }
+    },
+    watch: {
+        playerSrc() {
+            this._play()
         }
     }
 }
@@ -225,6 +235,10 @@ export default {
       margin-right: 25px;
       width: 66px;
       padding-left: 4px;
+    }
+    .icon-loading {
+      transform: rotate(7200deg);
+      transition: all 10s linear 0s;
     }
   }
   audio {

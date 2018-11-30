@@ -34,32 +34,6 @@ export default {
   data() {
     return {
       doemData: {
-        // title: '快速卖货的方法',
-        // text: '非常有效、百试不爽的快速卖货的方式发送到发送到防守打法',
-        // num: '10',
-        // list: [
-        //   {
-        //     title: '01-人人可行的8条移动互联网创业之路',
-        //     id: 1,
-        //     isFree: 0
-        //   },
-        //   {
-        //     title: '02-人人可行的8条移动互联网创业之路',
-        //     id: 2,
-        //     isFree: 1
-        //   },
-        //   {
-        //     title: '03-人人可行的8条移动互联网创业之路',
-        //     id: 3,
-        //     isFree: 0
-        //   },
-        //   {
-        //     title: '04-人人可行的8条移动互联网创业之路',
-        //     id: 4,
-        //     isFree: 1
-        //   }
-        // ],
-        // content: '<p><img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180814/6ff2e558836f42739085633edaab5f74.png" style="max-width:100%;"><img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180814/cba645b736454ca599baf06c38cbe96a.png" style="line-height: 32px; max-width: 100%;"><img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180814/9994356ea456424ab98998d17e4ee497.png" style="line-height: 32px; max-width: 100%;"><img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180814/bd597f5b51914492b4458bcdcfa0a2ee.png" style="line-height: 32px; max-width: 100%;"><img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180814/5d29b27c126c412eb4e2e66b2dea3f0a.png" style="line-height: 32px; max-width: 100%;"><img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180814/00f3f454027542948092f106dc7a0144.png" style="line-height: 32px; max-width: 100%;"><img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180814/1f8ee060801e4b569ae60afb881d7d27.png" style="line-height: 32px; max-width: 100%;"><img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180814/da74baa92cfd46098f2886c415615c0f.png" style="line-height: 32px; max-width: 100%;"><img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180814/7dff672b10e342ba98c6208f8f1b1c2b.png" style="line-height: 32px; max-width: 100%;"></p><p><video src="http://1254016570.vod2.myqcloud.com/7176c53evodgzp1254016570/185e92f15285890781237742077/0puRQIaXfYcA.mp4"></video></p><p><br></p><p><img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180817/f91ae72642694dd9959d4b6f3029eeed.png" style="max-width: 100%;"></p><p><img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181009/bc0677c5162d4d1286558d6a778de140.jpg" style="max-width: 100%;"></p>'
       }
     }
   },
@@ -88,22 +62,6 @@ export default {
 
   methods: {
     dredge() {
-      //   this.$store.commit('playPlayer', {
-      //     playerList: [{
-      //       mp3Src: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181126/be1c3e57467d4a36ac9d5a3602c691b9.mp3', // mp3地址
-      //       mp3Img: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181126/cb72633a7fb74c2c8d0f110a2f68a3f6.png', // mp3封面图
-      //       mp3Title: '35-小点成交法话术与策略' // mp3标题
-      //     }, {
-      //       mp3Src: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181123/8a5f51909fe445e1b8545219cfcbb804.mp3', // mp3地址
-      //       mp3Img: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181123/5123e3f71a18495eacc02d8930a9de2a.png', // mp3封面图
-      //       mp3Title: '36-小点成交法话术与策略' // mp3标题
-      //     }, {
-      //       mp3Src: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/ddb807f6bdbb46a6bb85931ea7eefa32.mp3', // mp3地址
-      //       mp3Img: 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181120/96d983b0060349d4a5bd35a0496de9bf.png', // mp3封面图
-      //       mp3Title: '37-小点成交法话术与策略' // mp3标题
-      //     }], // 播放列表
-      //     playingIndex: 1 // 当前播放的是哪一个
-      //   })
       if (this.doemData.isVipFree) {
         let params = { productId: 0, ...this.$route.params, ...this.$route.query }
         let productId = Number(params.productId)

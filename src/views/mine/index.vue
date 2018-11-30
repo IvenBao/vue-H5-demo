@@ -18,12 +18,6 @@ export default {
   data() {
     return {
       mineData: {
-        // isok: 2,
-        // logoUrl: 'http://thirdwx.qlogo.cn/mmopen/vi_32/icicMFqvtG0ha6GmwPtxK3XeobYdjMqChnSWhBeibC8KQqweASlxtH7vejDTwWF7T0JgvWVXibn0ibUEqrHcD2Db1og/132',
-        // nickName: 'D_H',
-        // xiaxianCount: 15,
-        // registerMobile: '13866365214'
-        memberLevel: 99
       },
       ok: '',
       show: false
@@ -36,14 +30,6 @@ export default {
     MeMber,
     TiShi
   },
-  // beforeRouteEnter(to, from, next) {
-  //   if (window.localStorage.getItem('gm-token')) {
-  //     next()
-  //   } else {
-  //     // todo
-  //     // login()
-  //   }
-  // },
   mounted() {
     /**
      * 测试流程用代码，无用代码
