@@ -184,3 +184,23 @@ export const tips = (data) => {
         setTimeout(resolve, data.duration || 2000)
     })
 }
+
+/**
+ * 倒计时类
+ * @param {int} time 倒计时时间
+ * @param {function}  callback 倒计时结束时的回调函数会返回一个参数是具体时间
+ * this.countdown(5, (time) => { console.log(time) })
+ */
+export const countdown = (time, callback) => {
+    if (parseInt(time) == 0) {
+        callback && callback(time)
+    } else {
+        time--
+        setTimeout(() => {
+            if (time !== 0) {
+                callback && callback(time)
+            }
+            countdown(time, callback)
+        }, 1000)
+    }
+}

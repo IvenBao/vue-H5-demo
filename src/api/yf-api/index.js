@@ -45,10 +45,11 @@ export const weblogin = (data) => {
 // 绑定手机号接口
 export const bindMobile = (data) => {
     return axios.request({
-        url: 'bindMobile',
-        method: 'post',
+        url: '/api/user/my/bindCellphone',
+        method: 'get',
         data: {
-            ...data
+            cellphone: data.phone,
+            code: data.code
         }
     })
 }

@@ -1,11 +1,11 @@
 <template>
-  <div class="pad64px">
-    <mine-header :minedata="mineData"></mine-header>
-    <me-mber :isok='ok'></me-mber>
-    <mine-content :minedata="mineData"></mine-content>
-    <mine-footer></mine-footer>
-    <ti-shi v-show="show"></ti-shi>
-  </div>
+    <div class="pad64px">
+        <mine-header :minedata="mineData"></mine-header>
+        <me-mber :isok='ok'></me-mber>
+        <mine-content :minedata="mineData"></mine-content>
+        <mine-footer></mine-footer>
+        <ti-shi v-show="show"></ti-shi>
+    </div>
 </template>
 <script>
 import MineHeader from '@/views/mine/mine-header.vue'
@@ -13,71 +13,68 @@ import MineContent from '@/views/mine/mine-content.vue'
 import MineFooter from '@/views/mine/footer-tab.vue'
 import MeMber from '@/views/home/member.vue'
 import TiShi from '@/views/mine/tishi.vue'
-import { getmineData , getAccessTokenByWxCode } from '@/api'
+import { getmineData, getAccessTokenByWxCode } from '@/api'
 export default {
-  data() {
-    return {
-      mineData: {
-        // isok: 2,
-        // logoUrl: 'http://thirdwx.qlogo.cn/mmopen/vi_32/icicMFqvtG0ha6GmwPtxK3XeobYdjMqChnSWhBeibC8KQqweASlxtH7vejDTwWF7T0JgvWVXibn0ibUEqrHcD2Db1og/132',
-        // nickName: 'D_H',
-        // xiaxianCount: 15,
-        // registerMobile: '13866365214'
-        memberLevel: 99
-      },
-      ok: '',
-      show: false
-    }
-  },
-  components: {
-    MineHeader,
-    MineContent,
-    MineFooter,
-    MeMber,
-    TiShi
-  },
-  // beforeRouteEnter(to, from, next) {
-  //   if (window.localStorage.getItem('gm-token')) {
-  //     next()
-  //   } else {
-  //     // todo
-  //     // login()
-  //   }
-  // },
-  mounted() {
-    /**
-     * 测试流程用代码，无用代码
-     */
-    const code =  this.$route.query.code 
-    
-
-    if(code == undefined){
-      getmineData().then(res => {
-      if (res) {
-        console.log(res) 
-        if(res.userVip){
-          res.userVip.expiresAt = res.userVip.expiresAt.substring(0,10)
+    data() {
+        return {
+            mineData: {
+                // isok: 2,
+                // logoUrl: 'http://thirdwx.qlogo.cn/mmopen/vi_32/icicMFqvtG0ha6GmwPtxK3XeobYdjMqChnSWhBeibC8KQqweASlxtH7vejDTwWF7T0JgvWVXibn0ibUEqrHcD2Db1og/132',
+                // nickName: 'D_H',
+                // xiaxianCount: 15,
+                // registerMobile: '13866365214'
+                memberLevel: 99
+            },
+            ok: '',
+            show: false
         }
-        this.mineData = res
+    },
+    components: {
+        MineHeader,
+        MineContent,
+        MineFooter,
+        MeMber,
+        TiShi
+    },
+    // beforeRouteEnter(to, from, next) {
+    //   if (window.localStorage.getItem('gm-token')) {
+    //     next()
+    //   } else {
+    //     // todo
+    //     // login()
+    //   }
+    // },
+    mounted() {
+        /**
+         * 测试流程用代码，无用代码
+         */
+        const code = this.$route.query.code
+        if (code == undefined) {
+            getmineData().then(res => {
+                if (res) {
+                    console.log(res)
+                    if (res.userVip) {
+                        res.userVip.expiresAt = res.userVip.expiresAt.substring(0, 10)
+                    }
+                    this.mineData = res
+                }
+            })
+        } else {
+            console.log('code = ' + code)
+            getAccessTokenByWxCode(code).then(token => {
+                console.log(token)
+                getmineData().then(res => {
+                    if (res) {
+                        console.log(res)
+                        if (res.userVip) {
+                            res.userVip.expiresAt = res.userVip.expiresAt.substring(0, 10)
+                        }
+                        this.mineData = res
+                    }
+                })
+            })
         }
-      })
-    }else{
-      console.log('code = ' + code);
-      getAccessTokenByWxCode(code).then(token=>{
-        console.log(token)
-        getmineData().then(res => {
-        if (res) {
-          console.log(res) 
-          if(res.userVip){
-            res.userVip.expiresAt = res.userVip.expiresAt.substring(0,10)
-          }
-          this.mineData = res
-          }
-        })
-      })
     }
-    
-  }
 }
 </script>
 <style lang="less" scoped>
