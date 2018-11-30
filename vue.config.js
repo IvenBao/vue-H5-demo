@@ -18,9 +18,9 @@ module.exports = {
         hotOnly: false,
         proxy: { // 设置代理
             '/dev': {
-                // target: 'mall.xc2018.com.cn', // 测试🐔
+                target: 'http://mall.xc2018.com.cn', // 测试🐔
                 // target: 'http://192.168.0.160:8080', // 周伟亮
-                target: 'http://192.168.0.121:8080', // 陈 本地
+                // target: 'http://192.168.0.121:8080', // 陈 本地
                 ws: true,
                 changeOrigin: true,
                 pathRewrite: {

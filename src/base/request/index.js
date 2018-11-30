@@ -137,8 +137,6 @@ class HttpRequest {
             delete options.data
         }
         this.queue[options.url] = instance
-        console.log('options: ')
-        console.log(options)
         return instance(options)
     }
 }

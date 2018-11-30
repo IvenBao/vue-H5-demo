@@ -18,7 +18,7 @@
 <script>
 import { tips, WXAuthorize, countdown } from 'base/global/g'
 import { isWX, trimIn } from 'base/global/tools'
-import { weblogin, sendCode } from '@/api'
+import { weblogin, sendCode, getAccessTokenByWxCode } from '@/api'
 import { testPhone } from 'base/vaildate'
 import {
     Indicator
@@ -50,9 +50,22 @@ export default {
             if (to.query.code) {
                 // todo
                 // 调用后端的接口去实现微信登录
+                getAccessTokenByWxCode({
+                    code: to.query.code
+                }).then(res => {
+                    if (res.errmsg) {
+                        tips({ message: res.errmsg }).then(() => {
+                            next({
+                                name: 'home'
+                            })
+                        })
+                    }
+                }, rej => {
+                    WXAuthorize(window.location.origin + to.path)
+                })
             } else {
                 // 去授权
-                WXAuthorize(window.location.origin + window.location.pathname)
+                WXAuthorize(window.location.origin + to.path)
             }
         } else {
             next()
@@ -72,12 +85,6 @@ export default {
                     Indicator.close()
                     tips({
                         message: '登录成功'
-                    }).then(() => {
-                        this.$route.push(
-                            {
-                                path: window.sessionStorage.getItem('backVueRouter') || '/home'
-                            }
-                        )
                     })
                 }, rej => {
                     Indicator.close()

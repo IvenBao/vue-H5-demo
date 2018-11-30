@@ -41,10 +41,14 @@ export default {
 
     computed: {},
     beforeRouteEnter(to, from, next) {
-        console.log(from)
-        console.log(to)
+        let backRouterName
+        if (from.name) {
+            backRouterName = from.name
+        }
         // ...
-        next()
+        next(vm => {
+            vm.backRouterName = backRouterName
+        })
     },
     mounted() {
     },
@@ -60,6 +64,10 @@ export default {
                     Indicator.close()
                     tips({
                         message: '绑定成功'
+                    }).then(() => {
+                        this.$router.push({
+                            path: this.backRouterName || '/home'
+                        })
                     })
                 }, rej => {
                     Indicator.close()

@@ -21,6 +21,28 @@ export const getWXconfig = (data) => {
         }
     })
 }
+// 微信登录
+export const getAccessTokenByWxCode = (code) => {
+    return axios.request({
+        url: '/api/auth/wx/wx_code',
+        method: 'get',
+        data: {
+            code
+        }
+    }).then(res => {
+        if (!res.errno) {
+            window.localStorage.setItem('token', res.data.userAccessToken.token)
+            window.localStorage.setItem('access_token', res.data.userAccessToken)
+            router.push({
+                path: window.sessionStorage.getItem('backVueRouter') || '/home'
+            })
+        }
+        return res
+    }, rej => {
+        return rej
+    })
+}
+
 // web端登录接口
 export const weblogin = (data) => {
     return new Promise((resolve, reject) => {
