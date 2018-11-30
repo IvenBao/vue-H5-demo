@@ -55,8 +55,14 @@ export default {
       //   res.data.errorType = 1
       //   res.data.isVipFree = true
       //   res.data.isFree = true
-      this.doemData = res.data
-      document.title = this.doemData.name
+      if (res.data.isFree) {
+        res.data.isVipFree = false
+        this.doemData = res.data
+        document.title = this.doemData.name
+      } else {
+        this.doemData = res.data
+        document.title = this.doemData.name
+      }
     })
   },
 
