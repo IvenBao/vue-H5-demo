@@ -4,7 +4,10 @@
     <header>
       <div class="header">
         <div class="header-content flex-st">
-          <div class="avatar">
+          <div
+            class="avatar"
+            @click="logOut"
+          >
             <img
               :src="minedata.avatar"
               alt=""
@@ -47,6 +50,8 @@
 
 <script>
 // import { getUserReferrerInfo } from '@/api'
+import { logOut } from 'base/global/g'
+let out = 0
 export default {
   data() {
     return {
@@ -58,6 +63,12 @@ export default {
   methods: {
     status(status) {
       this.superior = status
+    },
+    logOut() {
+      out++
+      if (out > 6) {
+        logOut()
+      }
     }
   },
   props: ['minedata'],

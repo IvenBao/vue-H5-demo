@@ -23,7 +23,8 @@
 
 <script>
 // import { Indicator } from 'mint-ui';
-import { getBannerList, getCourseProductList, getOfflineActivityThemeList } from '@/api'
+import { getBannerList, getCourseProductList, getOfflineActivityThemeList, getmineData } from '@/api'
+import { isLogin } from 'base/global/g'
 import SwiperComm from '@/views/home/swiper-comm.vue'
 import FooterTab from '@/views/home/footer-tab.vue'
 import MeMber from '@/views/home/member.vue'
@@ -74,11 +75,13 @@ export default {
       })
       console.log(this.bannerData)
     })
-    // getmineData().then(res => {
-    //   // res.data.memberLevel = 1
-    //   // res.data.isVIP = true
-    //   this.ok = res.data.isVIP
-    // })
+    if (isLogin) {
+      getmineData().then(res => {
+        // res.data.memberLevel = 1
+        // res.data.isVIP = true
+        this.ok = res.data.isVIP
+      })
+    }
     getCourseProductList(o).then(res => {
       if (res.data) {
         this.onlineproductList = res.data

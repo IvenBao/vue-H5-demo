@@ -67,18 +67,20 @@ export const login = (callbackUrl) => {
 /**
  * 当前前端是否登录
  */
-export const isLogin = () => {
-    return !!(window.localStorage.getItem('token'))
-}
+export const isLogin = !!(window.localStorage.getItem('token'))
 /**
  * 退出登录
  */
 export const logOut = () => {
+    tips({
+        message: '退出登录咯'
+    }).then(() => {
+        router.push({
+            name: 'home'
+        })
+    })
     window.localStorage.removeItem('token')
     window.localStorage.removeItem('access_token')
-    router.push({
-        name: 'home'
-    })
 }
 /**
  * 微信授权
