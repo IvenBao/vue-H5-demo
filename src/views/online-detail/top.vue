@@ -1,7 +1,19 @@
 <!--  -->
 <template>
   <div>
-    <div class="imgSty">
+    <swiper
+      v-if="doemData.gallery"
+      :list="doemData.gallery"
+      auto
+      style="width:100%;margin:0 auto;"
+      height="180px"
+      dots-class="custom-bottom"
+      dots-position="center"
+    ></swiper>
+    <div
+      class="imgSty"
+      v-else
+    >
       <img
         :src="doemData.picUrl"
         alt=""
@@ -10,11 +22,11 @@
     <div class="content">
       <span class="name">{{doemData.name}}</span>
       <p>{{doemData.brief}}</p>
-      <img
+      <!--<img
         @click="share"
         src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181121/1b4c378527ba4df485193a05ee4f45d9.png"
         alt=""
-      >
+      >-->
       <div
         style="margin-top: 12px;"
         v-if="!doemData.isListen && !doemData.isVipFree"
@@ -27,13 +39,13 @@
       </div>
       <div
         style="margin-top: 12px;"
-        v-if="!doemData.isListen && doemData.isVipFree"
+        v-if="doemData.isVipFree"
       >
         <span class="memberSty">会员免费</span>
       </div>
       <div
         style="margin-top: 12px;"
-        v-if="doemData.isListen"
+        v-if="doemData.isFree"
       >
         <span class="memberSty">免费学习</span>
       </div>
@@ -42,13 +54,16 @@
 </template>
 
 <script>
+import { Swiper } from 'vux'
 export default {
   data() {
     return {
     }
   },
 
-  components: {},
+  components: {
+    Swiper
+  },
 
   computed: {},
 
