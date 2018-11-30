@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import { getOfflineActivityThemeList } from '@/api'
 import HeadLine from '@/views/home/headline.vue'
 export default {
   data() {
@@ -43,25 +42,15 @@ export default {
         type: 1,
         imgUrl:
           'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20180917/7373c0c6badb448890338f796394a0be.png'
-      },
-      productList: [
-
-      ]
+      }
     }
   },
   components: {
     HeadLine
   },
   mounted() {
-    let o = {
-      pageNum: 1,
-      pageSize: 20
-    }
-    getOfflineActivityThemeList(o).then(res => {
-      this.productList = res.data
-    })
   },
-  props: ['isok'],
+  props: ['isok', 'productList'],
   methods: {
     getProductById(id) {
       this.$router.push({ name: 'offline-detail', query: { productId: id } })

@@ -14,7 +14,17 @@
         v-if="productData.themeType === 1"
         x5-video-player-type='h5'
       ></video> -->
+      <swiper
+        v-if="productData.gallery.length > 0"
+        :list="productData.gallery"
+        auto
+        style="width:100%;margin:0 auto;"
+        height="180px"
+        dots-class="custom-bottom"
+        dots-position="center"
+      ></swiper>
       <img
+        v-else
         :src="productData.picUrl"
         alt=""
         class="demoSty"
@@ -22,10 +32,10 @@
       <div class="content">
         <p class="titleSty">{{productData.name}}</p>
         <p class="contxt">{{productData.brief}}</p>
-        <img
+        <!--<img
           src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181121/1b4c378527ba4df485193a05ee4f45d9.png"
           alt=""
-        >
+        >-->
         <div style="margin-top: 12px;">
           <h4 class="timeSty">￥{{productData.retailPriceDesc}} <span
               class="original"
@@ -47,6 +57,7 @@
   </div>
 </template>
 <script>
+import { Swiper } from 'vux'
 export default {
   data() {
     return {
@@ -77,6 +88,7 @@ export default {
     }
   },
   components: {
+    Swiper
   },
   props: ['productData']
 }

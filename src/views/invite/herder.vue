@@ -8,7 +8,7 @@
       >
         <span></span>
         <span>邀请会员人数</span>
-        <p>{{num}}</p>
+        <p>{{mineData.referVIPCount}}</p>
       </div>
       <p class="wire"></p>
       <div
@@ -17,7 +17,7 @@
       >
         <span></span>
         <span>邀请订单总金额</span>
-        <p>￥{{num}}</p>
+        <p>￥{{mineData.orderPriceSum}}</p>
       </div>
     </div>
     <div class="posi">
@@ -62,7 +62,8 @@ export default {
     getData(data) {
       this.$emit('Tdata', data)
     }
-  }
+  },
+  props: ['mineData']
 }
 
 </script>

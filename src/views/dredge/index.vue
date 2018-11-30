@@ -60,7 +60,7 @@
   </div>
 </template>
 <script>
-import { getmineData, xiadan, buy } from '@/api'
+import { getmineData, buyOrder, buy } from '@/api'
 import { openwechatpay } from 'base/global/pay'
 import KK from '@/views/home/line.vue'
 export default {
@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     playbuy() {
-      xiadan(this.postData).then(res => {
+      buyOrder(this.postData).then(res => {
         // eslint-disable-next-line
         if (res.errno == 0) {
           let data = {

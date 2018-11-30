@@ -4,7 +4,10 @@
     <header>
       <div class="header">
         <div class="header-content flex-st">
-          <div class="avatar">
+          <div
+            class="avatar"
+            @click="logOut"
+          >
             <img
               :src="minedata.avatar"
               alt=""
@@ -18,11 +21,11 @@
             <div
               class="nickname"
               v-else-if="minedata.realName"
-            >{{minedata.realName}}<span :class="minedata.isVIP == 99?'memberSty':'nomemberSty'"></span></div>
+            >{{minedata.realName}}<span :class="minedata.isVIP?'memberSty':'nomemberSty'"></span></div>
             <div
               class="users"
-              v-if="minedata.vip"
-            >{{minedata.userVip.expiresAt}}到期</div>
+              v-if="minedata.isVIP"
+            >{{minedata.expiresTime}}到期</div>
             <div
               class="users"
               v-else
@@ -31,11 +34,11 @@
         </div>
         <div class="content">
           <div class="indentNum">
-            <p>100</p>
+            <p>{{minedata.orderCount}}</p>
             <span>订单总数（个）</span>
           </div>
           <div class="inviteNum">
-            <p>100</p>
+            <p>{{minedata.referVIPCount}}</p>
             <span>邀请会员数（个）</span>
           </div>
         </div>
@@ -47,6 +50,8 @@
 
 <script>
 // import { getUserReferrerInfo } from '@/api'
+import { logOut } from 'base/global/g'
+let out = 0
 export default {
   data() {
     return {
@@ -58,6 +63,12 @@ export default {
   methods: {
     status(status) {
       this.superior = status
+    },
+    logOut() {
+      out++
+      if (out > 6) {
+        logOut()
+      }
     }
   },
   props: ['minedata'],

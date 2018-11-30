@@ -2,25 +2,41 @@
 <template>
   <div class="bigbox">
     <ul v-if="orderList && orderList.length > 0">
-      <li v-for="item in orderList" :key="item.id">
+      <li
+        v-for="item in orderList"
+        :key="item.id"
+      >
         <div class="top">
-          <img :src="item.sellerLogo" alt="">
+          <img
+            :src="item.sellerLogo"
+            alt=""
+          >
           <span>{{item.sellerName}}</span>
           <span>{{item.createTime}}</span>
           <span @click="push(item.redirectFlag)">我的签到码</span>
         </div>
         <div class="content">
-          <img :src="item.productPic" alt="" />
+          <img
+            :src="item.productPic"
+            alt=""
+          />
           <div class="rigth">
             <h3 class="productName">{{item.productName}}</h3>
             <p class="contentText">{{item.productDesc}}</p>
             <span class="moneySty">￥{{item.productPriceDesc}}</span>
+            <span class="orderStatusSty">{{item.orderStatusDesc}}</span>
           </div>
         </div>
       </li>
     </ul>
-    <span v-else class="no-list">
-      <img src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181123/9f956e49cd58415c918b20d959af4dfa.png" alt="">
+    <span
+      v-else
+      class="no-list"
+    >
+      <img
+        src="http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181123/9f956e49cd58415c918b20d959af4dfa.png"
+        alt=""
+      >
     </span>
   </div>
 </template>
@@ -40,7 +56,8 @@ export default {
           productName: '渠道革命',
           productPriceDesc: '1980',
           id: 1,
-          redirectFlag: 0
+          redirectFlag: 0,
+          orderStatusDesc: '待核销'
         }, {
           sellerName: '德玛西亚',
           sellerLogo: '',
@@ -50,7 +67,8 @@ export default {
           productName: '渠道革命',
           productPriceDesc: '1980',
           id: 2,
-          redirectFlag: 1
+          redirectFlag: 1,
+          orderStatusDesc: '完成交易'
         }, {
           sellerName: '德玛西亚德玛西亚德玛西亚',
           sellerLogo: '',
@@ -60,7 +78,8 @@ export default {
           productName: '渠道革命渠道革命渠道革命渠道革命渠道革命',
           productPriceDesc: '1980',
           id: 3,
-          redirectFlag: 0
+          redirectFlag: 0,
+          orderStatusDesc: '待审核'
         }, {
           sellerName: '德玛西亚',
           sellerLogo: '',
@@ -70,7 +89,8 @@ export default {
           productName: '渠道革命',
           productPriceDesc: '1980',
           id: 4,
-          redirectFlag: 1
+          redirectFlag: 1,
+          orderStatusDesc: '未支付'
         }
       ],
       requestData: {
@@ -87,7 +107,9 @@ export default {
 
   mounted() {
     getOrderList(this.requestData).then(res => {
-      console.log(res)
+      if (res.data) {
+        // this.orderList = res.data
+      }
     })
   },
 
@@ -96,7 +118,7 @@ export default {
       if (redirectFlag === 1) {
         this.$router.push({ name: 'order-result' })
       } else {
-        alert(6666)
+        this.$router.push({ name: '' })
       }
     }
   }
@@ -158,10 +180,17 @@ export default {
       white-space: nowrap;
     }
     .moneySty {
-      display: block;
+      display: inline-block;
       font-size: 24px;
       color: rgba(152, 152, 152, 1);
       margin-top: 23px;
+    }
+    .orderStatusSty {
+      display: inline-block;
+      width: 75%;
+      text-align: right;
+      font-size: 24px;
+      color: rgba(54, 54, 54, 1);
     }
   }
 }

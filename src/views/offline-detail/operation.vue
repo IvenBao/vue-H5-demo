@@ -67,7 +67,7 @@
   </div>
 </template>
 <script>
-import { xiadan, buy, getmineData } from '@/api'
+import { buyOrder, buy, getmineData } from '@/api'
 import { openwechatpay } from 'base/global/pay'
 export default {
   data() {
@@ -98,7 +98,7 @@ export default {
       //   this.$router.push({ name: 'registerInformation', query: { dindanId: this.productData.dindanId } })
       // }
       if (this.productData.isAlreadyBuy) { // 是否下单
-        xiadan(this.productId).then(res => {
+        buyOrder(this.productId).then(res => {
           // eslint-disable-next-line
           if (res.errno == 0) {
             this.$router.push({ name: 'registerInformation', query: { orderSn: res.data.orderSn } })
@@ -106,7 +106,7 @@ export default {
         })
       } else {
         if (this.productData.isFree) { // 是否免费
-          xiadan(this.productId).then(res => {
+          buyOrder(this.productId).then(res => {
             // eslint-disable-next-line
             if (res.errno == 0) {
               this.$router.push({ name: 'registerInformation', query: { orderSn: res.data.orderSn } })
@@ -114,7 +114,7 @@ export default {
           })
         } else {
           if (this.productData.isOnlinePay) { // 1是线上付费   0还是线上咨询
-            xiadan(this.productId).then(res => {
+            buyOrder(this.productId).then(res => {
               // eslint-disable-next-line
               if (res.errno == 0) {
                 let data = {
@@ -139,7 +139,7 @@ export default {
               }
             })
           } else {
-            xiadan(this.productId).then(res => {
+            buyOrder(this.productId).then(res => {
               // eslint-disable-next-line
               if (res.errno == 0) {
                 this.$router.push({ name: 'registerInformation', query: { orderSn: res.data.orderSn } })
