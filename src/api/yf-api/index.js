@@ -2,6 +2,7 @@ import {
     axios
 } from 'base/request'
 import router from '@/router'
+import { getAccessToken, setAccessToken } from '../paul-api'
 export const xx = (data) => {
     return axios.request({
         url: '/api-member/saas/member/login',
@@ -29,8 +30,9 @@ export const weblogin = (data) => {
             method: 'post'
         }).then(res => {
             if (!res.errno) {
+                const accessToken = res.data
                 window.localStorage.setItem('token', res.data.userAccessToken.token)
-                window.localStorage.setItem('access_token', res.data.userAccessToken)
+                window.localStorage.setItem('access_token', JSON.stringify(accessToken))
                 router.push({
                     path: window.sessionStorage.getItem('backVueRouter') || '/home'
                 })
@@ -45,11 +47,32 @@ export const weblogin = (data) => {
 // 绑定手机号接口
 export const bindMobile = (data) => {
     return axios.request({
-        url: 'bindMobile',
-        method: 'post',
+        url: '/api/user/my/bindCellphone',
+        method: 'get',
         data: {
             ...data
         }
+    }).then((userInfo) => {
+        let accessToken = getAccessToken()
+        if (accessToken) {
+            accessToken.userInfo = userInfo
+            setAccessToken(accessToken)
+        }
+        return userInfo
+    })
+}
+
+// 切换到手机号的用户，并且将当前用户微信绑定到改手机号用户
+export const bindMobileUser = (data) => {
+    return axios.request({
+        url: '/api/user/my/bindCellphoneUser',
+        method: 'get',
+        data: {
+            ...data
+        }
+    }).then((accessToken) => {
+        setAccessToken(accessToken)
+        return accessToken
     })
 }
 
@@ -87,7 +110,7 @@ export const getActivityFormByOrderSn = (data) => {
 export const sendCode = (data) => {
     return axios.request({
         url: `/api/auth/send_code`,
-        method: 'post',
+        method: 'get',
         data: {
             ...data
         }

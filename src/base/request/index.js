@@ -42,7 +42,8 @@ class HttpRequest {
             let {
                 data
             } = res
-            if (!res.errno) {
+            if (!data.errno) {
+                console.log('invoker api success!')
                 return data
             } else {
                 return Promise.reject(data)

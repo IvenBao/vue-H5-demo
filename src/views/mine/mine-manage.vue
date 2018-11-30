@@ -13,12 +13,13 @@
     <div class="line">
       <div class="inner layout">
         <div
-          v-if="minedata.userInfo"
+          v-if="minedata.userInfo.cellphone"
           class="fs18px v100 flex-be sty"
+          @click="bangding"
         >
           <span class="posi">手机号</span>
-          <span class="item-rigth-0">{{minedata.userInfo.cellphone}}</span>
-          <!-- <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth"> -->
+          <span class="item-rigth">{{minedata.userInfo.cellphone}}</span>
+          <img src="https://chuang-saas.oss-cn-hangzhou.aliyuncs.com/icon/dongyao/goright.png" alt="" class="imgrigth">
         </div>
         <div
           v-else

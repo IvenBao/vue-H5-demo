@@ -1,10 +1,24 @@
 import {
     axios
 } from 'base/request'
-
+/**
+ * 获取用户的accessToken,如果未登陆返回null
+ */
 export const getAccessToken = () => {
     let accessToken = window.localStorage.getItem('access_token')
-    return accessToken
+    if (accessToken) {
+        try {
+            return JSON.parse(accessToken)
+        } catch (error) {
+            window.localStorage.removeItem('access_token')
+        }
+    } else {
+        return null
+    }
+}
+
+export const setAccessToken = (accessToken) => {
+    window.localStorage.setItem('access_token', JSON.stringify(accessToken))
 }
 
 export const getAccessTokenByWxCode = (code) => {
@@ -13,8 +27,9 @@ export const getAccessTokenByWxCode = (code) => {
         method: 'get'
     }).then(res => {
         if (!res.errno) {
+            const accessToken = res.data
             window.localStorage.setItem('token', res.data.userAccessToken.token)
-            window.localStorage.setItem('access_token', res.data.userAccessToken)
+            setAccessToken(accessToken)
         }
         return res
     })

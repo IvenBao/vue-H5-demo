@@ -4,22 +4,26 @@
         <h4>绑定手机号</h4>
         <div class="input_div phone">
             <div class="area_code">+86</div>
-            <input type="tel" placeholder="请输入手机号">
-            <div class="get_code">获取验证码</div>
+            <input type="tel" v-model='phone' placeholder="请输入手机号">
+            <div class="get_code" @click="getCode">获取验证码</div>
         </div>
         <div class="input_div msg_code">
             <div class="area_code">验证码</div>
-            <input type="tel" placeholder="请输入手机号">
+            <input type="tel" v-model='code' placeholder="请输入验证码">
         </div>
-        <div class="bind" :class='{active: active}'>确认</div>
+        <div class="bind" :class='{active: active}' @click="bindCode">确认</div>
     </div>
 </template>
 
 <script>
 import { tips } from 'base/global/g'
+import { sendCode, bindMobile, bindMobileUser} from '@/api'
+
 export default {
     data() {
         return {
+            phone: '',
+            code: '',
             active: false // 登录按钮的样式
         }
     },
@@ -41,7 +45,35 @@ export default {
         })
     },
 
-    methods: {}
+    methods: {
+        // 获取手机验证码
+        getCode() {
+            sendCode({
+                phone: this.phone
+            }).then(res => {
+                console.log(res)
+            })
+        },
+        bindCode(){
+            console.log(this.code)
+            bindMobile({
+                phone: this.phone,
+                code: this.code
+            }).then(
+                (data) => {
+                    console.log('bind success')
+                    console.log(data)
+                },
+                (errorData) => {
+                    console.log('bind failed')
+                    if(errorData.errno === 106){ //改手机好已经注册
+                        alert(errorData.errmsg)
+                    }
+                   
+                }
+            )
+        }
+    }
 }
 
 </script>
