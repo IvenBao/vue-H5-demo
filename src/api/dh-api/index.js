@@ -36,7 +36,7 @@ export const getCourseProductDetailById = (id) => {
         url: '/api/auth/courseProduct/getCourseProductDetailById',
         method: 'get',
         data: {
-            id: id
+            id
         }
     })
 }
@@ -59,7 +59,7 @@ export const getCourseAudioList = (courseId) => {
         url: '/api/auth/courseAudio/getCourseAudioList',
         method: 'get',
         data: {
-            courseId: courseId
+            courseId
         }
     })
 }
@@ -115,5 +115,33 @@ export const changeGenderAndCityById = (data) => {
         method: 'post',
         data: data
 
+    })
+}
+
+// 修改性别和现居地址
+export const xiadan = (data) => {
+    return axios.request({
+        url: '/api/user/order/buy',
+        method: 'get',
+        data: data
+
+    })
+}
+
+// 获取我的邀请人列表
+export const getUserListByReferUid = (data) => {
+    return axios.request({
+        url: '/api/user/user/getUserListByReferUid',
+        method: 'get',
+        data: data
+    })
+}
+
+// 获取我的邀请订单列表
+export const getOrderListByReferUid = (data) => {
+    return axios.request({
+        url: '/api/user/order/getOrderListByReferUid',
+        method: 'get',
+        data: data
     })
 }

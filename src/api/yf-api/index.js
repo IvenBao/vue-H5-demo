@@ -58,7 +58,7 @@ export const bindMobile = (data) => {
 export const buy = (data) => {
     return axios.request({
         url: '/api/user/order/pay',
-        method: 'post',
+        method: 'get',
         data: {
             ...data
         }

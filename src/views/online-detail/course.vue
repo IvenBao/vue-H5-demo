@@ -4,24 +4,35 @@
         <div class="sty">
             <p class="title">
                 <span>课程目录</span>
-                <span>共{{doemData.num}}节课</span>
+                <span>共{{doemData.audioCount}}节课</span>
             </p>
         </div>
         <ul>
-            <li v-for="(item, index) in list" :key="index" @click="play(item.id,item.isFree,item, index)">
+            <li v-for="(item, index) in list" :key="index" @click="play(item.id,item.isFree,list, index)">
                 <span>{{item.name}}</span>
                 <span v-if="item.isFree && !doemData.isListen">试听</span>
                 <div v-else>
                     <div class="img1" v-if="doemData.isListen" :class="{img3:changeRed == item.id}"></div>
                     <div class="img2" v-else></div>
                 </div>
+                <ul>
+                    <li v-for="(item, index) in list" :key="index" @click="play(item.id,item.isFree,item, index)">
+                        <span>{{item.name}}</span>
+                        <span v-if="item.isFree && !doemData.isListen">试听</span>
+                        <div v-else>
+                            <div class="img1" v-if="doemData.isListen" :class="{img3:changeRed == item.id}"></div>
+                            <div class="img2" v-else></div>
+                        </div>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
-import { getCourseAudioList } from '@/api'
+import { getCourseAudioList, xiadan, buy } from '@/api'
+import { openwechatpay } from 'base/global/pay'
 import { tips } from 'base/global/g'
 export default {
     data() {
@@ -38,8 +49,8 @@ export default {
 
     mounted() {
         let params = { productId: 0, ...this.$route.params, ...this.$route.query }
-        this.productId = Number(params.productId)
-        getCourseAudioList(this.productId).then(res => {
+        this.productid = Number(params.productId)
+        getCourseAudioList(this.productid).then(res => {
             this.list = res.data
         })
     },
@@ -48,40 +59,31 @@ export default {
         playPalyers(playerList, index) {
             this.$store.commit('playPlayer', {
                 playerList: playerList,
-                playingIndex: 0
+                playingIndex: index
             })
         },
-        play(id, isFree, item, index) {
-            let playerList = [{
-                mp3Src: item.url, // mp3地址
-                mp3Img: item.picUrl || 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181126/cb72633a7fb74c2c8d0f110a2f68a3f6.png', // mp3封面图
-                mp3Title: item.name // mp3标题
-            }]
-            // if (this.doemData.isFree) {
-            //   this.changeRed = id
-            //   // alert('直接听')
-            // } else if (!this.doemData.isVipFree) {
-            //   tips({
-            //     message: '请单独购买该课程'
-            //   })
-            // } else {
-            //   if (this.dj === 1) {
-            //     this.changeRed = id // tab切换效果
-            //   } else if (isFree) {
-            //     alert('可以试听')
-            //   } else if (this.dj !== 1) {
-            //     tips({
-            //       message: '请先去开通会员'
-            //     })
-            //   }
-            // }
+        play(id, isFree, list, index) {
+            var playerList = []
+            for (var i = 0; i < list.length; i++) {
+                var itme = {}
+                itme.mp3Src = list[i].url
+                itme.mp3Img = list[i].picUrl || 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181126/cb72633a7fb74c2c8d0f110a2f68a3f6.png'
+                itme.mp3Title = list[i].name
+                playerList.push(itme)
+            }
+
+            // let playerList = [{
+            //   mp3Src: item.url, // mp3地址
+            //   mp3Img: item.picUrl || 'http://chuang-saas.oss-cn-hangzhou.aliyuncs.com/upload/image/20181126/cb72633a7fb74c2c8d0f110a2f68a3f6.png', // mp3封面图
+            //   mp3Title: item.name // mp3标题
+            // }]
             if (this.doemData.isListen === 1) { // 判断是否能听
                 this.changeRed = id
                 this.playPalyers(playerList, index)
             } else {
                 if (this.doemData.errorType === 0) { // 判断是否绑定手机
-                    if (isFree) {
-                        alert('可以试听')
+                    if (isFree) { // 是否能试听
+                        this.playPalyers(playerList, index)
                     } else {
                         tips({
                             message: '请先去绑定手机号'
@@ -90,23 +92,55 @@ export default {
                         })
                     }
                 } else if (this.doemData.errorType === 1) { // 判断是否开通会员
-                    if (isFree) {
-                        alert('可以试听')
+                    if (isFree) { // 是否能试听
+                        this.playPalyers(playerList, index)
                     } else {
+                        // tips({
+                        //   message: '请先开通VIP会员'
+                        // }).then(res => {
+                        //   this.$router.push({ name: 'dredge' })
+                        // })
                         tips({
-                            message: '请先去开通会员'
+                            message: '请联系客服'
                         }).then(res => {
-                            this.$router.push({ name: 'dredge', query: { productId: this.productId } })
+                            this.$router.push({ name: 'mine' })
                         })
                     }
                 } else if (this.doemData.errorType === 2) { // 判断是否购买
-                    if (isFree) {
-                        alert('可以试听')
+                    if (isFree) { // 是否能试听
+                        this.playPalyers(playerList, index)
                     } else {
                         tips({
-                            message: '请单独购买该课程'
+                            message: '请先购买课程'
                         }).then(res => {
-                            alert('买买买')
+                            let postData = {
+                                productId: this.productid,
+                                productType: this.doemData.productType
+                            }
+                            xiadan(postData).then(res => {
+                                // eslint-disable-next-line
+                                if (res.errno == 0) {
+                                    let data = {
+                                        orderSn: res.data.orderSn
+                                    }
+                                    buy(data).then(res => {
+                                        // eslint-disable-next-line
+                                        if (res.errno == 0) {
+                                            var config = {
+                                                'appId': res.data.appid,
+                                                'nonceStr': res.data.nonceStr,
+                                                'package': res.data.packageStr,
+                                                'paySign': res.data.paySign,
+                                                'signType': res.data.signType,
+                                                'timeStamp': res.data.timeStamp
+                                            }
+                                            openwechatpay(config, res => {
+                                                console.log(res)
+                                            })
+                                        }
+                                    })
+                                }
+                            })
                         })
                     }
                 }
