@@ -2,7 +2,10 @@ import {
     axios
 } from 'base/request'
 import router from '@/router'
-import { getAccessToken, setAccessToken } from '../paul-api'
+import {
+    getAccessToken,
+    setAccessToken
+} from '../paul-api'
 export const xx = (data) => {
     return axios.request({
         url: '/api-member/saas/member/login',
@@ -32,8 +35,9 @@ export const getAccessTokenByWxCode = (code) => {
         }
     }).then(res => {
         if (!res.errno) {
+            const accessToken = res.data
             window.localStorage.setItem('token', res.data.userAccessToken.token)
-            window.localStorage.setItem('access_token', res.data.userAccessToken)
+            window.localStorage.setItem('access_token', JSON.stringify(accessToken))
             router.push({
                 path: window.sessionStorage.getItem('backVueRouter') || '/home'
             })

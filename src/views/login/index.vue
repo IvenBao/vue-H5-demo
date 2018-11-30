@@ -53,15 +53,17 @@ export default {
                 getAccessTokenByWxCode({
                     code: to.query.code
                 }).then(res => {
-                    if (res.errmsg) {
-                        tips({ message: res.errmsg }).then(() => {
-                            next({
-                                name: 'home'
-                            })
+                    if (res.errno == '10000') {
+                        tips({ message: res.errmsg || '登录失败，重新登录' }).then(() => {
+                            WXAuthorize(window.location.origin + to.path)
                         })
+                        return false
                     }
+                    tips({ message: res.errmsg || '登录成功' })
                 }, rej => {
-                    WXAuthorize(window.location.origin + to.path)
+                    tips({ message: rej.errmsg || '登录失败，重新登录' }).then(() => {
+                        WXAuthorize(window.location.origin + to.path)
+                    })
                 })
             } else {
                 // 去授权

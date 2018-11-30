@@ -54,14 +54,6 @@ export default {
     },
 
     methods: {
-        // 获取手机验证码
-        getCode() {
-            sendCode({
-                phone: this.phone
-            }).then(res => {
-                console.log(res)
-            })
-        },
         bindCode() {
             console.log(this.code)
             bindMobile({
@@ -74,10 +66,9 @@ export default {
                 },
                 (errorData) => {
                     console.log('bind failed')
-                    if(errorData.errno === 106){ //改手机好已经注册
+                    if (errorData.errno === 106) { // 改手机好已经注册
                         alert(errorData.errmsg)
                     }
-                   
                 }
             )
         },
