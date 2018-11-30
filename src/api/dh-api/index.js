@@ -26,7 +26,7 @@ export const getActivityProductDetailById = (data) => {
 export const getCourseProductList = (data) => {
     return axios.request({
         url: '/api/auth/courseProduct/getCourseProductList',
-        method: 'post',
+        method: 'get',
         data: data
 
     })
@@ -36,9 +36,9 @@ export const getCourseProductList = (data) => {
 export const getCourseProductDetailById = (id) => {
     return axios.request({
         url: '/api/auth/courseProduct/getCourseProductDetailById',
-        method: 'post',
+        method: 'get',
         data: {
-            id
+            id: id
         }
 
     })
@@ -60,9 +60,9 @@ export const getBannerList = (data) => {
 export const getCourseAudioList = (courseId) => {
     return axios.request({
         url: '/api/auth/courseAudio/getCourseAudioList',
-        method: 'post',
+        method: 'get',
         data: {
-            courseId
+            courseId: courseId
         }
     })
 }

@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class="sty">
-      <p class="title"> <span>课程目录</span> <span>共{{doemData.num}}节课</span></p>
+      <p class="title"> <span>课程目录</span> <span>共{{doemData.audioCount}}节课</span></p>
     </div>
     <ul>
       <li
