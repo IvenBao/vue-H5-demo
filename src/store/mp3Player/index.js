@@ -17,7 +17,8 @@ export default {
             state.close_player = true
         },
         playPlayer(state, data) {
-            if (data && data.playerList && data.playingIndex) {
+            // eslint-disable-next-line
+            if (data && data.playerList && data.playingIndex.length != 0) {
                 state.playerList = data.playerList // 播放列表
                 state.playingIndex = data.playingIndex // 当前播放的是哪一个
                 state.close_player = false

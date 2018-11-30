@@ -1,7 +1,10 @@
 <template>
   <div class="big">
     <her-der></her-der>
-    <con-tent :productData="productData"></con-tent>
+    <con-tent
+      :productData="productData"
+      :productId="productId"
+    ></con-tent>
     <opera-tion
       :productId="productId"
       :productData="productData"
@@ -18,7 +21,8 @@ export default {
   data() {
     return {
       productId: {
-        productId: ''
+        productId: '',
+        productType: ''
       },
       productData: {
         // gallery: 'http://1254016570.vod2.myqcloud.com/7176c53evodgzp1254016570/822fe01c5285890780717738819/fU4oyY5EooQA.mp4',
@@ -69,6 +73,7 @@ export default {
         // res.data.isFree = false
         res.data.isOnlinePay = true
         this.productData = res.data
+        this.productId.productType = this.productData.productType
       })
     }
   }

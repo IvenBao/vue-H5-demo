@@ -89,8 +89,11 @@
         >
       </div>
     </div>
-    <p class="shangji">
-      <span>我的学伴:{{1341245212}}</span>
+    <p
+      class="shangji"
+      v-if="minedata.refName"
+    >
+      <span>我的学伴:{{minedata.refName}}</span>
     </p>
   </div>
 </template>

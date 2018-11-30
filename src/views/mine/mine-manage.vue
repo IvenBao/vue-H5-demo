@@ -232,12 +232,6 @@ export default {
         })
       })
     },
-    reminder() {
-      this.$router.push({
-        name: 'realNameStatus',
-        query: { certificationStatus: this.minedata.certificationStatus }
-      })
-    },
     bangding() {
       this.$router.push({ name: 'bindMobile' })
     },
