@@ -6,9 +6,8 @@ import {
 export const getOfflineActivityThemeList = (data) => {
     return axios.request({
         url: '/api/auth/activityProduct/getActivityProductList',
-        method: 'post',
+        method: 'get',
         data: data
-
     })
 }
 
@@ -16,7 +15,7 @@ export const getOfflineActivityThemeList = (data) => {
 export const getActivityProductDetailById = (data) => {
     return axios.request({
         url: '/api/auth/activityProduct/getActivityProductDetailById',
-        method: 'post',
+        method: 'get',
         data: data
 
     })
@@ -28,7 +27,6 @@ export const getCourseProductList = (data) => {
         url: '/api/auth/courseProduct/getCourseProductList',
         method: 'get',
         data: data
-
     })
 }
 
@@ -38,9 +36,8 @@ export const getCourseProductDetailById = (id) => {
         url: '/api/auth/courseProduct/getCourseProductDetailById',
         method: 'get',
         data: {
-            id: id
+            id
         }
-
     })
 }
 
@@ -48,7 +45,7 @@ export const getCourseProductDetailById = (id) => {
 export const getBannerList = (data) => {
     return axios.request({
         url: '/api/auth/banner/getBannerList',
-        method: 'post',
+        method: 'get',
         data: {
             portType: 1,
             ...data
@@ -62,7 +59,7 @@ export const getCourseAudioList = (courseId) => {
         url: '/api/auth/courseAudio/getCourseAudioList',
         method: 'get',
         data: {
-            courseId: courseId
+            courseId
         }
     })
 }
@@ -70,15 +67,25 @@ export const getCourseAudioList = (courseId) => {
 // 我的 - 首页
 export const getmineData = (data) => {
     return axios.request({
-        url: '/api/user/my/detail',
-        method: 'get'
+        url: '/api/user/user/getMyInfoById',
+        method: 'get',
+        data: data
+    })
+}
+
+// 我的 - 账户管理
+export const getUserInfoById = (data) => {
+    return axios.request({
+        url: '/api/user/user/getUserInfoById',
+        method: 'get',
+        data: data
     })
 }
 
 export const browerCourse = (id) => {
     return axios.request({
-        url: '/qudao-membe/saas/classset/addClassSetBrowseCount',
-        method: 'post',
+        url: '/qudao-member/saas/classset/addClassSetBrowseCount',
+        method: 'get',
         data: {
             classInfoId: id
         }
@@ -96,7 +103,45 @@ export const browerCourse = (id) => {
 export const getOrderList = (data) => {
     return axios.request({
         url: '/getOrderList',
+        method: 'get',
+        data: data
+    })
+}
+
+// 修改性别和现居地址
+export const changeGenderAndCityById = (data) => {
+    return axios.request({
+        url: '/api/user/user/changeGenderAndCityById',
         method: 'post',
+        data: data
+
+    })
+}
+
+// 修改性别和现居地址
+export const xiadan = (data) => {
+    return axios.request({
+        url: '/api/user/order/buy',
+        method: 'get',
+        data: data
+
+    })
+}
+
+// 获取我的邀请人列表
+export const getUserListByReferUid = (data) => {
+    return axios.request({
+        url: '/api/user/user/getUserListByReferUid',
+        method: 'get',
+        data: data
+    })
+}
+
+// 获取我的邀请订单列表
+export const getOrderListByReferUid = (data) => {
+    return axios.request({
+        url: '/api/user/order/getOrderListByReferUid',
+        method: 'get',
         data: data
     })
 }

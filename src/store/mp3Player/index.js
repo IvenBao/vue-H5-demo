@@ -30,14 +30,14 @@ export default {
         playingIndex: 0, // 当前播放的是哪一个
         playingTime: '00:00', // 已播放时间
         playerTime: '00:00', // 音频所有时长
-        playStatus: false // 播放状态是否为正在播放
+        playStatus: false // 当前播放状态是否为正在播放
     },
     mutations: {
         closePlayer(state) {
             state.close_player = true
         },
         playPlayer(state, data) {
-            if (data && data.playerList && data.playingIndex) {
+            if (data && data.playerList && data.playingIndex.length !== 0) {
                 state.playerList = data.playerList // 播放列表
                 state.playingIndex = data.playingIndex // 当前播放的是哪一个
                 state.close_player = false
@@ -47,7 +47,9 @@ export default {
                 return false
             }
         },
-        pausePlayer() {}
+        pausePlayer(state) {
+            state.playStatus = false
+        }
     },
     actions: {
 

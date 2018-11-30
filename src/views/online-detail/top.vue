@@ -17,7 +17,7 @@
       >
       <div
         style="margin-top: 12px;"
-        v-if="!doemData.isplay && !doemData.isVipFree"
+        v-if="!doemData.isListen && !doemData.isVipFree"
       >
         <h4 class="timeSty">￥{{doemData.retailPriceDesc}}</h4>
         <span
@@ -27,13 +27,13 @@
       </div>
       <div
         style="margin-top: 12px;"
-        v-if="!doemData.isplay && doemData.isVipFree"
+        v-if="!doemData.isListen && doemData.isVipFree"
       >
         <span class="memberSty">会员免费</span>
       </div>
       <div
         style="margin-top: 12px;"
-        v-if="doemData.isplay"
+        v-if="doemData.isListen"
       >
         <span class="memberSty">免费学习</span>
       </div>

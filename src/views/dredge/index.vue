@@ -60,7 +60,8 @@
   </div>
 </template>
 <script>
-import { getmineData, buy } from '@/api'
+import { getmineData, xiadan, buy } from '@/api'
+import { openwechatpay } from 'base/global/pay'
 import KK from '@/views/home/line.vue'
 export default {
   data() {
@@ -68,8 +69,8 @@ export default {
       isVip: '',
       mineData: {},
       postData: {
-        productId: null,
-        productType: 3
+        productId: 1,
+        productType: 2
       }
     }
   },
@@ -88,10 +89,29 @@ export default {
   },
   methods: {
     playbuy() {
-      let params = { ...this.$route.params, ...this.$route.query }
-      this.postData.productId = params.productId
-      buy(this.postData).then(res => {
-        console.log(res)
+      xiadan(this.postData).then(res => {
+        // eslint-disable-next-line
+        if (res.errno == 0) {
+          let data = {
+            orderSn: res.data.orderSn
+          }
+          buy(data).then(res => {
+            // eslint-disable-next-line
+            if (res.errno == 0) {
+              var config = {
+                'appId': res.data.appid,
+                'nonceStr': res.data.nonceStr,
+                'package': res.data.packageStr,
+                'paySign': res.data.paySign,
+                'signType': res.data.signType,
+                'timeStamp': res.data.timeStamp
+              }
+              openwechatpay(config, res => {
+                console.log(res)
+              })
+            }
+          })
+        }
       })
     }
   }

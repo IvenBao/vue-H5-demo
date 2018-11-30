@@ -31,7 +31,7 @@ export default [{
         name: 'dredge',
         meta: {
             keepAlive: true,
-            title: '渠道革命',
+            title: '加入会员',
             shareInfo: {
                 title: '',
                 desc: ''

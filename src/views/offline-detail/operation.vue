@@ -67,12 +67,14 @@
   </div>
 </template>
 <script>
-import { pay } from '@/api'
+import { xiadan, buy, getmineData } from '@/api'
+import { openwechatpay } from 'base/global/pay'
 export default {
   data() {
     return {
       authentication: false,
-      show: true
+      show: true,
+      phone: false
     }
   },
   methods: {
@@ -95,26 +97,67 @@ export default {
       // } else { // 判断若是订单id不为空，直接跳去填信息页
       //   this.$router.push({ name: 'registerInformation', query: { dindanId: this.productData.dindanId } })
       // }
-      if (this.productData.isxiadan) { // 是否下单
-        pay().then(res => {
-
+      if (this.productData.isAlreadyBuy) { // 是否下单
+        xiadan(this.productId).then(res => {
+          // eslint-disable-next-line
+          if (res.errno == 0) {
+            this.$router.push({ name: 'registerInformation', query: { orderSn: res.data.orderSn } })
+          }
         })
       } else {
         if (this.productData.isFree) { // 是否免费
-          pay().then(res => {
-
+          xiadan(this.productId).then(res => {
+            // eslint-disable-next-line
+            if (res.errno == 0) {
+              this.$router.push({ name: 'registerInformation', query: { orderSn: res.data.orderSn } })
+            }
           })
         } else {
-          if (this.productData.isOnlinePay) { // 是线上付费   还是线上咨询
-
+          if (this.productData.isOnlinePay) { // 1是线上付费   0还是线上咨询
+            xiadan(this.productId).then(res => {
+              // eslint-disable-next-line
+              if (res.errno == 0) {
+                let data = {
+                  orderSn: res.data.orderSn
+                }
+                buy(data).then(res => {
+                  // eslint-disable-next-line
+                  if (res.errno == 0) {
+                    var config = {
+                      'appId': res.data.appid,
+                      'nonceStr': res.data.nonceStr,
+                      'package': res.data.packageStr,
+                      'paySign': res.data.paySign,
+                      'signType': res.data.signType,
+                      'timeStamp': res.data.timeStamp
+                    }
+                    openwechatpay(config, res => {
+                      console.log(res)
+                    })
+                  }
+                })
+              }
+            })
+          } else {
+            xiadan(this.productId).then(res => {
+              // eslint-disable-next-line
+              if (res.errno == 0) {
+                this.$router.push({ name: 'registerInformation', query: { orderSn: res.data.orderSn } })
+              }
+            })
           }
         }
       }
     }
   },
-  props: ['productData'],
+  props: ['productData', 'productId'],
   components: {
     // AuthenTication
+  },
+  mounted() {
+    getmineData().then(res => {
+      if (res.data.phone) { }
+    })
   },
   computed: {
     classSty() {

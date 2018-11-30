@@ -4,26 +4,35 @@
         <h4>绑定手机号</h4>
         <div class="input_div phone">
             <div class="area_code">+86</div>
-            <input type="tel" v-model='phone' placeholder="请输入手机号">
-            <div class="get_code" @click="getCode">获取验证码</div>
+            <input type="tel" placeholder="请输入手机号" v-model="loginInfo.phone" @input="checkValue('phone')" @paste="pastePhone">
+            <div class="get_code" :class="{gray: grayGetCode}" @click="getCode">{{getCodeText}}</div>
         </div>
         <div class="input_div msg_code">
             <div class="area_code">验证码</div>
-            <input type="tel" v-model='code' placeholder="请输入验证码">
+            <input type="tel" placeholder="请输入验证码" v-model="loginInfo.code" @input="checkValue('code')" @paste="pasteCode">
         </div>
-        <div class="bind" :class='{active: active}' @click="bindCode">确认</div>
+        <div class="bind" :class='{active: active}' @click="tobind">确认</div>
     </div>
 </template>
 
 <script>
-import { tips } from 'base/global/g'
-import { sendCode, bindMobile, bindMobileUser} from '@/api'
-
+import { tips, countdown } from 'base/global/g'
+import { trimIn } from 'base/global/tools'
+import { bindMobile, sendCode } from '@/api'
+import { testPhone } from 'base/vaildate'
+import {
+    Indicator
+} from 'mint-ui'
 export default {
     data() {
         return {
-            phone: '',
-            code: '',
+            grayGetCode: true, // 获取验证码按钮是否灰显
+            getCodeText: '获取验证码',
+            isGetCodeing: false, // 是否在获取验证码中 , 也就是是否倒计时结束
+            loginInfo: {
+                phone: '',
+                code: ''
+            },
             active: false // 登录按钮的样式
         }
     },
@@ -32,17 +41,16 @@ export default {
 
     computed: {},
     beforeRouteEnter(to, from, next) {
+        let backRouterName
+        if (from.name) {
+            backRouterName = from.name
+        }
         // ...
-        next()
+        next(vm => {
+            vm.backRouterName = backRouterName
+        })
     },
     mounted() {
-        tips({
-            message: '111222333'
-        }).then(() => {
-            tips({
-                message: '444555666'
-            })
-        })
     },
 
     methods: {
@@ -54,7 +62,7 @@ export default {
                 console.log(res)
             })
         },
-        bindCode(){
+        bindCode() {
             console.log(this.code)
             bindMobile({
                 phone: this.phone,
@@ -72,6 +80,98 @@ export default {
                    
                 }
             )
+        },
+        tobind() {
+            if (this.active) {
+                Indicator.open({
+                    text: '绑定中...',
+                    spinnerType: 'double-bounce'
+                })
+                bindMobile(this.loginInfo).then(res => {
+                    Indicator.close()
+                    tips({
+                        message: '绑定成功'
+                    }).then(() => {
+                        this.$router.push({
+                            path: this.backRouterName || '/home'
+                        })
+                    })
+                }, rej => {
+                    Indicator.close()
+                    tips({
+                        message: '绑定失败'
+                    })
+                })
+            } else {
+                if (!this.loginInfo.phone) {
+                    tips({
+                        message: '请填写手机号码'
+                    })
+                } else if (!this.loginInfo.code) {
+                    tips({
+                        message: '请填写手机验证码'
+                    })
+                }
+            }
+        },
+        loginStatus() {
+            this.active = !!(this.loginInfo.phone && testPhone(this.loginInfo.phone) && this.loginInfo.code)
+        },
+        checkValue(env) {
+            if (env == 'phone') {
+                this.loginInfo.phone = trimIn(this.loginInfo.phone)
+                this.$nextTick(() => {
+                    this.loginStatus()
+                    if (this.isGetCodeing) return
+                    this.grayGetCode = !testPhone(this.loginInfo.phone)
+                })
+            } else {
+                this.$nextTick(() => {
+                    this.loginStatus()
+                })
+            }
+        },
+        pastePhone() {
+            this.loginInfo.phone = trimIn(this.loginInfo.phone)
+            this.$nextTick(() => {
+                this.loginStatus()
+                if (!testPhone(this.loginInfo.phone)) {
+                    tips({
+                        message: '手机号格式不正确'
+                    })
+                    return false
+                }
+            })
+        },
+        pasteCode() {
+            this.$nextTick(() => {
+                this.loginStatus()
+            })
+        },
+        // 获取二维码
+        getCode() {
+            if (this.grayGetCode) {
+                return false
+            }
+            this.isGetCodeing = true
+            this.grayGetCode = true
+            this.getCodeText = `59s后获取`
+            countdown(59, (time) => {
+                if (time > 0) {
+                    this.getCodeText = `${time}s后获取`
+                } else {
+                    this.getCodeText = `获取验证码`
+                    this.grayGetCode = false
+                    this.isGetCodeing = false
+                }
+            })
+            sendCode({
+                phone: this.loginInfo.phone
+            }).then(res => {
+                tips({
+                    message: res.errmsg || '获取验证码成功'
+                })
+            })
         }
     }
 }
@@ -132,6 +232,9 @@ export default {
       font-size: 28px;
       color: #f43231;
       line-height: 48px;
+    }
+    .gray {
+      color: #999999;
     }
   }
   .bind {
